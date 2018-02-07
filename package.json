@@ -1,0 +1,23 @@
+{
+  "name": "ol-vt-tests",
+  "version": "0.0.1",
+  "description": "Tests & metrics on vector tiles support in openlayers",
+  "scripts": {
+    "start": "webpack-dashboard -- webpack-dev-server",
+    "build": "webpack --config webpack.config.js"
+  },
+  "dependencies": {
+    "ol": "^4.6.4",
+    "ol-hashed": "^1.0.2",
+    "ol-mapbox-style": "^2.10.1"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.9",
+    "html-webpack-plugin": "^2.30.1",
+    "ls": "0.2.1",
+    "style-loader": "^0.20.1",
+    "webpack": "^3.4.1",
+    "webpack-dashboard": "^0.4.0",
+    "webpack-dev-server": "^2.6.1"
+  }
+}

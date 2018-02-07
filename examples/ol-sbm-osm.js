@@ -44,7 +44,7 @@ var map = new ol.Map({
     new ol.layer.Tile({
       opacity: 0,
       source: new ol.source.XYZ({
-        url: 'https://wmts10.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png',
+        url: 'https://wmts{10-14}.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png',
         tileGrid: new ol.tilegrid.TileGrid({
           extent: ol.proj.get('EPSG:3857').getExtent(),
           resolutions: resolutionsWmts,

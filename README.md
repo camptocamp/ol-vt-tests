@@ -11,3 +11,11 @@ npm start
 ## Open
 
 localhost:3000/simple.html
+
+## Deploy
+
+```
+npm run deploy
+```
+
+https://fgravin.github.io/ol-vt-tests/simple.html

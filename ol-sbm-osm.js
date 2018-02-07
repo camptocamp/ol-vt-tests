@@ -126,6 +126,7 @@ map.addControl(new ZoomControl());
 
 
 var load = function(mbConfig, mbTilesUrl, mbTilesLayer) {
+  debugger;
   var vt = new ol.layer.VectorTile({
     declutter: true,
     visible: true,
@@ -153,6 +154,15 @@ var load = function(mbConfig, mbTilesUrl, mbTilesLayer) {
     });
   });
 };
+
+$(document).ready(function() {
+  load(
+    'data/swissbasemap-osm-integrated.json',
+    'https://tileserver.dev.bgdi.ch/data/swissbasemap-mbtiles/{z}/{x}/{y}.pbf',
+    'swissbasemap'
+  );
+});
+
 
 /***/ })
 

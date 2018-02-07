@@ -126,7 +126,6 @@ map.addControl(new ZoomControl());
 
 
 var load = function(mbConfig, mbTilesUrl, mbTilesLayer) {
-  debugger;
   var vt = new ol.layer.VectorTile({
     declutter: true,
     visible: true,

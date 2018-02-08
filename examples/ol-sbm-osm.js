@@ -49,7 +49,7 @@ const map = new Map({
       source: new XYZSource({
         url: 'https://wmts{10-14}.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png',
         tileGrid: new TileGrid({
-          extent: ol.proj.get('EPSG:3857').getExtent(),
+          extent: proj.get('EPSG:3857').getExtent(),
           resolutions: resolutionsWmts,
           tileSize: 256
         })

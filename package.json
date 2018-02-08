@@ -4,10 +4,11 @@
   "description": "Tests & metrics on vector tiles support in openlayers",
   "scripts": {
     "start": "webpack-dashboard -- webpack-dev-server",
-    "build": "webpack --config webpack.config.js",
-    "deploy": "gh-pages --dist dist"
+    "build": "webpack --config webpack.config.js && cp -r data/ dist",
+    "deploy": "npm run build && gh-pages --dist dist"
   },
   "dependencies": {
+    "mapbox-to-ol-style": "^3.4.0",
     "ol": "^4.6.4",
     "ol-hashed": "^1.0.2",
     "ol-mapbox-style": "^2.10.1"

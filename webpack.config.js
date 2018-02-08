@@ -1,13 +1,9 @@
-const Dashboard = require('webpack-dashboard/plugin');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ls = require('ls');
 
 const plugins = [
-  new Dashboard({
-    color: 'cyan'
-  }),
   new webpack.EnvironmentPlugin(
     Object.assign({
       NODE_ENV: 'development'

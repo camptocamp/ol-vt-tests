@@ -2039,7 +2039,7 @@ const map = new __WEBPACK_IMPORTED_MODULE_1_ol_map__["a" /* default */]({
     new __WEBPACK_IMPORTED_MODULE_7_ol_layer_tile__["a" /* default */]({
       opacity: 0,
       source: new __WEBPACK_IMPORTED_MODULE_8_ol_source_xyz__["a" /* default */]({
-        url: 'https://wmts10.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png',
+        url: 'https://wmts{10-14}.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png',
         tileGrid: new __WEBPACK_IMPORTED_MODULE_9_ol_tilegrid_tilegrid__["a" /* default */]({
           extent: ol.proj.get('EPSG:3857').getExtent(),
           resolutions: resolutionsWmts,

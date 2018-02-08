@@ -25,7 +25,7 @@ for (const filename of ls('examples/*.html')) {
       chunksSortMode: 'manual',
       filename: name + '.html',
       chunks: ['common', name],
-    }),
+    })
   );
 }
 plugins.push(new webpack.optimize.CommonsChunkPlugin({

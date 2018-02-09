@@ -4,7 +4,6 @@ import View from 'ol/view';
 import MVT from 'ol/format/mvt';
 import VectorTileLayer from 'ol/layer/vectortile';
 import VectorTileSource from 'ol/source/vectortile';
-import sync from 'ol-hashed';
 import TileLayer from 'ol/layer/tile';
 import XYZSource from 'ol/source/xyz';
 import TileGrid from 'ol/tilegrid/tilegrid';
@@ -65,8 +64,6 @@ const map = new Map({
     new Zoom({delta: 0.55})
   ]
 });
-
-// sync(map);
 
 const mbTilesLayer = new VectorTileLayer({
   declutter: true,

@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "mapbox-to-ol-style": "^3.4.0",
-    "ol": "^4.6.4",
-    "ol-hashed": "^1.0.2",
+    "ol": "5.0.0-beta.3",
     "ol-mapbox-style": "^2.10.1"
   },
   "devDependencies": {

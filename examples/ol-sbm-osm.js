@@ -1,15 +1,13 @@
-import 'ol/ol.css';
-import Map from 'ol/map';
-import View from 'ol/view';
-import MVT from 'ol/format/mvt';
-import VectorTileLayer from 'ol/layer/vectortile';
-import VectorTileSource from 'ol/source/vectortile';
-import sync from 'ol-hashed';
-import TileLayer from 'ol/layer/tile';
-import XYZSource from 'ol/source/xyz';
-import TileGrid from 'ol/tilegrid/tilegrid';
-import proj from 'ol/proj';
-import Zoom from 'ol/control/zoom';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import MVT from 'ol/format/MVT';
+import VectorTileLayer from 'ol/layer/VectorTile';
+import VectorTileSource from 'ol/source/VectorTile';
+import TileLayer from 'ol/layer/Tile';
+import XYZSource from 'ol/source/XYZ';
+import TileGrid from 'ol/tilegrid/TileGrid';
+import {fromLonLat, get as getProjection} from 'ol/proj';
+import Zoom from 'ol/control/Zoom';
 import mb2olstyle from 'mapbox-to-ol-style';
 
 const resolutionsView = [];
@@ -29,7 +27,7 @@ for (let i = 0; i <= 14; ++i) {
 
 
 const tileGridMvt = new TileGrid({
-  extent: proj.get('EPSG:3857').getExtent(),
+  extent: getProjection('EPSG:3857').getExtent(),
   resolutions: resolutionsMvt,
   tileSize: 512
 });
@@ -49,7 +47,7 @@ const map = new Map({
       source: new XYZSource({
         url: 'https://wmts{10-14}.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png',
         tileGrid: new TileGrid({
-          extent: proj.get('EPSG:3857').getExtent(),
+          extent: getProjection('EPSG:3857').getExtent(),
           resolutions: resolutionsWmts,
           tileSize: 256
         })
@@ -58,15 +56,13 @@ const map = new Map({
   ],
   target: 'map',
   view: new  View({
-    center: proj.fromLonLat([7.75, 46.7]),
+    center: fromLonLat([7.75, 46.7]),
     zoom: 7
   }),
   controls: [
     new Zoom({delta: 0.55})
   ]
 });
-
-// sync(map);
 
 const mbTilesLayer = new VectorTileLayer({
   declutter: true,

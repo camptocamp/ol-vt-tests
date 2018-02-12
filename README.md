@@ -18,4 +18,4 @@ localhost:3000/simple.html
 npm run deploy
 ```
 
-https://fgravin.github.io/ol-vt-tests/simple.html
+https://camptocamp.github.io/ol-vt-tests/ol-sbm-osm.html

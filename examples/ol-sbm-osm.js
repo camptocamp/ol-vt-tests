@@ -1,13 +1,13 @@
-import Map from 'ol/Map';
-import View from 'ol/View';
-import MVT from 'ol/format/MVT';
-import VectorTileLayer from 'ol/layer/VectorTile';
-import VectorTileSource from 'ol/source/VectorTile';
-import TileLayer from 'ol/layer/Tile';
-import XYZSource from 'ol/source/XYZ';
-import TileGrid from 'ol/tilegrid/TileGrid';
-import {fromLonLat, get as getProjection} from 'ol/proj';
-import Zoom from 'ol/control/Zoom';
+import Map from 'openlayers/Map';
+import View from 'openlayers/View';
+import MVT from 'openlayers/format/MVT';
+import VectorTileLayer from 'openlayers/layer/VectorTile';
+import VectorTileSource from 'openlayers/source/VectorTile';
+import TileLayer from 'openlayers/layer/Tile';
+import XYZSource from 'openlayers/source/XYZ';
+import TileGrid from 'openlayers/tilegrid/TileGrid';
+import {fromLonLat, get as getProjection} from 'openlayers/proj';
+import Zoom from 'openlayers/control/Zoom';
 import mb2olstyle from 'mapbox-to-ol-style';
 
 const resolutionsView = [];

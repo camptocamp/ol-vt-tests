@@ -1,7 +1,7 @@
-import Map from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import XYZ from 'ol/source/XYZ';
+import Map from 'openlayers/Map';
+import View from 'openlayers/View';
+import TileLayer from 'openlayers/layer/Tile';
+import XYZ from 'openlayers/source/XYZ';
 
 new Map({
   target: 'map',

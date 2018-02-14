@@ -2002,6 +2002,9 @@ _ol_extent_.applyTransform = function(extent, transformFn, opt_extent) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = interpolatePoint;
+/* harmony export (immutable) */ __webpack_exports__["b"] = lineStringCoordinateAtM;
+/* harmony export (immutable) */ __webpack_exports__["c"] = lineStringsCoordinateAtM;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__array_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__math_js__ = __webpack_require__(4);
 /**
@@ -2009,7 +2012,6 @@ _ol_extent_.applyTransform = function(extent, transformFn, opt_extent) {
  */
 
 
-const _ol_geom_flat_interpolate_ = {};
 
 
 /**
@@ -2021,7 +2023,7 @@ const _ol_geom_flat_interpolate_ = {};
  * @param {Array.<number>=} opt_dest Destination.
  * @return {Array.<number>} Destination.
  */
-_ol_geom_flat_interpolate_.lineString = function(flatCoordinates, offset, end, stride, fraction, opt_dest) {
+function interpolatePoint(flatCoordinates, offset, end, stride, fraction, opt_dest) {
   let pointX = NaN;
   let pointY = NaN;
   const n = (end - offset) / stride;
@@ -2068,7 +2070,7 @@ _ol_geom_flat_interpolate_.lineString = function(flatCoordinates, offset, end, s
   } else {
     return [pointX, pointY];
   }
-};
+}
 
 
 /**
@@ -2080,7 +2082,7 @@ _ol_geom_flat_interpolate_.lineString = function(flatCoordinates, offset, end, s
  * @param {boolean} extrapolate Extrapolate.
  * @return {ol.Coordinate} Coordinate.
  */
-_ol_geom_flat_interpolate_.lineStringCoordinateAtM = function(flatCoordinates, offset, end, stride, m, extrapolate) {
+function lineStringCoordinateAtM(flatCoordinates, offset, end, stride, m, extrapolate) {
   if (end == offset) {
     return null;
   }
@@ -2129,7 +2131,7 @@ _ol_geom_flat_interpolate_.lineStringCoordinateAtM = function(flatCoordinates, o
   }
   coordinate.push(m);
   return coordinate;
-};
+}
 
 
 /**
@@ -2142,10 +2144,10 @@ _ol_geom_flat_interpolate_.lineStringCoordinateAtM = function(flatCoordinates, o
  * @param {boolean} interpolate Interpolate.
  * @return {ol.Coordinate} Coordinate.
  */
-_ol_geom_flat_interpolate_.lineStringsCoordinateAtM = function(
+function lineStringsCoordinateAtM(
   flatCoordinates, offset, ends, stride, m, extrapolate, interpolate) {
   if (interpolate) {
-    return _ol_geom_flat_interpolate_.lineStringCoordinateAtM(
+    return lineStringCoordinateAtM(
       flatCoordinates, offset, ends[ends.length - 1], stride, m, extrapolate);
   }
   let coordinate;
@@ -2175,14 +2177,13 @@ _ol_geom_flat_interpolate_.lineStringsCoordinateAtM = function(
     if (m < flatCoordinates[offset + stride - 1]) {
       return null;
     } else if (m <= flatCoordinates[end - 1]) {
-      return _ol_geom_flat_interpolate_.lineStringCoordinateAtM(
+      return lineStringCoordinateAtM(
         flatCoordinates, offset, end, stride, m, false);
     }
     offset = end;
   }
   return null;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_interpolate_);
+}
 
 
 /***/ }),
@@ -3043,11 +3044,11 @@ LineString.prototype.closestPointXY = function(x, y, closestPoint, minSquaredDis
     return minSquaredDistance;
   }
   if (this.maxDeltaRevision_ != this.getRevision()) {
-    this.maxDelta_ = Math.sqrt(__WEBPACK_IMPORTED_MODULE_6__geom_flat_closest_js__["a" /* default */].getMaxSquaredDelta(
+    this.maxDelta_ = Math.sqrt(Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_closest_js__["e" /* maxSquaredDelta */])(
       this.flatCoordinates, 0, this.flatCoordinates.length, this.stride, 0));
     this.maxDeltaRevision_ = this.getRevision();
   }
-  return __WEBPACK_IMPORTED_MODULE_6__geom_flat_closest_js__["a" /* default */].getClosestPoint(
+  return Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_closest_js__["d" /* assignClosestPoint */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride,
     this.maxDelta_, false, x, y, closestPoint, minSquaredDistance);
 };
@@ -3089,7 +3090,7 @@ LineString.prototype.getCoordinateAtM = function(m, opt_extrapolate) {
     return null;
   }
   const extrapolate = opt_extrapolate !== undefined ? opt_extrapolate : false;
-  return __WEBPACK_IMPORTED_MODULE_9__geom_flat_interpolate_js__["a" /* default */].lineStringCoordinateAtM(this.flatCoordinates, 0,
+  return Object(__WEBPACK_IMPORTED_MODULE_9__geom_flat_interpolate_js__["b" /* lineStringCoordinateAtM */])(this.flatCoordinates, 0,
     this.flatCoordinates.length, this.stride, m, extrapolate);
 };
 
@@ -3101,7 +3102,7 @@ LineString.prototype.getCoordinateAtM = function(m, opt_extrapolate) {
  * @api
  */
 LineString.prototype.getCoordinates = function() {
-  return __WEBPACK_IMPORTED_MODULE_8__geom_flat_inflate_js__["a" /* default */].coordinates(
+  return Object(__WEBPACK_IMPORTED_MODULE_8__geom_flat_inflate_js__["a" /* inflateCoordinates */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride);
 };
 
@@ -3117,7 +3118,7 @@ LineString.prototype.getCoordinates = function() {
  * @api
  */
 LineString.prototype.getCoordinateAt = function(fraction, opt_dest) {
-  return __WEBPACK_IMPORTED_MODULE_9__geom_flat_interpolate_js__["a" /* default */].lineString(
+  return Object(__WEBPACK_IMPORTED_MODULE_9__geom_flat_interpolate_js__["a" /* interpolatePoint */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride,
     fraction, opt_dest);
 };
@@ -3129,7 +3130,7 @@ LineString.prototype.getCoordinateAt = function(fraction, opt_dest) {
  * @api
  */
 LineString.prototype.getLength = function() {
-  return __WEBPACK_IMPORTED_MODULE_11__geom_flat_length_js__["a" /* default */].lineString(
+  return Object(__WEBPACK_IMPORTED_MODULE_11__geom_flat_length_js__["a" /* lineStringLength */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride);
 };
 
@@ -3151,7 +3152,7 @@ LineString.prototype.getFlatMidpoint = function() {
  */
 LineString.prototype.getSimplifiedGeometryInternal = function(squaredTolerance) {
   const simplifiedFlatCoordinates = [];
-  simplifiedFlatCoordinates.length = __WEBPACK_IMPORTED_MODULE_13__geom_flat_simplify_js__["a" /* default */].douglasPeucker(
+  simplifiedFlatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_13__geom_flat_simplify_js__["a" /* douglasPeucker */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride,
     squaredTolerance, simplifiedFlatCoordinates, 0);
   const simplifiedLineString = new LineString(null);
@@ -3175,7 +3176,7 @@ LineString.prototype.getType = function() {
  * @api
  */
 LineString.prototype.intersectsExtent = function(extent) {
-  return __WEBPACK_IMPORTED_MODULE_10__geom_flat_intersectsextent_js__["a" /* default */].lineString(
+  return Object(__WEBPACK_IMPORTED_MODULE_10__geom_flat_intersectsextent_js__["a" /* intersectsLineString */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride,
     extent);
 };
@@ -3196,7 +3197,7 @@ LineString.prototype.setCoordinates = function(coordinates, opt_layout) {
     if (!this.flatCoordinates) {
       this.flatCoordinates = [];
     }
-    this.flatCoordinates.length = __WEBPACK_IMPORTED_MODULE_7__geom_flat_deflate_js__["a" /* default */].coordinates(
+    this.flatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_deflate_js__["b" /* deflateCoordinates */])(
       this.flatCoordinates, 0, coordinates, this.stride);
     this.changed();
   }
@@ -3320,7 +3321,7 @@ MultiPoint.prototype.closestPointXY = function(x, y, closestPoint, minSquaredDis
  * @api
  */
 MultiPoint.prototype.getCoordinates = function() {
-  return __WEBPACK_IMPORTED_MODULE_8__geom_flat_inflate_js__["a" /* default */].coordinates(
+  return Object(__WEBPACK_IMPORTED_MODULE_8__geom_flat_inflate_js__["a" /* inflateCoordinates */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride);
 };
 
@@ -3405,7 +3406,7 @@ MultiPoint.prototype.setCoordinates = function(coordinates, opt_layout) {
     if (!this.flatCoordinates) {
       this.flatCoordinates = [];
     }
-    this.flatCoordinates.length = __WEBPACK_IMPORTED_MODULE_7__geom_flat_deflate_js__["a" /* default */].coordinates(
+    this.flatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_deflate_js__["b" /* deflateCoordinates */])(
       this.flatCoordinates, 0, coordinates, this.stride);
     this.changed();
   }
@@ -4604,16 +4605,16 @@ module.exports = __webpack_require__(158);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ol_Map__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ol_View__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ol_format_MVT__ = __webpack_require__(238);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ol_layer_VectorTile__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ol_source_VectorTile__ = __webpack_require__(252);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ol_layer_Tile__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ol_source_XYZ__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ol_tilegrid_TileGrid__ = __webpack_require__(145);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ol_proj__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ol_control_Zoom__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_openlayers_Map__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers_View__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers_format_MVT__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_openlayers_layer_VectorTile__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_openlayers_source_VectorTile__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_openlayers_layer_Tile__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_openlayers_source_XYZ__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_openlayers_tilegrid_TileGrid__ = __webpack_require__(145);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_openlayers_proj__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_openlayers_control_Zoom__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_mapbox_to_ol_style__ = __webpack_require__(266);
 
 
@@ -4643,30 +4644,30 @@ for (let i = 0; i <= 14; ++i) {
 }
 
 
-const tileGridMvt = new __WEBPACK_IMPORTED_MODULE_7_ol_tilegrid_TileGrid__["a" /* default */]({
-  extent: Object(__WEBPACK_IMPORTED_MODULE_8_ol_proj__["e" /* get */])('EPSG:3857').getExtent(),
+const tileGridMvt = new __WEBPACK_IMPORTED_MODULE_7_openlayers_tilegrid_TileGrid__["a" /* default */]({
+  extent: Object(__WEBPACK_IMPORTED_MODULE_8_openlayers_proj__["e" /* get */])('EPSG:3857').getExtent(),
   resolutions: resolutionsMvt,
   tileSize: 512
 });
 
-const map = new __WEBPACK_IMPORTED_MODULE_0_ol_Map__["a" /* default */]({
+const map = new __WEBPACK_IMPORTED_MODULE_0_openlayers_Map__["a" /* default */]({
   layers: [
-    new __WEBPACK_IMPORTED_MODULE_5_ol_layer_Tile__["a" /* default */]({
+    new __WEBPACK_IMPORTED_MODULE_5_openlayers_layer_Tile__["a" /* default */]({
       opacity: 0.3,
-      source: new __WEBPACK_IMPORTED_MODULE_6_ol_source_XYZ__["a" /* default */]({
+      source: new __WEBPACK_IMPORTED_MODULE_6_openlayers_source_XYZ__["a" /* default */]({
         url: 'https://tileserver.dev.bgdi.ch/data/hillshade-europe-cut-mbtiles/{z}/{x}/{y}.png',
         transition: 0,
         tileGrid: tileGridMvt,
         maxZoom: 14
       })
     }),
-    new __WEBPACK_IMPORTED_MODULE_5_ol_layer_Tile__["a" /* default */]({
+    new __WEBPACK_IMPORTED_MODULE_5_openlayers_layer_Tile__["a" /* default */]({
       opacity: 0,
-      source: new __WEBPACK_IMPORTED_MODULE_6_ol_source_XYZ__["a" /* default */]({
+      source: new __WEBPACK_IMPORTED_MODULE_6_openlayers_source_XYZ__["a" /* default */]({
         url: 'https://wmts{10-14}.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png',
         transition: 0,
-        tileGrid: new __WEBPACK_IMPORTED_MODULE_7_ol_tilegrid_TileGrid__["a" /* default */]({
-          extent: Object(__WEBPACK_IMPORTED_MODULE_8_ol_proj__["e" /* get */])('EPSG:3857').getExtent(),
+        tileGrid: new __WEBPACK_IMPORTED_MODULE_7_openlayers_tilegrid_TileGrid__["a" /* default */]({
+          extent: Object(__WEBPACK_IMPORTED_MODULE_8_openlayers_proj__["e" /* get */])('EPSG:3857').getExtent(),
           resolutions: resolutionsWmts,
           tileSize: 256
         })
@@ -4674,20 +4675,20 @@ const map = new __WEBPACK_IMPORTED_MODULE_0_ol_Map__["a" /* default */]({
     })
   ],
   target: 'map',
-  view: new  __WEBPACK_IMPORTED_MODULE_1_ol_View__["a" /* default */]({
-    center: Object(__WEBPACK_IMPORTED_MODULE_8_ol_proj__["d" /* fromLonLat */])([7.75, 46.7]),
+  view: new  __WEBPACK_IMPORTED_MODULE_1_openlayers_View__["a" /* default */]({
+    center: Object(__WEBPACK_IMPORTED_MODULE_8_openlayers_proj__["d" /* fromLonLat */])([7.75, 46.7]),
     zoom: 7
   }),
   controls: [
-    new __WEBPACK_IMPORTED_MODULE_9_ol_control_Zoom__["a" /* default */]({delta: 0.55})
+    new __WEBPACK_IMPORTED_MODULE_9_openlayers_control_Zoom__["a" /* default */]({delta: 0.55})
   ]
 });
 
-const mbTilesLayer = new __WEBPACK_IMPORTED_MODULE_3_ol_layer_VectorTile__["a" /* default */]({
+const mbTilesLayer = new __WEBPACK_IMPORTED_MODULE_3_openlayers_layer_VectorTile__["a" /* default */]({
   declutter: true,
   visible: true,
-  source: new __WEBPACK_IMPORTED_MODULE_4_ol_source_VectorTile__["a" /* default */]({
-    format: new __WEBPACK_IMPORTED_MODULE_2_ol_format_MVT__["a" /* default */](),
+  source: new __WEBPACK_IMPORTED_MODULE_4_openlayers_source_VectorTile__["a" /* default */]({
+    format: new __WEBPACK_IMPORTED_MODULE_2_openlayers_format_MVT__["a" /* default */](),
     url: 'https://tileserver.dev.bgdi.ch/data/swissbasemap-mbtiles/{z}/{x}/{y}.pbf',
     maxZoom: 15
   })
@@ -4894,81 +4895,94 @@ Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["g" /* inherits */])(MVT, __WEBPA
 
 
 /**
- * Reader callbacks for parsing the PBF.
- * @type {Object.<string, function(number, Object, ol.ext.PBF)>}
+ * Reader callback for parsing layers.
+ * @param {number} tag The tag.
+ * @param {Object} layers The layers object.
+ * @param {ol.ext.PBF} pbf The PBF.
  */
-MVT.pbfReaders_ = {
-  layers: function(tag, layers, pbf) {
-    if (tag === 3) {
-      const layer = {
-        keys: [],
-        values: [],
-        features: []
-      };
-      const end = pbf.readVarint() + pbf.pos;
-      pbf.readFields(MVT.pbfReaders_.layer, layer, end);
-      layer.length = layer.features.length;
-      if (layer.length) {
-        layers[layer.name] = layer;
-      }
-    }
-  },
-  layer: function(tag, layer, pbf) {
-    if (tag === 15) {
-      layer.version = pbf.readVarint();
-    } else if (tag === 1) {
-      layer.name = pbf.readString();
-    } else if (tag === 5) {
-      layer.extent = pbf.readVarint();
-    } else if (tag === 2) {
-      layer.features.push(pbf.pos);
-    } else if (tag === 3) {
-      layer.keys.push(pbf.readString());
-    } else if (tag === 4) {
-      let value = null;
-      const end = pbf.readVarint() + pbf.pos;
-      while (pbf.pos < end) {
-        tag = pbf.readVarint() >> 3;
-        value = tag === 1 ? pbf.readString() :
-          tag === 2 ? pbf.readFloat() :
-            tag === 3 ? pbf.readDouble() :
-              tag === 4 ? pbf.readVarint64() :
-                tag === 5 ? pbf.readVarint() :
-                  tag === 6 ? pbf.readSVarint() :
-                    tag === 7 ? pbf.readBoolean() : null;
-      }
-      layer.values.push(value);
-    }
-  },
-  feature: function(tag, feature, pbf) {
-    if (tag == 1) {
-      feature.id = pbf.readVarint();
-    } else if (tag == 2) {
-      const end = pbf.readVarint() + pbf.pos;
-      while (pbf.pos < end) {
-        const key = feature.layer.keys[pbf.readVarint()];
-        const value = feature.layer.values[pbf.readVarint()];
-        feature.properties[key] = value;
-      }
-    } else if (tag == 3) {
-      feature.type = pbf.readVarint();
-    } else if (tag == 4) {
-      feature.geometry = pbf.pos;
+function layersPBFReader(tag, layers, pbf) {
+  if (tag === 3) {
+    const layer = {
+      keys: [],
+      values: [],
+      features: []
+    };
+    const end = pbf.readVarint() + pbf.pos;
+    pbf.readFields(layerPBFReader, layer, end);
+    layer.length = layer.features.length;
+    if (layer.length) {
+      layers[layer.name] = layer;
     }
   }
-};
+}
+
+/**
+ * Reader callback for parsing layer.
+ * @param {number} tag The tag.
+ * @param {Object} layer The layer object.
+ * @param {ol.ext.PBF} pbf The PBF.
+ */
+function layerPBFReader(tag, layer, pbf) {
+  if (tag === 15) {
+    layer.version = pbf.readVarint();
+  } else if (tag === 1) {
+    layer.name = pbf.readString();
+  } else if (tag === 5) {
+    layer.extent = pbf.readVarint();
+  } else if (tag === 2) {
+    layer.features.push(pbf.pos);
+  } else if (tag === 3) {
+    layer.keys.push(pbf.readString());
+  } else if (tag === 4) {
+    let value = null;
+    const end = pbf.readVarint() + pbf.pos;
+    while (pbf.pos < end) {
+      tag = pbf.readVarint() >> 3;
+      value = tag === 1 ? pbf.readString() :
+        tag === 2 ? pbf.readFloat() :
+          tag === 3 ? pbf.readDouble() :
+            tag === 4 ? pbf.readVarint64() :
+              tag === 5 ? pbf.readVarint() :
+                tag === 6 ? pbf.readSVarint() :
+                  tag === 7 ? pbf.readBoolean() : null;
+    }
+    layer.values.push(value);
+  }
+}
+
+/**
+ * Reader callback for parsing feature.
+ * @param {number} tag The tag.
+ * @param {Object} feature The feature object.
+ * @param {ol.ext.PBF} pbf The PBF.
+ */
+function featurePBFReader(tag, feature, pbf) {
+  if (tag == 1) {
+    feature.id = pbf.readVarint();
+  } else if (tag == 2) {
+    const end = pbf.readVarint() + pbf.pos;
+    while (pbf.pos < end) {
+      const key = feature.layer.keys[pbf.readVarint()];
+      const value = feature.layer.values[pbf.readVarint()];
+      feature.properties[key] = value;
+    }
+  } else if (tag == 3) {
+    feature.type = pbf.readVarint();
+  } else if (tag == 4) {
+    feature.geometry = pbf.pos;
+  }
+}
 
 
 /**
  * Read a raw feature from the pbf offset stored at index `i` in the raw layer.
  * @suppress {missingProperties}
- * @private
  * @param {ol.ext.PBF} pbf PBF.
  * @param {Object} layer Raw layer.
  * @param {number} i Index of the feature in the raw layer's `features` array.
  * @return {Object} Raw feature.
  */
-MVT.readRawFeature_ = function(pbf, layer, i) {
+function readRawFeature(pbf, layer, i) {
   pbf.pos = layer.features[i];
   const end = pbf.readVarint() + pbf.pos;
 
@@ -4977,22 +4991,22 @@ MVT.readRawFeature_ = function(pbf, layer, i) {
     type: 0,
     properties: {}
   };
-  pbf.readFields(MVT.pbfReaders_.feature, feature, end);
+  pbf.readFields(featurePBFReader, feature, end);
   return feature;
-};
+}
 
 
 /**
  * Read the raw geometry from the pbf offset stored in a raw feature's geometry
  * proeprty.
  * @suppress {missingProperties}
- * @private
  * @param {ol.ext.PBF} pbf PBF.
  * @param {Object} feature Raw feature.
  * @param {Array.<number>} flatCoordinates Array to store flat coordinates in.
  * @param {Array.<number>} ends Array to store ends in.
+ * @private
  */
-MVT.readRawGeometry_ = function(pbf, feature, flatCoordinates, ends) {
+MVT.prototype.readRawGeometry_ = function(pbf, feature, flatCoordinates, ends) {
   pbf.pos = feature.geometry;
 
   const end = pbf.readVarint() + pbf.pos;
@@ -5050,13 +5064,12 @@ MVT.readRawGeometry_ = function(pbf, feature, flatCoordinates, ends) {
 
 /**
  * @suppress {missingProperties}
- * @private
  * @param {number} type The raw feature's geometry type
  * @param {number} numEnds Number of ends of the flat coordinates of the
  * geometry.
  * @return {ol.geom.GeometryType} The geometry type.
  */
-MVT.getGeometryType_ = function(type, numEnds) {
+function getGeometryType(type, numEnds) {
   /** @type {ol.geom.GeometryType} */
   let geometryType;
   if (type === 1) {
@@ -5072,7 +5085,7 @@ MVT.getGeometryType_ = function(type, numEnds) {
     // outer rings of polygons.
   }
   return geometryType;
-};
+}
 
 /**
  * @private
@@ -5094,9 +5107,9 @@ MVT.prototype.createFeature_ = function(pbf, rawFeature, opt_options) {
 
   const flatCoordinates = [];
   let ends = [];
-  MVT.readRawGeometry_(pbf, rawFeature, flatCoordinates, ends);
+  this.readRawGeometry_(pbf, rawFeature, flatCoordinates, ends);
 
-  const geometryType = MVT.getGeometryType_(type, ends.length);
+  const geometryType = getGeometryType(type, ends.length);
 
   if (this.featureClass_ === __WEBPACK_IMPORTED_MODULE_16__render_Feature_js__["a" /* default */]) {
     feature = new this.featureClass_(geometryType, flatCoordinates, ends, values, id);
@@ -5108,7 +5121,7 @@ MVT.prototype.createFeature_ = function(pbf, rawFeature, opt_options) {
       let prevEndIndex = 0;
       for (let i = 0, ii = ends.length; i < ii; ++i) {
         const end = ends[i];
-        if (!__WEBPACK_IMPORTED_MODULE_13__geom_flat_orient_js__["a" /* default */].linearRingIsClockwise(flatCoordinates, offset, end, 2)) {
+        if (!Object(__WEBPACK_IMPORTED_MODULE_13__geom_flat_orient_js__["a" /* linearRingIsClockwise */])(flatCoordinates, offset, end, 2)) {
           endss.push(ends.slice(prevEndIndex, i));
           prevEndIndex = i;
         }
@@ -5168,7 +5181,7 @@ MVT.prototype.readFeatures = function(source, opt_options) {
   const layers = this.layers_;
 
   const pbf = new __WEBPACK_IMPORTED_MODULE_2_pbf___default.a(/** @type {ArrayBuffer} */ (source));
-  const pbfLayers = pbf.readFields(MVT.pbfReaders_.layers, {});
+  const pbfLayers = pbf.readFields(layersPBFReader, {});
   /** @type {Array.<ol.Feature|ol.render.Feature>} */
   const features = [];
   let pbfLayer;
@@ -5179,7 +5192,7 @@ MVT.prototype.readFeatures = function(source, opt_options) {
     pbfLayer = pbfLayers[name];
 
     for (let i = 0, ii = pbfLayer.length; i < ii; ++i) {
-      const rawFeature = MVT.readRawFeature_(pbf, pbfLayer, i);
+      const rawFeature = readRawFeature(pbf, pbfLayer, i);
       features.push(this.createFeature_(pbf, rawFeature));
     }
     this.extent_ = pbfLayer ? [0, 0, pbfLayer.extent, pbfLayer.extent] : null;
@@ -6302,11 +6315,11 @@ MultiLineString.prototype.closestPointXY = function(x, y, closestPoint, minSquar
     return minSquaredDistance;
   }
   if (this.maxDeltaRevision_ != this.getRevision()) {
-    this.maxDelta_ = Math.sqrt(__WEBPACK_IMPORTED_MODULE_7__geom_flat_closest_js__["a" /* default */].getsMaxSquaredDelta(
+    this.maxDelta_ = Math.sqrt(Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_closest_js__["a" /* arrayMaxSquaredDelta */])(
       this.flatCoordinates, 0, this.ends_, this.stride, 0));
     this.maxDeltaRevision_ = this.getRevision();
   }
-  return __WEBPACK_IMPORTED_MODULE_7__geom_flat_closest_js__["a" /* default */].getsClosestPoint(
+  return Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_closest_js__["b" /* assignClosestArrayPoint */])(
     this.flatCoordinates, 0, this.ends_, this.stride,
     this.maxDelta_, false, x, y, closestPoint, minSquaredDistance);
 };
@@ -6342,7 +6355,7 @@ MultiLineString.prototype.getCoordinateAtM = function(m, opt_extrapolate, opt_in
   }
   const extrapolate = opt_extrapolate !== undefined ? opt_extrapolate : false;
   const interpolate = opt_interpolate !== undefined ? opt_interpolate : false;
-  return __WEBPACK_IMPORTED_MODULE_10__geom_flat_interpolate_js__["a" /* default */].lineStringsCoordinateAtM(this.flatCoordinates, 0,
+  return Object(__WEBPACK_IMPORTED_MODULE_10__geom_flat_interpolate_js__["c" /* lineStringsCoordinateAtM */])(this.flatCoordinates, 0,
     this.ends_, this.stride, m, extrapolate, interpolate);
 };
 
@@ -6354,7 +6367,7 @@ MultiLineString.prototype.getCoordinateAtM = function(m, opt_extrapolate, opt_in
  * @api
  */
 MultiLineString.prototype.getCoordinates = function() {
-  return __WEBPACK_IMPORTED_MODULE_9__geom_flat_inflate_js__["a" /* default */].coordinatess(
+  return Object(__WEBPACK_IMPORTED_MODULE_9__geom_flat_inflate_js__["b" /* inflateCoordinatesArray */])(
     this.flatCoordinates, 0, this.ends_, this.stride);
 };
 
@@ -6418,7 +6431,7 @@ MultiLineString.prototype.getFlatMidpoints = function() {
   const stride = this.stride;
   for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
-    const midpoint = __WEBPACK_IMPORTED_MODULE_10__geom_flat_interpolate_js__["a" /* default */].lineString(
+    const midpoint = Object(__WEBPACK_IMPORTED_MODULE_10__geom_flat_interpolate_js__["a" /* interpolatePoint */])(
       flatCoordinates, offset, end, stride, 0.5);
     Object(__WEBPACK_IMPORTED_MODULE_1__array_js__["c" /* extend */])(midpoints, midpoint);
     offset = end;
@@ -6433,7 +6446,7 @@ MultiLineString.prototype.getFlatMidpoints = function() {
 MultiLineString.prototype.getSimplifiedGeometryInternal = function(squaredTolerance) {
   const simplifiedFlatCoordinates = [];
   const simplifiedEnds = [];
-  simplifiedFlatCoordinates.length = __WEBPACK_IMPORTED_MODULE_12__geom_flat_simplify_js__["a" /* default */].douglasPeuckers(
+  simplifiedFlatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_12__geom_flat_simplify_js__["b" /* douglasPeuckerArray */])(
     this.flatCoordinates, 0, this.ends_, this.stride, squaredTolerance,
     simplifiedFlatCoordinates, 0, simplifiedEnds);
   const simplifiedMultiLineString = new MultiLineString(null);
@@ -6457,7 +6470,7 @@ MultiLineString.prototype.getType = function() {
  * @api
  */
 MultiLineString.prototype.intersectsExtent = function(extent) {
-  return __WEBPACK_IMPORTED_MODULE_11__geom_flat_intersectsextent_js__["a" /* default */].lineStrings(
+  return Object(__WEBPACK_IMPORTED_MODULE_11__geom_flat_intersectsextent_js__["b" /* intersectsLineStringArray */])(
     this.flatCoordinates, 0, this.ends_, this.stride, extent);
 };
 
@@ -6477,7 +6490,7 @@ MultiLineString.prototype.setCoordinates = function(coordinates, opt_layout) {
     if (!this.flatCoordinates) {
       this.flatCoordinates = [];
     }
-    const ends = __WEBPACK_IMPORTED_MODULE_8__geom_flat_deflate_js__["a" /* default */].coordinatess(
+    const ends = Object(__WEBPACK_IMPORTED_MODULE_8__geom_flat_deflate_js__["c" /* deflateCoordinatesArray */])(
       this.flatCoordinates, 0, coordinates, this.stride, this.ends_);
     this.flatCoordinates.length = ends.length === 0 ? 0 : ends[ends.length - 1];
     this.changed();
@@ -6679,11 +6692,11 @@ MultiPolygon.prototype.closestPointXY = function(x, y, closestPoint, minSquaredD
     return minSquaredDistance;
   }
   if (this.maxDeltaRevision_ != this.getRevision()) {
-    this.maxDelta_ = Math.sqrt(__WEBPACK_IMPORTED_MODULE_10__geom_flat_closest_js__["a" /* default */].getssMaxSquaredDelta(
+    this.maxDelta_ = Math.sqrt(Object(__WEBPACK_IMPORTED_MODULE_10__geom_flat_closest_js__["f" /* multiArrayMaxSquaredDelta */])(
       this.flatCoordinates, 0, this.endss_, this.stride, 0));
     this.maxDeltaRevision_ = this.getRevision();
   }
-  return __WEBPACK_IMPORTED_MODULE_10__geom_flat_closest_js__["a" /* default */].getssClosestPoint(
+  return Object(__WEBPACK_IMPORTED_MODULE_10__geom_flat_closest_js__["c" /* assignClosestMultiArrayPoint */])(
     this.getOrientedFlatCoordinates(), 0, this.endss_, this.stride,
     this.maxDelta_, true, x, y, closestPoint, minSquaredDistance);
 };
@@ -6725,13 +6738,13 @@ MultiPolygon.prototype.getCoordinates = function(opt_right) {
   let flatCoordinates;
   if (opt_right !== undefined) {
     flatCoordinates = this.getOrientedFlatCoordinates().slice();
-    __WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["a" /* default */].orientLinearRingss(
+    Object(__WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["e" /* orientLinearRingsArray */])(
       flatCoordinates, 0, this.endss_, this.stride, opt_right);
   } else {
     flatCoordinates = this.flatCoordinates;
   }
 
-  return __WEBPACK_IMPORTED_MODULE_13__geom_flat_inflate_js__["a" /* default */].coordinatesss(
+  return Object(__WEBPACK_IMPORTED_MODULE_13__geom_flat_inflate_js__["c" /* inflateMultiCoordinatesArray */])(
     flatCoordinates, 0, this.endss_, this.stride);
 };
 
@@ -6751,7 +6764,7 @@ MultiPolygon.prototype.getFlatInteriorPoints = function() {
   if (this.flatInteriorPointsRevision_ != this.getRevision()) {
     const flatCenters = Object(__WEBPACK_IMPORTED_MODULE_9__geom_flat_center_js__["a" /* linearRingss */])(
       this.flatCoordinates, 0, this.endss_, this.stride);
-    this.flatInteriorPoints_ = __WEBPACK_IMPORTED_MODULE_14__geom_flat_interiorpoint_js__["a" /* default */].linearRingss(
+    this.flatInteriorPoints_ = Object(__WEBPACK_IMPORTED_MODULE_14__geom_flat_interiorpoint_js__["b" /* getInteriorPointsOfMultiArray */])(
       this.getOrientedFlatCoordinates(), 0, this.endss_, this.stride,
       flatCenters);
     this.flatInteriorPointsRevision_ = this.getRevision();
@@ -6780,13 +6793,13 @@ MultiPolygon.prototype.getInteriorPoints = function() {
 MultiPolygon.prototype.getOrientedFlatCoordinates = function() {
   if (this.orientedRevision_ != this.getRevision()) {
     const flatCoordinates = this.flatCoordinates;
-    if (__WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["a" /* default */].linearRingssAreOriented(
+    if (Object(__WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["c" /* linearRingsAreOriented */])(
       flatCoordinates, 0, this.endss_, this.stride)) {
       this.orientedFlatCoordinates_ = flatCoordinates;
     } else {
       this.orientedFlatCoordinates_ = flatCoordinates.slice();
       this.orientedFlatCoordinates_.length =
-          __WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["a" /* default */].orientLinearRingss(
+          Object(__WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["e" /* orientLinearRingsArray */])(
             this.orientedFlatCoordinates_, 0, this.endss_, this.stride);
     }
     this.orientedRevision_ = this.getRevision();
@@ -6801,7 +6814,7 @@ MultiPolygon.prototype.getOrientedFlatCoordinates = function() {
 MultiPolygon.prototype.getSimplifiedGeometryInternal = function(squaredTolerance) {
   const simplifiedFlatCoordinates = [];
   const simplifiedEndss = [];
-  simplifiedFlatCoordinates.length = __WEBPACK_IMPORTED_MODULE_17__geom_flat_simplify_js__["a" /* default */].quantizess(
+  simplifiedFlatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_17__geom_flat_simplify_js__["d" /* quantizeMultiArray */])(
     this.flatCoordinates, 0, this.endss_, this.stride,
     Math.sqrt(squaredTolerance),
     simplifiedFlatCoordinates, 0, simplifiedEndss);
@@ -6886,7 +6899,7 @@ MultiPolygon.prototype.getType = function() {
  * @api
  */
 MultiPolygon.prototype.intersectsExtent = function(extent) {
-  return __WEBPACK_IMPORTED_MODULE_15__geom_flat_intersectsextent_js__["a" /* default */].linearRingss(
+  return Object(__WEBPACK_IMPORTED_MODULE_15__geom_flat_intersectsextent_js__["d" /* intersectsLinearRingMultiArray */])(
     this.getOrientedFlatCoordinates(), 0, this.endss_, this.stride, extent);
 };
 
@@ -6906,7 +6919,7 @@ MultiPolygon.prototype.setCoordinates = function(coordinates, opt_layout) {
     if (!this.flatCoordinates) {
       this.flatCoordinates = [];
     }
-    const endss = __WEBPACK_IMPORTED_MODULE_12__geom_flat_deflate_js__["a" /* default */].coordinatesss(
+    const endss = Object(__WEBPACK_IMPORTED_MODULE_12__geom_flat_deflate_js__["d" /* deflateMultiCoordinatesArray */])(
       this.flatCoordinates, 0, coordinates, this.stride, this.endss_);
     if (endss.length === 0) {
       this.flatCoordinates.length = 0;
@@ -7099,7 +7112,7 @@ RenderFeature.prototype.getExtent = function() {
 RenderFeature.prototype.getFlatInteriorPoint = function() {
   if (!this.flatInteriorPoints_) {
     const flatCenter = Object(__WEBPACK_IMPORTED_MODULE_2__extent_js__["x" /* getCenter */])(this.getExtent());
-    this.flatInteriorPoints_ = __WEBPACK_IMPORTED_MODULE_5__geom_flat_interiorpoint_js__["a" /* default */].linearRings(
+    this.flatInteriorPoints_ = Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_interiorpoint_js__["a" /* getInteriorPointOfArray */])(
       this.flatCoordinates_, 0, this.ends_, 2, flatCenter, 0);
   }
   return this.flatInteriorPoints_;
@@ -7113,7 +7126,7 @@ RenderFeature.prototype.getFlatInteriorPoints = function() {
   if (!this.flatInteriorPoints_) {
     const flatCenters = Object(__WEBPACK_IMPORTED_MODULE_4__geom_flat_center_js__["a" /* linearRingss */])(
       this.flatCoordinates_, 0, this.ends_, 2);
-    this.flatInteriorPoints_ = __WEBPACK_IMPORTED_MODULE_5__geom_flat_interiorpoint_js__["a" /* default */].linearRingss(
+    this.flatInteriorPoints_ = Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_interiorpoint_js__["b" /* getInteriorPointsOfMultiArray */])(
       this.flatCoordinates_, 0, this.ends_, 2, flatCenters);
   }
   return this.flatInteriorPoints_;
@@ -7125,7 +7138,7 @@ RenderFeature.prototype.getFlatInteriorPoints = function() {
  */
 RenderFeature.prototype.getFlatMidpoint = function() {
   if (!this.flatMidpoints_) {
-    this.flatMidpoints_ = __WEBPACK_IMPORTED_MODULE_6__geom_flat_interpolate_js__["a" /* default */].lineString(
+    this.flatMidpoints_ = Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_interpolate_js__["a" /* interpolatePoint */])(
       this.flatCoordinates_, 0, this.flatCoordinates_.length, 2, 0.5);
   }
   return this.flatMidpoints_;
@@ -7143,7 +7156,7 @@ RenderFeature.prototype.getFlatMidpoints = function() {
     const ends = this.ends_;
     for (let i = 0, ii = ends.length; i < ii; ++i) {
       const end = ends[i];
-      const midpoint = __WEBPACK_IMPORTED_MODULE_6__geom_flat_interpolate_js__["a" /* default */].lineString(
+      const midpoint = Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_interpolate_js__["a" /* interpolatePoint */])(
         flatCoordinates, offset, end, 2, 0.5);
       Object(__WEBPACK_IMPORTED_MODULE_1__array_js__["c" /* extend */])(this.flatMidpoints_, midpoint);
       offset = end;
@@ -7246,7 +7259,7 @@ RenderFeature.prototype.transform = function(source, destination) {
     projectedExtent[0], projectedExtent[3],
     scale, -scale, 0,
     0, 0);
-  __WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["a" /* default */].transform2D(this.flatCoordinates_, 0, this.flatCoordinates_.length, 2,
+  Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["c" /* transform2D */])(this.flatCoordinates_, 0, this.flatCoordinates_.length, 2,
     transform, this.flatCoordinates_);
 };
 /* harmony default export */ __webpack_exports__["a"] = (RenderFeature);
@@ -7937,9 +7950,8 @@ Style.createFunction = function(obj) {
 
 /**
  * @type {Array.<ol.style.Style>}
- * @private
  */
-Style.default_ = null;
+let defaultStyles = null;
 
 
 /**
@@ -7953,7 +7965,7 @@ Style.defaultFunction = function(feature, resolution) {
   // browsers that do not support Canvas. (ol.style.Circle does
   // canvas.getContext('2d') at construction time, which will cause an.error
   // in such browsers.)
-  if (!Style.default_) {
+  if (!defaultStyles) {
     const fill = new __WEBPACK_IMPORTED_MODULE_3__style_Fill_js__["a" /* default */]({
       color: 'rgba(255,255,255,0.4)'
     });
@@ -7961,7 +7973,7 @@ Style.defaultFunction = function(feature, resolution) {
       color: '#3399CC',
       width: 1.25
     });
-    Style.default_ = [
+    defaultStyles = [
       new Style({
         image: new __WEBPACK_IMPORTED_MODULE_2__style_Circle_js__["a" /* default */]({
           fill: fill,
@@ -7973,7 +7985,7 @@ Style.defaultFunction = function(feature, resolution) {
       })
     ];
   }
-  return Style.default_;
+  return defaultStyles;
 };
 
 

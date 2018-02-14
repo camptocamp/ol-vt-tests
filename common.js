@@ -3412,10 +3412,9 @@ Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["g" /* inherits */])(BaseObject, 
 
 
 /**
- * @private
  * @type {Object.<string, string>}
  */
-BaseObject.changeEventTypeCache_ = {};
+const changeEventTypeCache = {};
 
 
 /**
@@ -3423,9 +3422,9 @@ BaseObject.changeEventTypeCache_ = {};
  * @return {string} Change name.
  */
 BaseObject.getChangeEventType = function(key) {
-  return BaseObject.changeEventTypeCache_.hasOwnProperty(key) ?
-    BaseObject.changeEventTypeCache_[key] :
-    (BaseObject.changeEventTypeCache_[key] = 'change:' + key);
+  return changeEventTypeCache.hasOwnProperty(key) ?
+    changeEventTypeCache[key] :
+    (changeEventTypeCache[key] = 'change:' + key);
 };
 
 
@@ -3989,7 +3988,7 @@ SimpleGeometry.prototype.rotate = function(angle, anchor) {
   const flatCoordinates = this.getFlatCoordinates();
   if (flatCoordinates) {
     const stride = this.getStride();
-    __WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["a" /* default */].rotate(
+    Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["a" /* rotate */])(
       flatCoordinates, 0, flatCoordinates.length,
       stride, angle, anchor, flatCoordinates);
     this.changed();
@@ -4013,7 +4012,7 @@ SimpleGeometry.prototype.scale = function(sx, opt_sy, opt_anchor) {
   const flatCoordinates = this.getFlatCoordinates();
   if (flatCoordinates) {
     const stride = this.getStride();
-    __WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["a" /* default */].scale(
+    Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["b" /* scale */])(
       flatCoordinates, 0, flatCoordinates.length,
       stride, sx, sy, anchor, flatCoordinates);
     this.changed();
@@ -4029,7 +4028,7 @@ SimpleGeometry.prototype.translate = function(deltaX, deltaY) {
   const flatCoordinates = this.getFlatCoordinates();
   if (flatCoordinates) {
     const stride = this.getStride();
-    __WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["a" /* default */].translate(
+    Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["d" /* translate */])(
       flatCoordinates, 0, flatCoordinates.length, stride,
       deltaX, deltaY, flatCoordinates);
     this.changed();
@@ -4049,7 +4048,7 @@ SimpleGeometry.transform2D = function(simpleGeometry, transform, opt_dest) {
     return null;
   } else {
     const stride = simpleGeometry.getStride();
-    return __WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["a" /* default */].transform2D(
+    return Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["c" /* transform2D */])(
       flatCoordinates, 0, flatCoordinates.length, stride,
       transform, opt_dest);
   }
@@ -4062,10 +4061,13 @@ SimpleGeometry.transform2D = function(simpleGeometry, transform, opt_dest) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["c"] = transform2D;
+/* harmony export (immutable) */ __webpack_exports__["a"] = rotate;
+/* harmony export (immutable) */ __webpack_exports__["b"] = scale;
+/* harmony export (immutable) */ __webpack_exports__["d"] = translate;
 /**
  * @module ol/geom/flat/transform
  */
-const _ol_geom_flat_transform_ = {};
 
 
 /**
@@ -4077,7 +4079,7 @@ const _ol_geom_flat_transform_ = {};
  * @param {Array.<number>=} opt_dest Destination.
  * @return {Array.<number>} Transformed coordinates.
  */
-_ol_geom_flat_transform_.transform2D = function(flatCoordinates, offset, end, stride, transform, opt_dest) {
+function transform2D(flatCoordinates, offset, end, stride, transform, opt_dest) {
   const dest = opt_dest ? opt_dest : [];
   let i = 0;
   for (let j = offset; j < end; j += stride) {
@@ -4090,7 +4092,7 @@ _ol_geom_flat_transform_.transform2D = function(flatCoordinates, offset, end, st
     dest.length = i;
   }
   return dest;
-};
+}
 
 
 /**
@@ -4103,7 +4105,7 @@ _ol_geom_flat_transform_.transform2D = function(flatCoordinates, offset, end, st
  * @param {Array.<number>=} opt_dest Destination.
  * @return {Array.<number>} Transformed coordinates.
  */
-_ol_geom_flat_transform_.rotate = function(flatCoordinates, offset, end, stride, angle, anchor, opt_dest) {
+function rotate(flatCoordinates, offset, end, stride, angle, anchor, opt_dest) {
   const dest = opt_dest ? opt_dest : [];
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
@@ -4123,7 +4125,7 @@ _ol_geom_flat_transform_.rotate = function(flatCoordinates, offset, end, stride,
     dest.length = i;
   }
   return dest;
-};
+}
 
 
 /**
@@ -4138,7 +4140,7 @@ _ol_geom_flat_transform_.rotate = function(flatCoordinates, offset, end, stride,
  * @param {Array.<number>=} opt_dest Destination.
  * @return {Array.<number>} Transformed coordinates.
  */
-_ol_geom_flat_transform_.scale = function(flatCoordinates, offset, end, stride, sx, sy, anchor, opt_dest) {
+function scale(flatCoordinates, offset, end, stride, sx, sy, anchor, opt_dest) {
   const dest = opt_dest ? opt_dest : [];
   const anchorX = anchor[0];
   const anchorY = anchor[1];
@@ -4156,7 +4158,7 @@ _ol_geom_flat_transform_.scale = function(flatCoordinates, offset, end, stride, 
     dest.length = i;
   }
   return dest;
-};
+}
 
 
 /**
@@ -4169,7 +4171,7 @@ _ol_geom_flat_transform_.scale = function(flatCoordinates, offset, end, stride, 
  * @param {Array.<number>=} opt_dest Destination.
  * @return {Array.<number>} Transformed coordinates.
  */
-_ol_geom_flat_transform_.translate = function(flatCoordinates, offset, end, stride, deltaX, deltaY, opt_dest) {
+function translate(flatCoordinates, offset, end, stride, deltaX, deltaY, opt_dest) {
   const dest = opt_dest ? opt_dest : [];
   let i = 0;
   for (let j = offset; j < end; j += stride) {
@@ -4183,8 +4185,7 @@ _ol_geom_flat_transform_.translate = function(flatCoordinates, offset, end, stri
     dest.length = i;
   }
   return dest;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_transform_);
+}
 
 
 /***/ }),
@@ -4884,10 +4885,13 @@ Interaction.zoomWithoutConstraints = function(view, resolution, opt_anchor, opt_
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = deflateCoordinate;
+/* harmony export (immutable) */ __webpack_exports__["b"] = deflateCoordinates;
+/* harmony export (immutable) */ __webpack_exports__["c"] = deflateCoordinatesArray;
+/* harmony export (immutable) */ __webpack_exports__["d"] = deflateMultiCoordinatesArray;
 /**
  * @module ol/geom/flat/deflate
  */
-const _ol_geom_flat_deflate_ = {};
 
 
 /**
@@ -4897,12 +4901,12 @@ const _ol_geom_flat_deflate_ = {};
  * @param {number} stride Stride.
  * @return {number} offset Offset.
  */
-_ol_geom_flat_deflate_.coordinate = function(flatCoordinates, offset, coordinate, stride) {
+function deflateCoordinate(flatCoordinates, offset, coordinate, stride) {
   for (let i = 0, ii = coordinate.length; i < ii; ++i) {
     flatCoordinates[offset++] = coordinate[i];
   }
   return offset;
-};
+}
 
 
 /**
@@ -4912,7 +4916,7 @@ _ol_geom_flat_deflate_.coordinate = function(flatCoordinates, offset, coordinate
  * @param {number} stride Stride.
  * @return {number} offset Offset.
  */
-_ol_geom_flat_deflate_.coordinates = function(flatCoordinates, offset, coordinates, stride) {
+function deflateCoordinates(flatCoordinates, offset, coordinates, stride) {
   for (let i = 0, ii = coordinates.length; i < ii; ++i) {
     const coordinate = coordinates[i];
     for (let j = 0; j < stride; ++j) {
@@ -4920,7 +4924,7 @@ _ol_geom_flat_deflate_.coordinates = function(flatCoordinates, offset, coordinat
     }
   }
   return offset;
-};
+}
 
 
 /**
@@ -4931,18 +4935,18 @@ _ol_geom_flat_deflate_.coordinates = function(flatCoordinates, offset, coordinat
  * @param {Array.<number>=} opt_ends Ends.
  * @return {Array.<number>} Ends.
  */
-_ol_geom_flat_deflate_.coordinatess = function(flatCoordinates, offset, coordinatess, stride, opt_ends) {
+function deflateCoordinatesArray(flatCoordinates, offset, coordinatess, stride, opt_ends) {
   const ends = opt_ends ? opt_ends : [];
   let i = 0;
   for (let j = 0, jj = coordinatess.length; j < jj; ++j) {
-    const end = _ol_geom_flat_deflate_.coordinates(
+    const end = deflateCoordinates(
       flatCoordinates, offset, coordinatess[j], stride);
     ends[i++] = end;
     offset = end;
   }
   ends.length = i;
   return ends;
-};
+}
 
 
 /**
@@ -4953,19 +4957,18 @@ _ol_geom_flat_deflate_.coordinatess = function(flatCoordinates, offset, coordina
  * @param {Array.<Array.<number>>=} opt_endss Endss.
  * @return {Array.<Array.<number>>} Endss.
  */
-_ol_geom_flat_deflate_.coordinatesss = function(flatCoordinates, offset, coordinatesss, stride, opt_endss) {
+function deflateMultiCoordinatesArray(flatCoordinates, offset, coordinatesss, stride, opt_endss) {
   const endss = opt_endss ? opt_endss : [];
   let i = 0;
   for (let j = 0, jj = coordinatesss.length; j < jj; ++j) {
-    const ends = _ol_geom_flat_deflate_.coordinatess(
+    const ends = deflateCoordinatesArray(
       flatCoordinates, offset, coordinatesss[j], stride, endss[i]);
     endss[i++] = ends;
     offset = ends[ends.length - 1];
   }
   endss.length = i;
   return endss;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_deflate_);
+}
 
 
 /***/ }),
@@ -4973,10 +4976,12 @@ _ol_geom_flat_deflate_.coordinatesss = function(flatCoordinates, offset, coordin
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = inflateCoordinates;
+/* harmony export (immutable) */ __webpack_exports__["b"] = inflateCoordinatesArray;
+/* harmony export (immutable) */ __webpack_exports__["c"] = inflateMultiCoordinatesArray;
 /**
  * @module ol/geom/flat/inflate
  */
-const _ol_geom_flat_inflate_ = {};
 
 
 /**
@@ -4987,7 +4992,7 @@ const _ol_geom_flat_inflate_ = {};
  * @param {Array.<ol.Coordinate>=} opt_coordinates Coordinates.
  * @return {Array.<ol.Coordinate>} Coordinates.
  */
-_ol_geom_flat_inflate_.coordinates = function(flatCoordinates, offset, end, stride, opt_coordinates) {
+function inflateCoordinates(flatCoordinates, offset, end, stride, opt_coordinates) {
   const coordinates = opt_coordinates !== undefined ? opt_coordinates : [];
   let i = 0;
   for (let j = offset; j < end; j += stride) {
@@ -4995,7 +5000,7 @@ _ol_geom_flat_inflate_.coordinates = function(flatCoordinates, offset, end, stri
   }
   coordinates.length = i;
   return coordinates;
-};
+}
 
 
 /**
@@ -5006,18 +5011,18 @@ _ol_geom_flat_inflate_.coordinates = function(flatCoordinates, offset, end, stri
  * @param {Array.<Array.<ol.Coordinate>>=} opt_coordinatess Coordinatess.
  * @return {Array.<Array.<ol.Coordinate>>} Coordinatess.
  */
-_ol_geom_flat_inflate_.coordinatess = function(flatCoordinates, offset, ends, stride, opt_coordinatess) {
+function inflateCoordinatesArray(flatCoordinates, offset, ends, stride, opt_coordinatess) {
   const coordinatess = opt_coordinatess !== undefined ? opt_coordinatess : [];
   let i = 0;
   for (let j = 0, jj = ends.length; j < jj; ++j) {
     const end = ends[j];
-    coordinatess[i++] = _ol_geom_flat_inflate_.coordinates(
+    coordinatess[i++] = inflateCoordinates(
       flatCoordinates, offset, end, stride, coordinatess[i]);
     offset = end;
   }
   coordinatess.length = i;
   return coordinatess;
-};
+}
 
 
 /**
@@ -5029,19 +5034,18 @@ _ol_geom_flat_inflate_.coordinatess = function(flatCoordinates, offset, ends, st
  *     Coordinatesss.
  * @return {Array.<Array.<Array.<ol.Coordinate>>>} Coordinatesss.
  */
-_ol_geom_flat_inflate_.coordinatesss = function(flatCoordinates, offset, endss, stride, opt_coordinatesss) {
+function inflateMultiCoordinatesArray(flatCoordinates, offset, endss, stride, opt_coordinatesss) {
   const coordinatesss = opt_coordinatesss !== undefined ? opt_coordinatesss : [];
   let i = 0;
   for (let j = 0, jj = endss.length; j < jj; ++j) {
     const ends = endss[j];
-    coordinatesss[i++] = _ol_geom_flat_inflate_.coordinatess(
+    coordinatesss[i++] = inflateCoordinatesArray(
       flatCoordinates, offset, ends, stride, coordinatesss[i]);
     offset = ends[ends.length - 1];
   }
   coordinatesss.length = i;
   return coordinatesss;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_inflate_);
+}
 
 
 /***/ }),
@@ -5319,7 +5323,7 @@ const primaryAction = function(mapBrowserEvent) {
 /* harmony export (immutable) */ __webpack_exports__["b"] = asString;
 /* harmony export (immutable) */ __webpack_exports__["a"] = asArray;
 /* unused harmony export normalize */
-/* unused harmony export toString */
+/* harmony export (immutable) */ __webpack_exports__["c"] = toString;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__asserts_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__math_js__ = __webpack_require__(4);
 /**
@@ -5903,6 +5907,15 @@ EventTarget.prototype.removeEventListener = function(type, listener) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export simplifyLineString */
+/* harmony export (immutable) */ __webpack_exports__["a"] = douglasPeucker;
+/* harmony export (immutable) */ __webpack_exports__["b"] = douglasPeuckerArray;
+/* unused harmony export douglasPeuckerMultiArray */
+/* unused harmony export radialDistance */
+/* harmony export (immutable) */ __webpack_exports__["e"] = snap;
+/* unused harmony export quantize */
+/* harmony export (immutable) */ __webpack_exports__["c"] = quantizeArray;
+/* harmony export (immutable) */ __webpack_exports__["d"] = quantizeMultiArray;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_js__ = __webpack_require__(4);
 /**
  * @module ol/geom/flat/simplify
@@ -5934,7 +5947,6 @@ EventTarget.prototype.removeEventListener = function(type, listener) {
 // POSSIBILITY OF SUCH DAMAGE.
 
 
-const _ol_geom_flat_simplify_ = {};
 
 
 /**
@@ -5948,23 +5960,23 @@ const _ol_geom_flat_simplify_ = {};
  *     coordinates.
  * @return {Array.<number>} Simplified line string.
  */
-_ol_geom_flat_simplify_.lineString = function(flatCoordinates, offset, end,
+function simplifyLineString(flatCoordinates, offset, end,
   stride, squaredTolerance, highQuality, opt_simplifiedFlatCoordinates) {
   const simplifiedFlatCoordinates = opt_simplifiedFlatCoordinates !== undefined ?
     opt_simplifiedFlatCoordinates : [];
   if (!highQuality) {
-    end = _ol_geom_flat_simplify_.radialDistance(flatCoordinates, offset, end,
+    end = radialDistance(flatCoordinates, offset, end,
       stride, squaredTolerance,
       simplifiedFlatCoordinates, 0);
     flatCoordinates = simplifiedFlatCoordinates;
     offset = 0;
     stride = 2;
   }
-  simplifiedFlatCoordinates.length = _ol_geom_flat_simplify_.douglasPeucker(
+  simplifiedFlatCoordinates.length = douglasPeucker(
     flatCoordinates, offset, end, stride, squaredTolerance,
     simplifiedFlatCoordinates, 0);
   return simplifiedFlatCoordinates;
-};
+}
 
 
 /**
@@ -5978,7 +5990,7 @@ _ol_geom_flat_simplify_.lineString = function(flatCoordinates, offset, end,
  * @param {number} simplifiedOffset Simplified offset.
  * @return {number} Simplified offset.
  */
-_ol_geom_flat_simplify_.douglasPeucker = function(flatCoordinates, offset, end,
+function douglasPeucker(flatCoordinates, offset, end,
   stride, squaredTolerance, simplifiedFlatCoordinates, simplifiedOffset) {
   const n = (end - offset) / stride;
   if (n < 3) {
@@ -6034,7 +6046,7 @@ _ol_geom_flat_simplify_.douglasPeucker = function(flatCoordinates, offset, end,
     }
   }
   return simplifiedOffset;
-};
+}
 
 
 /**
@@ -6049,19 +6061,19 @@ _ol_geom_flat_simplify_.douglasPeucker = function(flatCoordinates, offset, end,
  * @param {Array.<number>} simplifiedEnds Simplified ends.
  * @return {number} Simplified offset.
  */
-_ol_geom_flat_simplify_.douglasPeuckers = function(flatCoordinates, offset,
+function douglasPeuckerArray(flatCoordinates, offset,
   ends, stride, squaredTolerance, simplifiedFlatCoordinates,
   simplifiedOffset, simplifiedEnds) {
   for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
-    simplifiedOffset = _ol_geom_flat_simplify_.douglasPeucker(
+    simplifiedOffset = douglasPeucker(
       flatCoordinates, offset, end, stride, squaredTolerance,
       simplifiedFlatCoordinates, simplifiedOffset);
     simplifiedEnds.push(simplifiedOffset);
     offset = end;
   }
   return simplifiedOffset;
-};
+}
 
 
 /**
@@ -6076,20 +6088,20 @@ _ol_geom_flat_simplify_.douglasPeuckers = function(flatCoordinates, offset,
  * @param {Array.<Array.<number>>} simplifiedEndss Simplified endss.
  * @return {number} Simplified offset.
  */
-_ol_geom_flat_simplify_.douglasPeuckerss = function(
+function douglasPeuckerMultiArray(
   flatCoordinates, offset, endss, stride, squaredTolerance,
   simplifiedFlatCoordinates, simplifiedOffset, simplifiedEndss) {
   for (let i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
     const simplifiedEnds = [];
-    simplifiedOffset = _ol_geom_flat_simplify_.douglasPeuckers(
+    simplifiedOffset = douglasPeuckerArray(
       flatCoordinates, offset, ends, stride, squaredTolerance,
       simplifiedFlatCoordinates, simplifiedOffset, simplifiedEnds);
     simplifiedEndss.push(simplifiedEnds);
     offset = ends[ends.length - 1];
   }
   return simplifiedOffset;
-};
+}
 
 
 /**
@@ -6103,7 +6115,7 @@ _ol_geom_flat_simplify_.douglasPeuckerss = function(
  * @param {number} simplifiedOffset Simplified offset.
  * @return {number} Simplified offset.
  */
-_ol_geom_flat_simplify_.radialDistance = function(flatCoordinates, offset, end,
+function radialDistance(flatCoordinates, offset, end,
   stride, squaredTolerance, simplifiedFlatCoordinates, simplifiedOffset) {
   if (end <= offset + stride) {
     // zero or one point, no simplification possible, so copy and return
@@ -6138,7 +6150,7 @@ _ol_geom_flat_simplify_.radialDistance = function(flatCoordinates, offset, end,
     simplifiedFlatCoordinates[simplifiedOffset++] = y2;
   }
   return simplifiedOffset;
-};
+}
 
 
 /**
@@ -6146,9 +6158,9 @@ _ol_geom_flat_simplify_.radialDistance = function(flatCoordinates, offset, end,
  * @param {number} tolerance Tolerance.
  * @return {number} Rounded value.
  */
-_ol_geom_flat_simplify_.snap = function(value, tolerance) {
+function snap(value, tolerance) {
   return tolerance * Math.round(value / tolerance);
-};
+}
 
 
 /**
@@ -6170,15 +6182,15 @@ _ol_geom_flat_simplify_.snap = function(value, tolerance) {
  * @param {number} simplifiedOffset Simplified offset.
  * @return {number} Simplified offset.
  */
-_ol_geom_flat_simplify_.quantize = function(flatCoordinates, offset, end, stride,
+function quantize(flatCoordinates, offset, end, stride,
   tolerance, simplifiedFlatCoordinates, simplifiedOffset) {
   // do nothing if the line is empty
   if (offset == end) {
     return simplifiedOffset;
   }
   // snap the first coordinate (P1)
-  let x1 = _ol_geom_flat_simplify_.snap(flatCoordinates[offset], tolerance);
-  let y1 = _ol_geom_flat_simplify_.snap(flatCoordinates[offset + 1], tolerance);
+  let x1 = snap(flatCoordinates[offset], tolerance);
+  let y1 = snap(flatCoordinates[offset + 1], tolerance);
   offset += stride;
   // add the first coordinate to the output
   simplifiedFlatCoordinates[simplifiedOffset++] = x1;
@@ -6187,8 +6199,8 @@ _ol_geom_flat_simplify_.quantize = function(flatCoordinates, offset, end, stride
   // coordinate (P2)
   let x2, y2;
   do {
-    x2 = _ol_geom_flat_simplify_.snap(flatCoordinates[offset], tolerance);
-    y2 = _ol_geom_flat_simplify_.snap(flatCoordinates[offset + 1], tolerance);
+    x2 = snap(flatCoordinates[offset], tolerance);
+    y2 = snap(flatCoordinates[offset + 1], tolerance);
     offset += stride;
     if (offset == end) {
       // all coordinates snap to the same value, the line collapses to a point
@@ -6202,8 +6214,8 @@ _ol_geom_flat_simplify_.quantize = function(flatCoordinates, offset, end, stride
   } while (x2 == x1 && y2 == y1);
   while (offset < end) {
     // snap the next coordinate (P3)
-    const x3 = _ol_geom_flat_simplify_.snap(flatCoordinates[offset], tolerance);
-    const y3 = _ol_geom_flat_simplify_.snap(flatCoordinates[offset + 1], tolerance);
+    const x3 = snap(flatCoordinates[offset], tolerance);
+    const y3 = snap(flatCoordinates[offset + 1], tolerance);
     offset += stride;
     // skip P3 if it is equal to P2
     if (x3 == x2 && y3 == y2) {
@@ -6240,7 +6252,7 @@ _ol_geom_flat_simplify_.quantize = function(flatCoordinates, offset, end, stride
   simplifiedFlatCoordinates[simplifiedOffset++] = x2;
   simplifiedFlatCoordinates[simplifiedOffset++] = y2;
   return simplifiedOffset;
-};
+}
 
 
 /**
@@ -6255,13 +6267,13 @@ _ol_geom_flat_simplify_.quantize = function(flatCoordinates, offset, end, stride
  * @param {Array.<number>} simplifiedEnds Simplified ends.
  * @return {number} Simplified offset.
  */
-_ol_geom_flat_simplify_.quantizes = function(
+function quantizeArray(
   flatCoordinates, offset, ends, stride,
   tolerance,
   simplifiedFlatCoordinates, simplifiedOffset, simplifiedEnds) {
   for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
-    simplifiedOffset = _ol_geom_flat_simplify_.quantize(
+    simplifiedOffset = quantize(
       flatCoordinates, offset, end, stride,
       tolerance,
       simplifiedFlatCoordinates, simplifiedOffset);
@@ -6269,7 +6281,7 @@ _ol_geom_flat_simplify_.quantizes = function(
     offset = end;
   }
   return simplifiedOffset;
-};
+}
 
 
 /**
@@ -6284,14 +6296,14 @@ _ol_geom_flat_simplify_.quantizes = function(
  * @param {Array.<Array.<number>>} simplifiedEndss Simplified endss.
  * @return {number} Simplified offset.
  */
-_ol_geom_flat_simplify_.quantizess = function(
+function quantizeMultiArray(
   flatCoordinates, offset, endss, stride,
   tolerance,
   simplifiedFlatCoordinates, simplifiedOffset, simplifiedEndss) {
   for (let i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
     const simplifiedEnds = [];
-    simplifiedOffset = _ol_geom_flat_simplify_.quantizes(
+    simplifiedOffset = quantizeArray(
       flatCoordinates, offset, ends, stride,
       tolerance,
       simplifiedFlatCoordinates, simplifiedOffset, simplifiedEnds);
@@ -6299,8 +6311,7 @@ _ol_geom_flat_simplify_.quantizess = function(
     offset = ends[ends.length - 1];
   }
   return simplifiedOffset;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_simplify_);
+}
 
 
 /***/ }),
@@ -6505,6 +6516,7 @@ const getFontFamilies = (function() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = visibleAtResolution;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__events_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__events_EventType_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_js__ = __webpack_require__(0);
@@ -6597,10 +6609,10 @@ Object(__WEBPACK_IMPORTED_MODULE_2__index_js__["g" /* inherits */])(Layer, __WEB
  * @param {number} resolution Resolution.
  * @return {boolean} The layer is visible at the given resolution.
  */
-Layer.visibleAtResolution = function(layerState, resolution) {
+function visibleAtResolution(layerState, resolution) {
   return layerState.visible && resolution >= layerState.minResolution &&
       resolution < layerState.maxResolution;
-};
+}
 
 
 /**
@@ -6940,12 +6952,17 @@ WebGLVertex.prototype.getType = function() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["e"] = maxSquaredDelta;
+/* harmony export (immutable) */ __webpack_exports__["a"] = arrayMaxSquaredDelta;
+/* harmony export (immutable) */ __webpack_exports__["f"] = multiArrayMaxSquaredDelta;
+/* harmony export (immutable) */ __webpack_exports__["d"] = assignClosestPoint;
+/* harmony export (immutable) */ __webpack_exports__["b"] = assignClosestArrayPoint;
+/* harmony export (immutable) */ __webpack_exports__["c"] = assignClosestMultiArrayPoint;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_js__ = __webpack_require__(4);
 /**
  * @module ol/geom/flat/closest
  */
 
-const _ol_geom_flat_closest_ = {};
 
 
 /**
@@ -6960,7 +6977,7 @@ const _ol_geom_flat_closest_ = {};
  * @param {number} y Y.
  * @param {Array.<number>} closestPoint Closest point.
  */
-_ol_geom_flat_closest_.point = function(flatCoordinates, offset1, offset2, stride, x, y, closestPoint) {
+function assignClosest(flatCoordinates, offset1, offset2, stride, x, y, closestPoint) {
   const x1 = flatCoordinates[offset1];
   const y1 = flatCoordinates[offset1 + 1];
   const dx = flatCoordinates[offset2] - x1;
@@ -6987,7 +7004,7 @@ _ol_geom_flat_closest_.point = function(flatCoordinates, offset1, offset2, strid
     closestPoint[i] = flatCoordinates[offset + i];
   }
   closestPoint.length = stride;
-};
+}
 
 
 /**
@@ -6997,24 +7014,24 @@ _ol_geom_flat_closest_.point = function(flatCoordinates, offset1, offset2, strid
  * @param {number} offset Offset.
  * @param {number} end End.
  * @param {number} stride Stride.
- * @param {number} maxSquaredDelta Max squared delta.
+ * @param {number} max Max squared delta.
  * @return {number} Max squared delta.
  */
-_ol_geom_flat_closest_.getMaxSquaredDelta = function(flatCoordinates, offset, end, stride, maxSquaredDelta) {
+function maxSquaredDelta(flatCoordinates, offset, end, stride, max) {
   let x1 = flatCoordinates[offset];
   let y1 = flatCoordinates[offset + 1];
   for (offset += stride; offset < end; offset += stride) {
     const x2 = flatCoordinates[offset];
     const y2 = flatCoordinates[offset + 1];
     const squaredDelta = Object(__WEBPACK_IMPORTED_MODULE_0__math_js__["g" /* squaredDistance */])(x1, y1, x2, y2);
-    if (squaredDelta > maxSquaredDelta) {
-      maxSquaredDelta = squaredDelta;
+    if (squaredDelta > max) {
+      max = squaredDelta;
     }
     x1 = x2;
     y1 = y2;
   }
-  return maxSquaredDelta;
-};
+  return max;
+}
 
 
 /**
@@ -7022,18 +7039,18 @@ _ol_geom_flat_closest_.getMaxSquaredDelta = function(flatCoordinates, offset, en
  * @param {number} offset Offset.
  * @param {Array.<number>} ends Ends.
  * @param {number} stride Stride.
- * @param {number} maxSquaredDelta Max squared delta.
+ * @param {number} max Max squared delta.
  * @return {number} Max squared delta.
  */
-_ol_geom_flat_closest_.getsMaxSquaredDelta = function(flatCoordinates, offset, ends, stride, maxSquaredDelta) {
+function arrayMaxSquaredDelta(flatCoordinates, offset, ends, stride, max) {
   for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
-    maxSquaredDelta = _ol_geom_flat_closest_.getMaxSquaredDelta(
-      flatCoordinates, offset, end, stride, maxSquaredDelta);
+    max = maxSquaredDelta(
+      flatCoordinates, offset, end, stride, max);
     offset = end;
   }
-  return maxSquaredDelta;
-};
+  return max;
+}
 
 
 /**
@@ -7041,18 +7058,18 @@ _ol_geom_flat_closest_.getsMaxSquaredDelta = function(flatCoordinates, offset, e
  * @param {number} offset Offset.
  * @param {Array.<Array.<number>>} endss Endss.
  * @param {number} stride Stride.
- * @param {number} maxSquaredDelta Max squared delta.
+ * @param {number} max Max squared delta.
  * @return {number} Max squared delta.
  */
-_ol_geom_flat_closest_.getssMaxSquaredDelta = function(flatCoordinates, offset, endss, stride, maxSquaredDelta) {
+function multiArrayMaxSquaredDelta(flatCoordinates, offset, endss, stride, max) {
   for (let i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
-    maxSquaredDelta = _ol_geom_flat_closest_.getsMaxSquaredDelta(
-      flatCoordinates, offset, ends, stride, maxSquaredDelta);
+    max = arrayMaxSquaredDelta(
+      flatCoordinates, offset, ends, stride, max);
     offset = ends[ends.length - 1];
   }
-  return maxSquaredDelta;
-};
+  return max;
+}
 
 
 /**
@@ -7069,7 +7086,7 @@ _ol_geom_flat_closest_.getssMaxSquaredDelta = function(flatCoordinates, offset, 
  * @param {Array.<number>=} opt_tmpPoint Temporary point object.
  * @return {number} Minimum squared distance.
  */
-_ol_geom_flat_closest_.getClosestPoint = function(flatCoordinates, offset, end,
+function assignClosestPoint(flatCoordinates, offset, end,
   stride, maxDelta, isRing, x, y, closestPoint, minSquaredDistance,
   opt_tmpPoint) {
   if (offset == end) {
@@ -7093,7 +7110,7 @@ _ol_geom_flat_closest_.getClosestPoint = function(flatCoordinates, offset, end,
   const tmpPoint = opt_tmpPoint ? opt_tmpPoint : [NaN, NaN];
   let index = offset + stride;
   while (index < end) {
-    _ol_geom_flat_closest_.point(
+    assignClosest(
       flatCoordinates, index - stride, index, stride, x, y, tmpPoint);
     squaredDistance = Object(__WEBPACK_IMPORTED_MODULE_0__math_js__["g" /* squaredDistance */])(x, y, tmpPoint[0], tmpPoint[1]);
     if (squaredDistance < minSquaredDistance) {
@@ -7121,7 +7138,7 @@ _ol_geom_flat_closest_.getClosestPoint = function(flatCoordinates, offset, end,
   }
   if (isRing) {
     // Check the closing segment.
-    _ol_geom_flat_closest_.point(
+    assignClosest(
       flatCoordinates, end - stride, offset, stride, x, y, tmpPoint);
     squaredDistance = Object(__WEBPACK_IMPORTED_MODULE_0__math_js__["g" /* squaredDistance */])(x, y, tmpPoint[0], tmpPoint[1]);
     if (squaredDistance < minSquaredDistance) {
@@ -7133,7 +7150,7 @@ _ol_geom_flat_closest_.getClosestPoint = function(flatCoordinates, offset, end,
     }
   }
   return minSquaredDistance;
-};
+}
 
 
 /**
@@ -7150,19 +7167,19 @@ _ol_geom_flat_closest_.getClosestPoint = function(flatCoordinates, offset, end,
  * @param {Array.<number>=} opt_tmpPoint Temporary point object.
  * @return {number} Minimum squared distance.
  */
-_ol_geom_flat_closest_.getsClosestPoint = function(flatCoordinates, offset, ends,
+function assignClosestArrayPoint(flatCoordinates, offset, ends,
   stride, maxDelta, isRing, x, y, closestPoint, minSquaredDistance,
   opt_tmpPoint) {
   const tmpPoint = opt_tmpPoint ? opt_tmpPoint : [NaN, NaN];
   for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
-    minSquaredDistance = _ol_geom_flat_closest_.getClosestPoint(
+    minSquaredDistance = assignClosestPoint(
       flatCoordinates, offset, end, stride,
       maxDelta, isRing, x, y, closestPoint, minSquaredDistance, tmpPoint);
     offset = end;
   }
   return minSquaredDistance;
-};
+}
 
 
 /**
@@ -7179,20 +7196,19 @@ _ol_geom_flat_closest_.getsClosestPoint = function(flatCoordinates, offset, ends
  * @param {Array.<number>=} opt_tmpPoint Temporary point object.
  * @return {number} Minimum squared distance.
  */
-_ol_geom_flat_closest_.getssClosestPoint = function(flatCoordinates, offset,
+function assignClosestMultiArrayPoint(flatCoordinates, offset,
   endss, stride, maxDelta, isRing, x, y, closestPoint, minSquaredDistance,
   opt_tmpPoint) {
   const tmpPoint = opt_tmpPoint ? opt_tmpPoint : [NaN, NaN];
   for (let i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
-    minSquaredDistance = _ol_geom_flat_closest_.getsClosestPoint(
+    minSquaredDistance = assignClosestArrayPoint(
       flatCoordinates, offset, ends, stride,
       maxDelta, isRing, x, y, closestPoint, minSquaredDistance, tmpPoint);
     offset = ends[ends.length - 1];
   }
   return minSquaredDistance;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_closest_);
+}
 
 
 /***/ }),
@@ -7323,12 +7339,16 @@ function linearRingssContainsXY(flatCoordinates, offset, endss, stride, x, y) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = linearRingIsClockwise;
+/* harmony export (immutable) */ __webpack_exports__["b"] = linearRingIsOriented;
+/* harmony export (immutable) */ __webpack_exports__["c"] = linearRingsAreOriented;
+/* harmony export (immutable) */ __webpack_exports__["d"] = orientLinearRings;
+/* harmony export (immutable) */ __webpack_exports__["e"] = orientLinearRingsArray;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__flat_reverse_js__ = __webpack_require__(177);
 /**
  * @module ol/geom/flat/orient
  */
 
-const _ol_geom_flat_orient_ = {};
 
 
 /**
@@ -7338,7 +7358,7 @@ const _ol_geom_flat_orient_ = {};
  * @param {number} stride Stride.
  * @return {boolean} Is clockwise.
  */
-_ol_geom_flat_orient_.linearRingIsClockwise = function(flatCoordinates, offset, end, stride) {
+function linearRingIsClockwise(flatCoordinates, offset, end, stride) {
   // http://tinyurl.com/clockwise-method
   // https://github.com/OSGeo/gdal/blob/trunk/gdal/ogr/ogrlinearring.cpp
   let edge = 0;
@@ -7352,7 +7372,7 @@ _ol_geom_flat_orient_.linearRingIsClockwise = function(flatCoordinates, offset, 
     y1 = y2;
   }
   return edge > 0;
-};
+}
 
 
 /**
@@ -7368,11 +7388,11 @@ _ol_geom_flat_orient_.linearRingIsClockwise = function(flatCoordinates, offset, 
  *     (counter-clockwise exterior ring and clockwise interior rings).
  * @return {boolean} Rings are correctly oriented.
  */
-_ol_geom_flat_orient_.linearRingsAreOriented = function(flatCoordinates, offset, ends, stride, opt_right) {
+function linearRingIsOriented(flatCoordinates, offset, ends, stride, opt_right) {
   const right = opt_right !== undefined ? opt_right : false;
   for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
-    const isClockwise = _ol_geom_flat_orient_.linearRingIsClockwise(
+    const isClockwise = linearRingIsClockwise(
       flatCoordinates, offset, end, stride);
     if (i === 0) {
       if ((right && isClockwise) || (!right && !isClockwise)) {
@@ -7386,7 +7406,7 @@ _ol_geom_flat_orient_.linearRingsAreOriented = function(flatCoordinates, offset,
     offset = end;
   }
   return true;
-};
+}
 
 
 /**
@@ -7402,15 +7422,15 @@ _ol_geom_flat_orient_.linearRingsAreOriented = function(flatCoordinates, offset,
  *     (counter-clockwise exterior ring and clockwise interior rings).
  * @return {boolean} Rings are correctly oriented.
  */
-_ol_geom_flat_orient_.linearRingssAreOriented = function(flatCoordinates, offset, endss, stride, opt_right) {
+function linearRingsAreOriented(flatCoordinates, offset, endss, stride, opt_right) {
   for (let i = 0, ii = endss.length; i < ii; ++i) {
-    if (!_ol_geom_flat_orient_.linearRingsAreOriented(
+    if (!linearRingIsOriented(
       flatCoordinates, offset, endss[i], stride, opt_right)) {
       return false;
     }
   }
   return true;
-};
+}
 
 
 /**
@@ -7426,11 +7446,11 @@ _ol_geom_flat_orient_.linearRingssAreOriented = function(flatCoordinates, offset
  * @param {boolean=} opt_right Follow the right-hand rule for orientation.
  * @return {number} End.
  */
-_ol_geom_flat_orient_.orientLinearRings = function(flatCoordinates, offset, ends, stride, opt_right) {
+function orientLinearRings(flatCoordinates, offset, ends, stride, opt_right) {
   const right = opt_right !== undefined ? opt_right : false;
   for (let i = 0, ii = ends.length; i < ii; ++i) {
     const end = ends[i];
-    const isClockwise = _ol_geom_flat_orient_.linearRingIsClockwise(
+    const isClockwise = linearRingIsClockwise(
       flatCoordinates, offset, end, stride);
     const reverse = i === 0 ?
       (right && isClockwise) || (!right && !isClockwise) :
@@ -7441,7 +7461,7 @@ _ol_geom_flat_orient_.orientLinearRings = function(flatCoordinates, offset, ends
     offset = end;
   }
   return offset;
-};
+}
 
 
 /**
@@ -7457,14 +7477,13 @@ _ol_geom_flat_orient_.orientLinearRings = function(flatCoordinates, offset, ends
  * @param {boolean=} opt_right Follow the right-hand rule for orientation.
  * @return {number} End.
  */
-_ol_geom_flat_orient_.orientLinearRingss = function(flatCoordinates, offset, endss, stride, opt_right) {
+function orientLinearRingsArray(flatCoordinates, offset, endss, stride, opt_right) {
   for (let i = 0, ii = endss.length; i < ii; ++i) {
-    offset = _ol_geom_flat_orient_.orientLinearRings(
+    offset = orientLinearRings(
       flatCoordinates, offset, endss[i], stride, opt_right);
   }
   return offset;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_orient_);
+}
 
 
 /***/ }),
@@ -7727,7 +7746,7 @@ function asColorLike(color) {
   if (isColorLike(color)) {
     return /** @type {string|CanvasPattern|CanvasGradient} */ (color);
   } else {
-    return Object(__WEBPACK_IMPORTED_MODULE_0__color_js__["b" /* asString */])(/** @type {ol.Color} */ (color));
+    return Object(__WEBPACK_IMPORTED_MODULE_0__color_js__["c" /* toString */])(/** @type {ol.Color} */ (color));
   }
 }
 
@@ -8199,8 +8218,8 @@ CanvasReplay.prototype.drawCustom = function(geometry, feature, renderer) {
       offset = this.drawCustomCoordinates_(flatCoordinates, offset, endss[i], stride, myEnds);
       replayEndss.push(myEnds);
     }
-    this.instructions.push([__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].CUSTOM,
-      replayBegin, replayEndss, geometry, renderer, __WEBPACK_IMPORTED_MODULE_6__geom_flat_inflate_js__["a" /* default */].coordinatesss]);
+    this.instructions.push([__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].CUSTOM,
+      replayBegin, replayEndss, geometry, renderer, __WEBPACK_IMPORTED_MODULE_6__geom_flat_inflate_js__["c" /* inflateMultiCoordinatesArray */]]);
   } else if (type == __WEBPACK_IMPORTED_MODULE_5__geom_GeometryType_js__["a" /* default */].POLYGON || type == __WEBPACK_IMPORTED_MODULE_5__geom_GeometryType_js__["a" /* default */].MULTI_LINE_STRING) {
     replayEnds = [];
     flatCoordinates = (type == __WEBPACK_IMPORTED_MODULE_5__geom_GeometryType_js__["a" /* default */].POLYGON) ?
@@ -8209,19 +8228,19 @@ CanvasReplay.prototype.drawCustom = function(geometry, feature, renderer) {
     offset = this.drawCustomCoordinates_(flatCoordinates, 0,
       /** @type {ol.geom.Polygon|ol.geom.MultiLineString} */ (geometry).getEnds(),
       stride, replayEnds);
-    this.instructions.push([__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].CUSTOM,
-      replayBegin, replayEnds, geometry, renderer, __WEBPACK_IMPORTED_MODULE_6__geom_flat_inflate_js__["a" /* default */].coordinatess]);
+    this.instructions.push([__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].CUSTOM,
+      replayBegin, replayEnds, geometry, renderer, __WEBPACK_IMPORTED_MODULE_6__geom_flat_inflate_js__["b" /* inflateCoordinatesArray */]]);
   } else if (type == __WEBPACK_IMPORTED_MODULE_5__geom_GeometryType_js__["a" /* default */].LINE_STRING || type == __WEBPACK_IMPORTED_MODULE_5__geom_GeometryType_js__["a" /* default */].MULTI_POINT) {
     flatCoordinates = geometry.getFlatCoordinates();
     replayEnd = this.appendFlatCoordinates(
       flatCoordinates, 0, flatCoordinates.length, stride, false, false);
-    this.instructions.push([__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].CUSTOM,
-      replayBegin, replayEnd, geometry, renderer, __WEBPACK_IMPORTED_MODULE_6__geom_flat_inflate_js__["a" /* default */].coordinates]);
+    this.instructions.push([__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].CUSTOM,
+      replayBegin, replayEnd, geometry, renderer, __WEBPACK_IMPORTED_MODULE_6__geom_flat_inflate_js__["a" /* inflateCoordinates */]]);
   } else if (type == __WEBPACK_IMPORTED_MODULE_5__geom_GeometryType_js__["a" /* default */].POINT) {
     flatCoordinates = geometry.getFlatCoordinates();
     this.coordinates.push(flatCoordinates[0], flatCoordinates[1]);
     replayEnd = this.coordinates.length;
-    this.instructions.push([__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].CUSTOM,
+    this.instructions.push([__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].CUSTOM,
       replayBegin, replayEnd, geometry, renderer]);
   }
   this.endGeometry(geometry, feature);
@@ -8234,9 +8253,9 @@ CanvasReplay.prototype.drawCustom = function(geometry, feature, renderer) {
  * @param {ol.Feature|ol.render.Feature} feature Feature.
  */
 CanvasReplay.prototype.beginGeometry = function(geometry, feature) {
-  this.beginGeometryInstruction1_ = [__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].BEGIN_GEOMETRY, feature, 0];
+  this.beginGeometryInstruction1_ = [__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].BEGIN_GEOMETRY, feature, 0];
   this.instructions.push(this.beginGeometryInstruction1_);
-  this.beginGeometryInstruction2_ = [__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].BEGIN_GEOMETRY, feature, 0];
+  this.beginGeometryInstruction2_ = [__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].BEGIN_GEOMETRY, feature, 0];
   this.hitDetectionInstructions.push(this.beginGeometryInstruction2_);
 };
 
@@ -8339,7 +8358,7 @@ CanvasReplay.prototype.replay_ = function(
     if (!this.pixelCoordinates_) {
       this.pixelCoordinates_ = [];
     }
-    pixelCoordinates = __WEBPACK_IMPORTED_MODULE_9__geom_flat_transform_js__["a" /* default */].transform2D(
+    pixelCoordinates = Object(__WEBPACK_IMPORTED_MODULE_9__geom_flat_transform_js__["c" /* transform2D */])(
       this.coordinates, 0, this.coordinates.length, 2,
       transform, this.pixelCoordinates_);
     __WEBPACK_IMPORTED_MODULE_16__transform_js__["a" /* default */].setFromArray(this.renderedTransform_, transform);
@@ -8374,7 +8393,7 @@ CanvasReplay.prototype.replay_ = function(
     const instruction = instructions[i];
     const type = /** @type {ol.render.canvas.Instruction} */ (instruction[0]);
     switch (type) {
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].BEGIN_GEOMETRY:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].BEGIN_GEOMETRY:
         feature = /** @type {ol.Feature|ol.render.Feature} */ (instruction[1]);
         if ((skipFeatures &&
             skippedFeaturesHash[Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["f" /* getUid */])(feature).toString()]) ||
@@ -8387,7 +8406,7 @@ CanvasReplay.prototype.replay_ = function(
           ++i;
         }
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].BEGIN_PATH:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].BEGIN_PATH:
         if (pendingFill > batchSize) {
           this.fill_(context);
           pendingFill = 0;
@@ -8402,7 +8421,7 @@ CanvasReplay.prototype.replay_ = function(
         }
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].CIRCLE:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].CIRCLE:
         d = /** @type {number} */ (instruction[1]);
         const x1 = pixelCoordinates[d];
         const y1 = pixelCoordinates[d + 1];
@@ -8415,11 +8434,11 @@ CanvasReplay.prototype.replay_ = function(
         context.arc(x1, y1, r, 0, 2 * Math.PI, true);
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].CLOSE_PATH:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].CLOSE_PATH:
         context.closePath();
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].CUSTOM:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].CUSTOM:
         d = /** @type {number} */ (instruction[1]);
         dd = instruction[2];
         const geometry = /** @type {ol.geom.SimpleGeometry} */ (instruction[3]);
@@ -8441,7 +8460,7 @@ CanvasReplay.prototype.replay_ = function(
         renderer(coords, state);
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].DRAW_IMAGE:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].DRAW_IMAGE:
         d = /** @type {number} */ (instruction[1]);
         dd = /** @type {number} */ (instruction[2]);
         image =  /** @type {HTMLCanvasElement|HTMLVideoElement|Image} */
@@ -8484,7 +8503,7 @@ CanvasReplay.prototype.replay_ = function(
         this.renderDeclutter_(declutterGroup, feature);
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].DRAW_CHARS:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].DRAW_CHARS:
         const begin = /** @type {number} */ (instruction[1]);
         const end = /** @type {number} */ (instruction[2]);
         const baseline = /** @type {number} */ (instruction[3]);
@@ -8500,12 +8519,12 @@ CanvasReplay.prototype.replay_ = function(
         const textKey = /** @type {string} */ (instruction[13]);
         const textScale = /** @type {number} */ (instruction[14]);
 
-        const pathLength = __WEBPACK_IMPORTED_MODULE_7__geom_flat_length_js__["a" /* default */].lineString(pixelCoordinates, begin, end, 2);
+        const pathLength = Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_length_js__["a" /* lineStringLength */])(pixelCoordinates, begin, end, 2);
         const textLength = measure(text);
         if (overflow || textLength <= pathLength) {
           const textAlign = /** @type {ol.render.canvas.TextReplay} */ (this).textStates[textKey].textAlign;
           const startM = (pathLength - textLength) * __WEBPACK_IMPORTED_MODULE_15__replay_js__["a" /* default */].TEXT_ALIGN[textAlign];
-          const parts = __WEBPACK_IMPORTED_MODULE_8__geom_flat_textpath_js__["a" /* default */].lineString(
+          const parts = Object(__WEBPACK_IMPORTED_MODULE_8__geom_flat_textpath_js__["a" /* drawTextOnPath */])(
             pixelCoordinates, begin, end, 2, text, measure, startM, maxAngle);
           if (parts) {
             let c, cc, chars, label, part;
@@ -8542,7 +8561,7 @@ CanvasReplay.prototype.replay_ = function(
         this.renderDeclutter_(declutterGroup, feature);
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].END_GEOMETRY:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].END_GEOMETRY:
         if (featureCallback !== undefined) {
           feature = /** @type {ol.Feature|ol.render.Feature} */ (instruction[1]);
           const result = featureCallback(feature);
@@ -8552,7 +8571,7 @@ CanvasReplay.prototype.replay_ = function(
         }
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].FILL:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].FILL:
         if (batchSize) {
           pendingFill++;
         } else {
@@ -8560,7 +8579,7 @@ CanvasReplay.prototype.replay_ = function(
         }
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].MOVE_TO_LINE_TO:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].MOVE_TO_LINE_TO:
         d = /** @type {number} */ (instruction[1]);
         dd = /** @type {number} */ (instruction[2]);
         x = pixelCoordinates[d];
@@ -8585,7 +8604,7 @@ CanvasReplay.prototype.replay_ = function(
         }
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].SET_FILL_STYLE:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].SET_FILL_STYLE:
         lastFillInstruction = instruction;
         this.fillOrigin_ = instruction[2];
 
@@ -8601,7 +8620,7 @@ CanvasReplay.prototype.replay_ = function(
         context.fillStyle = /** @type {ol.ColorLike} */ (instruction[1]);
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].SET_STROKE_STYLE:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].SET_STROKE_STYLE:
         lastStrokeInstruction = instruction;
         if (pendingStroke) {
           context.stroke();
@@ -8610,7 +8629,7 @@ CanvasReplay.prototype.replay_ = function(
         this.setStrokeStyle_(context, /** @type {Array.<*>} */ (instruction));
         ++i;
         break;
-      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].STROKE:
+      case __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].STROKE:
         if (batchSize) {
           pendingStroke++;
         } else {
@@ -8686,9 +8705,9 @@ CanvasReplay.prototype.reverseHitDetectionInstructions = function() {
   for (i = 0; i < n; ++i) {
     instruction = hitDetectionInstructions[i];
     type = /** @type {ol.render.canvas.Instruction} */ (instruction[0]);
-    if (type == __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].END_GEOMETRY) {
+    if (type == __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].END_GEOMETRY) {
       begin = i;
-    } else if (type == __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].BEGIN_GEOMETRY) {
+    } else if (type == __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].BEGIN_GEOMETRY) {
       instruction[2] = i;
       Object(__WEBPACK_IMPORTED_MODULE_1__array_js__["i" /* reverseSubArray */])(this.hitDetectionInstructions, begin, i);
       begin = -1;
@@ -8756,7 +8775,7 @@ CanvasReplay.prototype.setFillStrokeStyle = function(fillStyle, strokeStyle) {
  */
 CanvasReplay.prototype.createFill = function(state, geometry) {
   const fillStyle = state.fillStyle;
-  const fillInstruction = [__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].SET_FILL_STYLE, fillStyle];
+  const fillInstruction = [__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].SET_FILL_STYLE, fillStyle];
   if (typeof fillStyle !== 'string') {
     const fillExtent = geometry.getExtent();
     fillInstruction.push([fillExtent[0], fillExtent[3]]);
@@ -8779,7 +8798,7 @@ CanvasReplay.prototype.applyStroke = function(state) {
  */
 CanvasReplay.prototype.createStroke = function(state) {
   return [
-    __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].SET_STROKE_STYLE,
+    __WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].SET_STROKE_STYLE,
     state.strokeStyle, state.lineWidth * this.pixelRatio, state.lineCap,
     state.lineJoin, state.miterLimit,
     this.applyPixelRatio(state.lineDash), state.lineDashOffset * this.pixelRatio
@@ -8845,7 +8864,7 @@ CanvasReplay.prototype.endGeometry = function(geometry, feature) {
   this.beginGeometryInstruction1_ = null;
   this.beginGeometryInstruction2_[2] = this.hitDetectionInstructions.length;
   this.beginGeometryInstruction2_ = null;
-  const endGeometryInstruction = [__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["a" /* default */].END_GEOMETRY, feature];
+  const endGeometryInstruction = [__WEBPACK_IMPORTED_MODULE_14__canvas_Instruction_js__["c" /* default */].END_GEOMETRY, feature];
   this.instructions.push(endGeometryInstruction);
   this.hitDetectionInstructions.push(endGeometryInstruction);
 };
@@ -8889,7 +8908,7 @@ CanvasReplay.prototype.getBufferedMaxExtent = function() {
 /**
  * @enum {number}
  */
-/* harmony default export */ __webpack_exports__["a"] = ({
+const Instruction = {
   BEGIN_GEOMETRY: 0,
   BEGIN_PATH: 1,
   CIRCLE: 2,
@@ -8903,7 +8922,42 @@ CanvasReplay.prototype.getBufferedMaxExtent = function() {
   SET_FILL_STYLE: 10,
   SET_STROKE_STYLE: 11,
   STROKE: 12
-});
+};
+
+
+/**
+ * @type {Array.<Instruction>}
+ */
+const fillInstruction = [Instruction.FILL];
+/* harmony export (immutable) */ __webpack_exports__["d"] = fillInstruction;
+
+
+
+/**
+ * @type {Array.<Instruction>}
+ */
+const strokeInstruction = [Instruction.STROKE];
+/* harmony export (immutable) */ __webpack_exports__["e"] = strokeInstruction;
+
+
+
+/**
+ * @type {Array.<Instruction>}
+ */
+const beginPathInstruction = [Instruction.BEGIN_PATH];
+/* harmony export (immutable) */ __webpack_exports__["a"] = beginPathInstruction;
+
+
+
+/**
+ * @type {Array.<Instruction>}
+ */
+const closePathInstruction = [Instruction.CLOSE_PATH];
+/* harmony export (immutable) */ __webpack_exports__["b"] = closePathInstruction;
+
+
+
+/* harmony default export */ __webpack_exports__["c"] = (Instruction);
 
 
 /***/ }),
@@ -9860,11 +9914,11 @@ Polygon.prototype.closestPointXY = function(x, y, closestPoint, minSquaredDistan
     return minSquaredDistance;
   }
   if (this.maxDeltaRevision_ != this.getRevision()) {
-    this.maxDelta_ = Math.sqrt(__WEBPACK_IMPORTED_MODULE_10__geom_flat_closest_js__["a" /* default */].getsMaxSquaredDelta(
+    this.maxDelta_ = Math.sqrt(Object(__WEBPACK_IMPORTED_MODULE_10__geom_flat_closest_js__["a" /* arrayMaxSquaredDelta */])(
       this.flatCoordinates, 0, this.ends_, this.stride, 0));
     this.maxDeltaRevision_ = this.getRevision();
   }
-  return __WEBPACK_IMPORTED_MODULE_10__geom_flat_closest_js__["a" /* default */].getsClosestPoint(
+  return Object(__WEBPACK_IMPORTED_MODULE_10__geom_flat_closest_js__["b" /* assignClosestArrayPoint */])(
     this.flatCoordinates, 0, this.ends_, this.stride,
     this.maxDelta_, true, x, y, closestPoint, minSquaredDistance);
 };
@@ -9906,13 +9960,13 @@ Polygon.prototype.getCoordinates = function(opt_right) {
   let flatCoordinates;
   if (opt_right !== undefined) {
     flatCoordinates = this.getOrientedFlatCoordinates().slice();
-    __WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["a" /* default */].orientLinearRings(
+    Object(__WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["d" /* orientLinearRings */])(
       flatCoordinates, 0, this.ends_, this.stride, opt_right);
   } else {
     flatCoordinates = this.flatCoordinates;
   }
 
-  return __WEBPACK_IMPORTED_MODULE_13__geom_flat_inflate_js__["a" /* default */].coordinatess(
+  return Object(__WEBPACK_IMPORTED_MODULE_13__geom_flat_inflate_js__["b" /* inflateCoordinatesArray */])(
     flatCoordinates, 0, this.ends_, this.stride);
 };
 
@@ -9931,7 +9985,7 @@ Polygon.prototype.getEnds = function() {
 Polygon.prototype.getFlatInteriorPoint = function() {
   if (this.flatInteriorPointRevision_ != this.getRevision()) {
     const flatCenter = Object(__WEBPACK_IMPORTED_MODULE_2__extent_js__["x" /* getCenter */])(this.getExtent());
-    this.flatInteriorPoint_ = __WEBPACK_IMPORTED_MODULE_14__geom_flat_interiorpoint_js__["a" /* default */].linearRings(
+    this.flatInteriorPoint_ = Object(__WEBPACK_IMPORTED_MODULE_14__geom_flat_interiorpoint_js__["a" /* getInteriorPointOfArray */])(
       this.getOrientedFlatCoordinates(), 0, this.ends_, this.stride,
       flatCenter, 0);
     this.flatInteriorPointRevision_ = this.getRevision();
@@ -10012,13 +10066,13 @@ Polygon.prototype.getLinearRings = function() {
 Polygon.prototype.getOrientedFlatCoordinates = function() {
   if (this.orientedRevision_ != this.getRevision()) {
     const flatCoordinates = this.flatCoordinates;
-    if (__WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["a" /* default */].linearRingsAreOriented(
+    if (Object(__WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["b" /* linearRingIsOriented */])(
       flatCoordinates, 0, this.ends_, this.stride)) {
       this.orientedFlatCoordinates_ = flatCoordinates;
     } else {
       this.orientedFlatCoordinates_ = flatCoordinates.slice();
       this.orientedFlatCoordinates_.length =
-          __WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["a" /* default */].orientLinearRings(
+          Object(__WEBPACK_IMPORTED_MODULE_16__geom_flat_orient_js__["d" /* orientLinearRings */])(
             this.orientedFlatCoordinates_, 0, this.ends_, this.stride);
     }
     this.orientedRevision_ = this.getRevision();
@@ -10033,7 +10087,7 @@ Polygon.prototype.getOrientedFlatCoordinates = function() {
 Polygon.prototype.getSimplifiedGeometryInternal = function(squaredTolerance) {
   const simplifiedFlatCoordinates = [];
   const simplifiedEnds = [];
-  simplifiedFlatCoordinates.length = __WEBPACK_IMPORTED_MODULE_17__geom_flat_simplify_js__["a" /* default */].quantizes(
+  simplifiedFlatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_17__geom_flat_simplify_js__["c" /* quantizeArray */])(
     this.flatCoordinates, 0, this.ends_, this.stride,
     Math.sqrt(squaredTolerance),
     simplifiedFlatCoordinates, 0, simplifiedEnds);
@@ -10058,7 +10112,7 @@ Polygon.prototype.getType = function() {
  * @api
  */
 Polygon.prototype.intersectsExtent = function(extent) {
-  return __WEBPACK_IMPORTED_MODULE_15__geom_flat_intersectsextent_js__["a" /* default */].linearRings(
+  return Object(__WEBPACK_IMPORTED_MODULE_15__geom_flat_intersectsextent_js__["c" /* intersectsLinearRingArray */])(
     this.getOrientedFlatCoordinates(), 0, this.ends_, this.stride, extent);
 };
 
@@ -10078,7 +10132,7 @@ Polygon.prototype.setCoordinates = function(coordinates, opt_layout) {
     if (!this.flatCoordinates) {
       this.flatCoordinates = [];
     }
-    const ends = __WEBPACK_IMPORTED_MODULE_12__geom_flat_deflate_js__["a" /* default */].coordinatess(
+    const ends = Object(__WEBPACK_IMPORTED_MODULE_12__geom_flat_deflate_js__["c" /* deflateCoordinatesArray */])(
       this.flatCoordinates, 0, coordinates, this.stride, this.ends_);
     this.flatCoordinates.length = ends.length === 0 ? 0 : ends[ends.length - 1];
     this.changed();
@@ -10545,6 +10599,11 @@ function linearRingss(flatCoordinates, offset, endss, stride) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = intersectsLineString;
+/* harmony export (immutable) */ __webpack_exports__["b"] = intersectsLineStringArray;
+/* unused harmony export intersectsLinearRing */
+/* harmony export (immutable) */ __webpack_exports__["c"] = intersectsLinearRingArray;
+/* harmony export (immutable) */ __webpack_exports__["d"] = intersectsLinearRingMultiArray;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__extent_js__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__flat_contains_js__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__flat_segments_js__ = __webpack_require__(114);
@@ -10554,7 +10613,6 @@ function linearRingss(flatCoordinates, offset, endss, stride) {
 
 
 
-const _ol_geom_flat_intersectsextent_ = {};
 
 
 /**
@@ -10565,7 +10623,7 @@ const _ol_geom_flat_intersectsextent_ = {};
  * @param {ol.Extent} extent Extent.
  * @return {boolean} True if the geometry and the extent intersect.
  */
-_ol_geom_flat_intersectsextent_.lineString = function(flatCoordinates, offset, end, stride, extent) {
+function intersectsLineString(flatCoordinates, offset, end, stride, extent) {
   const coordinatesExtent = Object(__WEBPACK_IMPORTED_MODULE_0__extent_js__["s" /* extendFlatCoordinates */])(
     Object(__WEBPACK_IMPORTED_MODULE_0__extent_js__["j" /* createEmpty */])(), flatCoordinates, offset, end, stride);
   if (!Object(__WEBPACK_IMPORTED_MODULE_0__extent_js__["F" /* intersects */])(extent, coordinatesExtent)) {
@@ -10592,7 +10650,7 @@ _ol_geom_flat_intersectsextent_.lineString = function(flatCoordinates, offset, e
     function(point1, point2) {
       return Object(__WEBPACK_IMPORTED_MODULE_0__extent_js__["G" /* intersectsSegment */])(extent, point1, point2);
     });
-};
+}
 
 
 /**
@@ -10603,16 +10661,16 @@ _ol_geom_flat_intersectsextent_.lineString = function(flatCoordinates, offset, e
  * @param {ol.Extent} extent Extent.
  * @return {boolean} True if the geometry and the extent intersect.
  */
-_ol_geom_flat_intersectsextent_.lineStrings = function(flatCoordinates, offset, ends, stride, extent) {
+function intersectsLineStringArray(flatCoordinates, offset, ends, stride, extent) {
   for (let i = 0, ii = ends.length; i < ii; ++i) {
-    if (_ol_geom_flat_intersectsextent_.lineString(
+    if (intersectsLineString(
       flatCoordinates, offset, ends[i], stride, extent)) {
       return true;
     }
     offset = ends[i];
   }
   return false;
-};
+}
 
 
 /**
@@ -10623,8 +10681,8 @@ _ol_geom_flat_intersectsextent_.lineStrings = function(flatCoordinates, offset, 
  * @param {ol.Extent} extent Extent.
  * @return {boolean} True if the geometry and the extent intersect.
  */
-_ol_geom_flat_intersectsextent_.linearRing = function(flatCoordinates, offset, end, stride, extent) {
-  if (_ol_geom_flat_intersectsextent_.lineString(
+function intersectsLinearRing(flatCoordinates, offset, end, stride, extent) {
+  if (intersectsLineString(
     flatCoordinates, offset, end, stride, extent)) {
     return true;
   }
@@ -10641,7 +10699,7 @@ _ol_geom_flat_intersectsextent_.linearRing = function(flatCoordinates, offset, e
     return true;
   }
   return false;
-};
+}
 
 
 /**
@@ -10652,8 +10710,8 @@ _ol_geom_flat_intersectsextent_.linearRing = function(flatCoordinates, offset, e
  * @param {ol.Extent} extent Extent.
  * @return {boolean} True if the geometry and the extent intersect.
  */
-_ol_geom_flat_intersectsextent_.linearRings = function(flatCoordinates, offset, ends, stride, extent) {
-  if (!_ol_geom_flat_intersectsextent_.linearRing(
+function intersectsLinearRingArray(flatCoordinates, offset, ends, stride, extent) {
+  if (!intersectsLinearRing(
     flatCoordinates, offset, ends[0], stride, extent)) {
     return false;
   }
@@ -10666,7 +10724,7 @@ _ol_geom_flat_intersectsextent_.linearRings = function(flatCoordinates, offset, 
     }
   }
   return true;
-};
+}
 
 
 /**
@@ -10677,18 +10735,17 @@ _ol_geom_flat_intersectsextent_.linearRings = function(flatCoordinates, offset, 
  * @param {ol.Extent} extent Extent.
  * @return {boolean} True if the geometry and the extent intersect.
  */
-_ol_geom_flat_intersectsextent_.linearRingss = function(flatCoordinates, offset, endss, stride, extent) {
+function intersectsLinearRingMultiArray(flatCoordinates, offset, endss, stride, extent) {
   for (let i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
-    if (_ol_geom_flat_intersectsextent_.linearRings(
+    if (intersectsLinearRingArray(
       flatCoordinates, offset, ends, stride, extent)) {
       return true;
     }
     offset = ends[ends.length - 1];
   }
   return false;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_intersectsextent_);
+}
 
 
 /***/ }),
@@ -11520,6 +11577,8 @@ _ol_render_webgl_.EPSILON = Number.EPSILON || 2.220446049250313e-16;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export createEmptyTexture */
+/* harmony export (immutable) */ __webpack_exports__["a"] = createTexture;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Disposable_js__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__array_js__ = __webpack_require__(3);
@@ -11843,9 +11902,8 @@ WebGLContext.prototype.useProgram = function(program) {
  * @param {number=} opt_wrapS wrapS.
  * @param {number=} opt_wrapT wrapT.
  * @return {WebGLTexture} The texture.
- * @private
  */
-WebGLContext.createTexture_ = function(gl, opt_wrapS, opt_wrapT) {
+function createTextureInternal(gl, opt_wrapS, opt_wrapT) {
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -11861,7 +11919,7 @@ WebGLContext.createTexture_ = function(gl, opt_wrapS, opt_wrapT) {
   }
 
   return texture;
-};
+}
 
 
 /**
@@ -11872,15 +11930,15 @@ WebGLContext.createTexture_ = function(gl, opt_wrapS, opt_wrapT) {
  * @param {number=} opt_wrapT wrapT.
  * @return {WebGLTexture} The texture.
  */
-WebGLContext.createEmptyTexture = function(
+function createEmptyTexture(
   gl, width, height, opt_wrapS, opt_wrapT) {
-  const texture = WebGLContext.createTexture_(gl, opt_wrapS, opt_wrapT);
+  const texture = createTextureInternal(gl, opt_wrapS, opt_wrapT);
   gl.texImage2D(
     gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE,
     null);
 
   return texture;
-};
+}
 
 
 /**
@@ -11890,14 +11948,15 @@ WebGLContext.createEmptyTexture = function(
  * @param {number=} opt_wrapT wrapT.
  * @return {WebGLTexture} The texture.
  */
-WebGLContext.createTexture = function(gl, image, opt_wrapS, opt_wrapT) {
-  const texture = WebGLContext.createTexture_(gl, opt_wrapS, opt_wrapT);
+function createTexture(gl, image, opt_wrapS, opt_wrapT) {
+  const texture = createTextureInternal(gl, opt_wrapS, opt_wrapT);
   gl.texImage2D(
     gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 
   return texture;
-};
-/* harmony default export */ __webpack_exports__["a"] = (WebGLContext);
+}
+
+/* harmony default export */ __webpack_exports__["b"] = (WebGLContext);
 
 
 /***/ }),
@@ -12666,6 +12725,9 @@ PriorityQueue.prototype.reprioritize = function() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export createCenterConstraint */
+/* unused harmony export createResolutionConstraint */
+/* unused harmony export createRotationConstraint */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tilegrid_common_js__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CenterConstraint_js__ = __webpack_require__(168);
@@ -12826,7 +12888,7 @@ View.prototype.applyOptions_ = function(options) {
   properties[__WEBPACK_IMPORTED_MODULE_7__ViewProperty_js__["a" /* default */].CENTER] = options.center !== undefined ?
     options.center : null;
 
-  const resolutionConstraintInfo = View.createResolutionConstraint_(
+  const resolutionConstraintInfo = createResolutionConstraint(
     options);
 
   /**
@@ -12859,9 +12921,9 @@ View.prototype.applyOptions_ = function(options) {
    */
   this.minZoom_ = resolutionConstraintInfo.minZoom;
 
-  const centerConstraint = View.createCenterConstraint_(options);
+  const centerConstraint = createCenterConstraint(options);
   const resolutionConstraint = resolutionConstraintInfo.constraint;
-  const rotationConstraint = View.createRotationConstraint_(options);
+  const rotationConstraint = createRotationConstraint(options);
 
   /**
    * @private
@@ -13776,25 +13838,23 @@ View.prototype.setZoom = function(zoom) {
 
 /**
  * @param {olx.ViewOptions} options View options.
- * @private
  * @return {ol.CenterConstraintType} The constraint.
  */
-View.createCenterConstraint_ = function(options) {
+function createCenterConstraint(options) {
   if (options.extent !== undefined) {
     return __WEBPACK_IMPORTED_MODULE_2__CenterConstraint_js__["a" /* default */].createExtent(options.extent);
   } else {
     return __WEBPACK_IMPORTED_MODULE_2__CenterConstraint_js__["a" /* default */].none;
   }
-};
+}
 
 
 /**
- * @private
  * @param {olx.ViewOptions} options View options.
  * @return {{constraint: ol.ResolutionConstraintType, maxResolution: number,
  *     minResolution: number, zoomFactor: number}} The constraint.
  */
-View.createResolutionConstraint_ = function(options) {
+function createResolutionConstraint(options) {
   let resolutionConstraint;
   let maxResolution;
   let minResolution;
@@ -13868,15 +13928,14 @@ View.createResolutionConstraint_ = function(options) {
   }
   return {constraint: resolutionConstraint, maxResolution: maxResolution,
     minResolution: minResolution, minZoom: minZoom, zoomFactor: zoomFactor};
-};
+}
 
 
 /**
- * @private
  * @param {olx.ViewOptions} options View options.
  * @return {ol.RotationConstraintType} Rotation constraint.
  */
-View.createRotationConstraint_ = function(options) {
+function createRotationConstraint(options) {
   const enableRotation = options.enableRotation !== undefined ?
     options.enableRotation : true;
   if (enableRotation) {
@@ -13893,7 +13952,7 @@ View.createRotationConstraint_ = function(options) {
   } else {
     return __WEBPACK_IMPORTED_MODULE_5__RotationConstraint_js__["a" /* default */].disable;
   }
-};
+}
 
 
 /**
@@ -14153,7 +14212,7 @@ Point.prototype.setCoordinates = function(coordinates, opt_layout) {
     if (!this.flatCoordinates) {
       this.flatCoordinates = [];
     }
-    this.flatCoordinates.length = __WEBPACK_IMPORTED_MODULE_5__geom_flat_deflate_js__["a" /* default */].coordinate(
+    this.flatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_deflate_js__["a" /* deflateCoordinate */])(
       this.flatCoordinates, 0, coordinates, this.stride);
     this.changed();
   }
@@ -14176,6 +14235,8 @@ Point.prototype.setFlatCoordinates = function(layout, flatCoordinates) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = getInteriorPointOfArray;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getInteriorPointsOfMultiArray;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__array_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__flat_contains_js__ = __webpack_require__(48);
 /**
@@ -14183,7 +14244,6 @@ Point.prototype.setFlatCoordinates = function(layout, flatCoordinates) {
  */
 
 
-const _ol_geom_flat_interiorpoint_ = {};
 
 
 /**
@@ -14199,7 +14259,7 @@ const _ol_geom_flat_interiorpoint_ = {};
  * @return {Array.<number>} Destination point as XYM coordinate, where M is the
  * length of the horizontal intersection that the point belongs to.
  */
-_ol_geom_flat_interiorpoint_.linearRings = function(flatCoordinates, offset,
+function getInteriorPointOfArray(flatCoordinates, offset,
   ends, stride, flatCenters, flatCentersOffset, opt_dest) {
   let i, ii, x, x1, x2, y1, y2;
   const y = flatCenters[flatCentersOffset + 1];
@@ -14250,7 +14310,7 @@ _ol_geom_flat_interiorpoint_.linearRings = function(flatCoordinates, offset,
   } else {
     return [pointX, y, maxSegmentLength];
   }
-};
+}
 
 
 /**
@@ -14262,17 +14322,16 @@ _ol_geom_flat_interiorpoint_.linearRings = function(flatCoordinates, offset,
  * @return {Array.<number>} Interior points as XYM coordinates, where M is the
  * length of the horizontal intersection that the point belongs to.
  */
-_ol_geom_flat_interiorpoint_.linearRingss = function(flatCoordinates, offset, endss, stride, flatCenters) {
+function getInteriorPointsOfMultiArray(flatCoordinates, offset, endss, stride, flatCenters) {
   let interiorPoints = [];
   for (let i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
-    interiorPoints = _ol_geom_flat_interiorpoint_.linearRings(flatCoordinates,
+    interiorPoints = getInteriorPointOfArray(flatCoordinates,
       offset, ends, stride, flatCenters, 2 * i, interiorPoints);
     offset = ends[ends.length - 1];
   }
   return interiorPoints;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_interiorpoint_);
+}
 
 
 /***/ }),
@@ -14888,6 +14947,7 @@ TileRange.prototype.intersects = function(tileRange) {
 
 
 module.exports = rbush;
+module.exports.default = rbush;
 
 var quickselect = __webpack_require__(204);
 
@@ -14977,7 +15037,7 @@ rbush.prototype = {
             return this;
         }
 
-        // recursively build the tree with the given data from stratch using OMT algorithm
+        // recursively build the tree with the given data from scratch using OMT algorithm
         var node = this._build(data.slice(), 0, data.length - 1, 0);
 
         if (!this.data.children.length) {
@@ -15914,7 +15974,7 @@ WebGLLayerRenderer.prototype.bindFramebuffer = function(frameState, framebufferD
       /** @type {ol.PostRenderFunction} */ (postRenderFunction)
     );
 
-    const texture = __WEBPACK_IMPORTED_MODULE_11__webgl_Context_js__["a" /* default */].createEmptyTexture(
+    const texture = __WEBPACK_IMPORTED_MODULE_11__webgl_Context_js__["b" /* default */].createEmptyTexture(
       gl, framebufferDimension, framebufferDimension);
 
     const framebuffer = gl.createFramebuffer();
@@ -17237,7 +17297,7 @@ Geometry.prototype.transform = function(source, destination) {
         projectedExtent[0], projectedExtent[3],
         scale, -scale, 0,
         0, 0);
-      __WEBPACK_IMPORTED_MODULE_4__geom_flat_transform_js__["a" /* default */].transform2D(inCoordinates, 0, inCoordinates.length, stride,
+      Object(__WEBPACK_IMPORTED_MODULE_4__geom_flat_transform_js__["c" /* transform2D */])(inCoordinates, 0, inCoordinates.length, stride,
         tmpTransform, outCoordinates);
       return Object(__WEBPACK_IMPORTED_MODULE_5__proj_js__["g" /* getTransform */])(source, destination)(inCoordinates, outCoordinates, stride);
     } :
@@ -18680,7 +18740,7 @@ CanvasImmediateRenderer.prototype.drawImages_ = function(flatCoordinates, offset
   if (!this.image_) {
     return;
   }
-  const pixelCoordinates = __WEBPACK_IMPORTED_MODULE_6__geom_flat_transform_js__["a" /* default */].transform2D(
+  const pixelCoordinates = Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_transform_js__["c" /* transform2D */])(
     flatCoordinates, offset, end, 2, this.transform_,
     this.pixelCoordinates_);
   const context = this.context_;
@@ -18741,7 +18801,7 @@ CanvasImmediateRenderer.prototype.drawText_ = function(flatCoordinates, offset, 
     this.setContextStrokeState_(this.textStrokeState_);
   }
   this.setContextTextState_(this.textState_);
-  const pixelCoordinates = __WEBPACK_IMPORTED_MODULE_6__geom_flat_transform_js__["a" /* default */].transform2D(
+  const pixelCoordinates = Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_transform_js__["c" /* transform2D */])(
     flatCoordinates, offset, end, stride, this.transform_,
     this.pixelCoordinates_);
   const context = this.context_;
@@ -18784,7 +18844,7 @@ CanvasImmediateRenderer.prototype.drawText_ = function(flatCoordinates, offset, 
  */
 CanvasImmediateRenderer.prototype.moveToLineTo_ = function(flatCoordinates, offset, end, stride, close) {
   const context = this.context_;
-  const pixelCoordinates = __WEBPACK_IMPORTED_MODULE_6__geom_flat_transform_js__["a" /* default */].transform2D(
+  const pixelCoordinates = Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_transform_js__["c" /* transform2D */])(
     flatCoordinates, offset, end, stride, this.transform_,
     this.pixelCoordinates_);
   context.moveTo(pixelCoordinates[0], pixelCoordinates[1]);
@@ -19662,6 +19722,7 @@ LayerRenderer.prototype.manageTilePyramid = function(
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = sortByZIndex;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Disposable_js__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__events_js__ = __webpack_require__(6);
@@ -19697,7 +19758,6 @@ LayerRenderer.prototype.manageTilePyramid = function(
 const MapRenderer = function(container, map) {
 
   __WEBPACK_IMPORTED_MODULE_1__Disposable_js__["a" /* default */].call(this);
-
 
   /**
    * @private
@@ -19755,11 +19815,10 @@ MapRenderer.prototype.removeLayerRenderers = function() {
 /**
  * @param {ol.PluggableMap} map Map.
  * @param {olx.FrameState} frameState Frame state.
- * @private
  */
-MapRenderer.expireIconCache_ = function(map, frameState) {
+function expireIconCache(map, frameState) {
   __WEBPACK_IMPORTED_MODULE_8__style_js__["a" /* iconImageCache */].expire();
-};
+}
 
 
 /**
@@ -19815,8 +19874,7 @@ MapRenderer.prototype.forEachFeatureAtCoordinate = function(coordinate, frameSta
   for (i = numLayers - 1; i >= 0; --i) {
     const layerState = layerStates[i];
     const layer = layerState.layer;
-    if (__WEBPACK_IMPORTED_MODULE_6__layer_Layer_js__["a" /* default */].visibleAtResolution(layerState, viewResolution) &&
-        layerFilter.call(thisArg2, layer)) {
+    if (Object(__WEBPACK_IMPORTED_MODULE_6__layer_Layer_js__["b" /* visibleAtResolution */])(layerState, viewResolution) && layerFilter.call(thisArg2, layer)) {
       const layerRenderer = this.getLayerRenderer(layer);
       if (layer.getSource()) {
         result = layerRenderer.forEachFeatureAtCoordinate(
@@ -19988,9 +20046,7 @@ MapRenderer.prototype.removeUnusedLayerRenderers_ = function(map, frameState) {
  * @protected
  */
 MapRenderer.prototype.scheduleExpireIconCache = function(frameState) {
-  frameState.postRenderFunctions.push(
-    /** @type {ol.PostRenderFunction} */ (MapRenderer.expireIconCache_)
-  );
+  frameState.postRenderFunctions.push(/** @type {ol.PostRenderFunction} */ (expireIconCache));
 };
 
 
@@ -20015,9 +20071,9 @@ MapRenderer.prototype.scheduleRemoveUnusedLayerRenderers = function(frameState) 
  * @param {ol.LayerState} state2 Second layer state.
  * @return {number} The zIndex difference.
  */
-MapRenderer.sortByZIndex = function(state1, state2) {
+function sortByZIndex(state1, state2) {
   return state1.zIndex - state2.zIndex;
-};
+}
 /* harmony default export */ __webpack_exports__["a"] = (MapRenderer);
 
 
@@ -20405,6 +20461,7 @@ CanvasTileLayerRenderer.prototype.getImageTransform = function() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export getCircleArray */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__array_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dom_js__ = __webpack_require__(9);
@@ -20437,6 +20494,22 @@ CanvasTileLayerRenderer.prototype.getImageTransform = function() {
 
 
 
+
+
+
+/**
+ * @type {Object.<ol.render.ReplayType,
+ *                function(new: ol.render.canvas.Replay, number, ol.Extent,
+ *                number, number, boolean, Array.<ol.DeclutterGroup>)>}
+ */
+const BATCH_CONSTRUCTORS = {
+  'Circle': __WEBPACK_IMPORTED_MODULE_11__canvas_PolygonReplay_js__["a" /* default */],
+  'Default': __WEBPACK_IMPORTED_MODULE_8__canvas_Replay_js__["a" /* default */],
+  'Image': __WEBPACK_IMPORTED_MODULE_9__canvas_ImageReplay_js__["a" /* default */],
+  'LineString': __WEBPACK_IMPORTED_MODULE_10__canvas_LineStringReplay_js__["a" /* default */],
+  'Polygon': __WEBPACK_IMPORTED_MODULE_11__canvas_PolygonReplay_js__["a" /* default */],
+  'Text': __WEBPACK_IMPORTED_MODULE_12__canvas_TextReplay_js__["a" /* default */]
+};
 
 
 /**
@@ -20531,9 +20604,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["g" /* inherits */])(CanvasReplay
  * This cache is used for storing calculated pixel circles for increasing performance.
  * It is a static property to allow each Replaygroup to access it.
  * @type {Object.<number, Array.<Array.<(boolean|undefined)>>>}
- * @private
  */
-CanvasReplayGroup.circleArrayCache_ = {
+const circleArrayCache = {
   0: [[true]]
 };
 
@@ -20544,9 +20616,8 @@ CanvasReplayGroup.circleArrayCache_ = {
  * @param {Array.<Array.<(boolean|undefined)>>} array The array that will be altered.
  * @param {number} x X coordinate.
  * @param {number} y Y coordinate.
- * @private
  */
-CanvasReplayGroup.fillCircleArrayRowToMiddle_ = function(array, x, y) {
+function fillCircleArrayRowToMiddle(array, x, y) {
   let i;
   const radius = Math.floor(array.length / 2);
   if (x >= radius) {
@@ -20558,7 +20629,7 @@ CanvasReplayGroup.fillCircleArrayRowToMiddle_ = function(array, x, y) {
       array[i][y] = true;
     }
   }
-};
+}
 
 
 /**
@@ -20568,11 +20639,10 @@ CanvasReplayGroup.fillCircleArrayRowToMiddle_ = function(array, x, y) {
  * A cache is used to increase performance.
  * @param {number} radius Radius.
  * @returns {Array.<Array.<(boolean|undefined)>>} An array with marked circle points.
- * @private
  */
-CanvasReplayGroup.getCircleArray_ = function(radius) {
-  if (CanvasReplayGroup.circleArrayCache_[radius] !== undefined) {
-    return CanvasReplayGroup.circleArrayCache_[radius];
+function getCircleArray(radius) {
+  if (circleArrayCache[radius] !== undefined) {
+    return circleArrayCache[radius];
   }
 
   const arraySize = radius * 2 + 1;
@@ -20586,14 +20656,14 @@ CanvasReplayGroup.getCircleArray_ = function(radius) {
   let error = 0;
 
   while (x >= y) {
-    CanvasReplayGroup.fillCircleArrayRowToMiddle_(arr, radius + x, radius + y);
-    CanvasReplayGroup.fillCircleArrayRowToMiddle_(arr, radius + y, radius + x);
-    CanvasReplayGroup.fillCircleArrayRowToMiddle_(arr, radius - y, radius + x);
-    CanvasReplayGroup.fillCircleArrayRowToMiddle_(arr, radius - x, radius + y);
-    CanvasReplayGroup.fillCircleArrayRowToMiddle_(arr, radius - x, radius - y);
-    CanvasReplayGroup.fillCircleArrayRowToMiddle_(arr, radius - y, radius - x);
-    CanvasReplayGroup.fillCircleArrayRowToMiddle_(arr, radius + y, radius - x);
-    CanvasReplayGroup.fillCircleArrayRowToMiddle_(arr, radius + x, radius - y);
+    fillCircleArrayRowToMiddle(arr, radius + x, radius + y);
+    fillCircleArrayRowToMiddle(arr, radius + y, radius + x);
+    fillCircleArrayRowToMiddle(arr, radius - y, radius + x);
+    fillCircleArrayRowToMiddle(arr, radius - x, radius + y);
+    fillCircleArrayRowToMiddle(arr, radius - x, radius - y);
+    fillCircleArrayRowToMiddle(arr, radius - y, radius - x);
+    fillCircleArrayRowToMiddle(arr, radius + y, radius - x);
+    fillCircleArrayRowToMiddle(arr, radius + x, radius - y);
 
     y++;
     error += 1 + 2 * y;
@@ -20603,9 +20673,9 @@ CanvasReplayGroup.getCircleArray_ = function(radius) {
     }
   }
 
-  CanvasReplayGroup.circleArrayCache_[radius] = arr;
+  circleArrayCache[radius] = arr;
   return arr;
-};
+}
 
 
 /**
@@ -20734,7 +20804,7 @@ CanvasReplayGroup.prototype.forEachFeatureAtCoordinate = function(
     Object(__WEBPACK_IMPORTED_MODULE_3__extent_js__["c" /* buffer */])(hitExtent, resolution * (this.renderBuffer_ + hitTolerance), hitExtent);
   }
 
-  const mask = CanvasReplayGroup.getCircleArray_(hitTolerance);
+  const mask = getCircleArray(hitTolerance);
   let declutteredFeatures;
   if (this.declutterTree_) {
     declutteredFeatures = this.declutterTree_.all().map(function(entry) {
@@ -20816,7 +20886,7 @@ CanvasReplayGroup.prototype.getClipCoords = function(transform) {
   const maxX = maxExtent[2];
   const maxY = maxExtent[3];
   const flatClipCoords = [minX, minY, minX, maxY, maxX, maxY, maxX, minY];
-  __WEBPACK_IMPORTED_MODULE_4__geom_flat_transform_js__["a" /* default */].transform2D(
+  Object(__WEBPACK_IMPORTED_MODULE_4__geom_flat_transform_js__["c" /* transform2D */])(
     flatClipCoords, 0, 8, 2, transform, flatClipCoords);
   return flatClipCoords;
 };
@@ -20834,7 +20904,7 @@ CanvasReplayGroup.prototype.getReplay = function(zIndex, replayType) {
   }
   let replay = replays[replayType];
   if (replay === undefined) {
-    const Constructor = CanvasReplayGroup.BATCH_CONSTRUCTORS_[replayType];
+    const Constructor = BATCH_CONSTRUCTORS[replayType];
     replay = new Constructor(this.tolerance_, this.maxExtent_,
       this.resolution_, this.pixelRatio_, this.overlaps_, this.declutterTree_);
     replays[replayType] = replay;
@@ -20909,22 +20979,6 @@ CanvasReplayGroup.prototype.replay = function(context,
   context.restore();
 };
 
-
-/**
- * @const
- * @private
- * @type {Object.<ol.render.ReplayType,
- *                function(new: ol.render.canvas.Replay, number, ol.Extent,
- *                number, number, boolean, Array.<ol.DeclutterGroup>)>}
- */
-CanvasReplayGroup.BATCH_CONSTRUCTORS_ = {
-  'Circle': __WEBPACK_IMPORTED_MODULE_11__canvas_PolygonReplay_js__["a" /* default */],
-  'Default': __WEBPACK_IMPORTED_MODULE_8__canvas_Replay_js__["a" /* default */],
-  'Image': __WEBPACK_IMPORTED_MODULE_9__canvas_ImageReplay_js__["a" /* default */],
-  'LineString': __WEBPACK_IMPORTED_MODULE_10__canvas_LineStringReplay_js__["a" /* default */],
-  'Polygon': __WEBPACK_IMPORTED_MODULE_11__canvas_PolygonReplay_js__["a" /* default */],
-  'Text': __WEBPACK_IMPORTED_MODULE_12__canvas_TextReplay_js__["a" /* default */]
-};
 /* harmony default export */ __webpack_exports__["a"] = (CanvasReplayGroup);
 
 
@@ -20966,10 +21020,11 @@ ReplayGroup.prototype.isEmpty = function() {};
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = lineStringLength;
+/* unused harmony export linearRingLength */
 /**
  * @module ol/geom/flat/length
  */
-const _ol_geom_flat_length_ = {};
 
 
 /**
@@ -20979,7 +21034,7 @@ const _ol_geom_flat_length_ = {};
  * @param {number} stride Stride.
  * @return {number} Length.
  */
-_ol_geom_flat_length_.lineString = function(flatCoordinates, offset, end, stride) {
+function lineStringLength(flatCoordinates, offset, end, stride) {
   let x1 = flatCoordinates[offset];
   let y1 = flatCoordinates[offset + 1];
   let length = 0;
@@ -20991,7 +21046,7 @@ _ol_geom_flat_length_.lineString = function(flatCoordinates, offset, end, stride
     y1 = y2;
   }
   return length;
-};
+}
 
 
 /**
@@ -21001,14 +21056,13 @@ _ol_geom_flat_length_.lineString = function(flatCoordinates, offset, end, stride
  * @param {number} stride Stride.
  * @return {number} Perimeter.
  */
-_ol_geom_flat_length_.linearRing = function(flatCoordinates, offset, end, stride) {
-  let perimeter = _ol_geom_flat_length_.lineString(flatCoordinates, offset, end, stride);
+function linearRingLength(flatCoordinates, offset, end, stride) {
+  let perimeter = lineStringLength(flatCoordinates, offset, end, stride);
   const dx = flatCoordinates[end - stride] - flatCoordinates[offset];
   const dy = flatCoordinates[end - stride + 1] - flatCoordinates[offset + 1];
   perimeter += Math.sqrt(dx * dx + dy * dy);
   return perimeter;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_length_);
+}
 
 
 /***/ }),
@@ -21487,6 +21541,25 @@ WebGLImmediateRenderer.prototype.setTextStyle = function(textStyle) {
 
 
 /**
+ * @type {Array.<number>}
+ */
+const HIT_DETECTION_SIZE = [1, 1];
+
+/**
+ * @type {Object.<ol.render.ReplayType,
+ *                function(new: ol.render.webgl.Replay, number,
+ *                ol.Extent)>}
+ */
+const BATCH_CONSTRUCTORS = {
+  'Circle': __WEBPACK_IMPORTED_MODULE_6__webgl_CircleReplay_js__["a" /* default */],
+  'Image': __WEBPACK_IMPORTED_MODULE_7__webgl_ImageReplay_js__["a" /* default */],
+  'LineString': __WEBPACK_IMPORTED_MODULE_8__webgl_LineStringReplay_js__["a" /* default */],
+  'Polygon': __WEBPACK_IMPORTED_MODULE_9__webgl_PolygonReplay_js__["a" /* default */],
+  'Text': __WEBPACK_IMPORTED_MODULE_10__webgl_TextReplay_js__["a" /* default */]
+};
+
+
+/**
  * @constructor
  * @extends {ol.render.ReplayGroup}
  * @param {number} tolerance Tolerance.
@@ -21588,7 +21661,7 @@ WebGLReplayGroup.prototype.getReplay = function(zIndex, replayType) {
     /**
      * @type {Function}
      */
-    const Constructor = WebGLReplayGroup.BATCH_CONSTRUCTORS_[replayType];
+    const Constructor = BATCH_CONSTRUCTORS[replayType];
     replay = new Constructor(this.tolerance_, this.maxExtent_);
     replays[replayType] = replay;
   }
@@ -21719,12 +21792,12 @@ WebGLReplayGroup.prototype.forEachFeatureAtCoordinate = function(
   }
 
   return this.replayHitDetection_(context,
-    coordinate, resolution, rotation, WebGLReplayGroup.HIT_DETECTION_SIZE_,
+    coordinate, resolution, rotation, HIT_DETECTION_SIZE,
     pixelRatio, opacity, skippedFeaturesHash,
     /**
-       * @param {ol.Feature|ol.render.Feature} feature Feature.
-       * @return {?} Callback result.
-       */
+     * @param {ol.Feature|ol.render.Feature} feature Feature.
+     * @return {?} Callback result.
+     */
     function(feature) {
       const imageData = new Uint8Array(4);
       gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, imageData);
@@ -21760,12 +21833,12 @@ WebGLReplayGroup.prototype.hasFeatureAtCoordinate = function(
     gl.FRAMEBUFFER, context.getHitDetectionFramebuffer());
 
   const hasFeature = this.replayHitDetection_(context,
-    coordinate, resolution, rotation, WebGLReplayGroup.HIT_DETECTION_SIZE_,
+    coordinate, resolution, rotation, HIT_DETECTION_SIZE,
     pixelRatio, opacity, skippedFeaturesHash,
     /**
-       * @param {ol.Feature|ol.render.Feature} feature Feature.
-       * @return {boolean} Is there a feature?
-       */
+     * @param {ol.Feature|ol.render.Feature} feature Feature.
+     * @return {boolean} Is there a feature?
+     */
     function(feature) {
       const imageData = new Uint8Array(4);
       gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, imageData);
@@ -21775,27 +21848,6 @@ WebGLReplayGroup.prototype.hasFeatureAtCoordinate = function(
   return hasFeature !== undefined;
 };
 
-/**
- * @const
- * @private
- * @type {Array.<number>}
- */
-WebGLReplayGroup.HIT_DETECTION_SIZE_ = [1, 1];
-
-/**
- * @const
- * @private
- * @type {Object.<ol.render.ReplayType,
- *                function(new: ol.render.webgl.Replay, number,
- *                ol.Extent)>}
- */
-WebGLReplayGroup.BATCH_CONSTRUCTORS_ = {
-  'Circle': __WEBPACK_IMPORTED_MODULE_6__webgl_CircleReplay_js__["a" /* default */],
-  'Image': __WEBPACK_IMPORTED_MODULE_7__webgl_ImageReplay_js__["a" /* default */],
-  'LineString': __WEBPACK_IMPORTED_MODULE_8__webgl_LineStringReplay_js__["a" /* default */],
-  'Polygon': __WEBPACK_IMPORTED_MODULE_9__webgl_PolygonReplay_js__["a" /* default */],
-  'Text': __WEBPACK_IMPORTED_MODULE_10__webgl_TextReplay_js__["a" /* default */]
-};
 /* harmony default export */ __webpack_exports__["a"] = (WebGLReplayGroup);
 
 
@@ -22157,7 +22209,7 @@ WebGLTextureReplay.prototype.createTextures = function(textures, images, texture
     if (uid in texturePerImage) {
       texture = texturePerImage[uid];
     } else {
-      texture = __WEBPACK_IMPORTED_MODULE_7__webgl_Context_js__["a" /* default */].createTexture(
+      texture = Object(__WEBPACK_IMPORTED_MODULE_7__webgl_Context_js__["a" /* createTexture */])(
         gl, image, __WEBPACK_IMPORTED_MODULE_6__webgl_js__["a" /* default */].CLAMP_TO_EDGE, __WEBPACK_IMPORTED_MODULE_6__webgl_js__["a" /* default */].CLAMP_TO_EDGE);
       texturePerImage[uid] = texture;
     }
@@ -22449,6 +22501,23 @@ WebGLTextureReplay.prototype.getHitDetectionTextures = function() {};
 
 
 
+
+/**
+ * @enum {number}
+ */
+const Instruction = {
+  ROUND: 2,
+  BEGIN_LINE: 3,
+  END_LINE: 5,
+  BEGIN_LINE_CAP: 7,
+  END_LINE_CAP: 11,
+  BEVEL_FIRST: 13,
+  BEVEL_SECOND: 17,
+  MITER_BOTTOM: 19,
+  MITER_TOP: 23
+};
+
+
 /**
  * @constructor
  * @extends {ol.render.webgl.Replay}
@@ -22518,7 +22587,7 @@ WebGLLineStringReplay.prototype.drawCoordinates_ = function(flatCoordinates, off
   let numVertices = this.vertices.length;
   let numIndices = this.indices.length;
   //To save a vertex, the direction of a point is a product of the sign (1 or -1), a prime from
-  //ol.render.webgl.LineStringReplay.Instruction_, and a rounding factor (1 or 2). If the product is even,
+  //Instruction, and a rounding factor (1 or 2). If the product is even,
   //we round it. If it is odd, we don't.
   const lineJoin = this.state_.lineJoin === 'bevel' ? 0 :
     this.state_.lineJoin === 'miter' ? 1 : 2;
@@ -22554,10 +22623,10 @@ WebGLLineStringReplay.prototype.drawCoordinates_ = function(flatCoordinates, off
 
         if (lineCap) {
           numVertices = this.addVertices_([0, 0], p1, p2,
-            lastSign * WebGLLineStringReplay.Instruction_.BEGIN_LINE_CAP * lineCap, numVertices);
+            lastSign * Instruction.BEGIN_LINE_CAP * lineCap, numVertices);
 
           numVertices = this.addVertices_([0, 0], p1, p2,
-            -lastSign * WebGLLineStringReplay.Instruction_.BEGIN_LINE_CAP * lineCap, numVertices);
+            -lastSign * Instruction.BEGIN_LINE_CAP * lineCap, numVertices);
 
           this.indices[numIndices++] = n + 2;
           this.indices[numIndices++] = n;
@@ -22570,10 +22639,10 @@ WebGLLineStringReplay.prototype.drawCoordinates_ = function(flatCoordinates, off
         }
 
         numVertices = this.addVertices_([0, 0], p1, p2,
-          lastSign * WebGLLineStringReplay.Instruction_.BEGIN_LINE * (lineCap || 1), numVertices);
+          lastSign * Instruction.BEGIN_LINE * (lineCap || 1), numVertices);
 
         numVertices = this.addVertices_([0, 0], p1, p2,
-          -lastSign * WebGLLineStringReplay.Instruction_.BEGIN_LINE * (lineCap || 1), numVertices);
+          -lastSign * Instruction.BEGIN_LINE * (lineCap || 1), numVertices);
 
         lastIndex = numVertices / 7 - 1;
 
@@ -22589,10 +22658,10 @@ WebGLLineStringReplay.prototype.drawCoordinates_ = function(flatCoordinates, off
         p0 = p0 || [0, 0];
 
         numVertices = this.addVertices_(p0, p1, [0, 0],
-          lastSign * WebGLLineStringReplay.Instruction_.END_LINE * (lineCap || 1), numVertices);
+          lastSign * Instruction.END_LINE * (lineCap || 1), numVertices);
 
         numVertices = this.addVertices_(p0, p1, [0, 0],
-          -lastSign * WebGLLineStringReplay.Instruction_.END_LINE * (lineCap || 1), numVertices);
+          -lastSign * Instruction.END_LINE * (lineCap || 1), numVertices);
 
         this.indices[numIndices++] = n;
         this.indices[numIndices++] = lastIndex - 1;
@@ -22604,10 +22673,10 @@ WebGLLineStringReplay.prototype.drawCoordinates_ = function(flatCoordinates, off
 
         if (lineCap) {
           numVertices = this.addVertices_(p0, p1, [0, 0],
-            lastSign * WebGLLineStringReplay.Instruction_.END_LINE_CAP * lineCap, numVertices);
+            lastSign * Instruction.END_LINE_CAP * lineCap, numVertices);
 
           numVertices = this.addVertices_(p0, p1, [0, 0],
-            -lastSign * WebGLLineStringReplay.Instruction_.END_LINE_CAP * lineCap, numVertices);
+            -lastSign * Instruction.END_LINE_CAP * lineCap, numVertices);
 
           this.indices[numIndices++] = n + 2;
           this.indices[numIndices++] = n;
@@ -22630,13 +22699,13 @@ WebGLLineStringReplay.prototype.drawCoordinates_ = function(flatCoordinates, off
       ? -1 : 1;
 
     numVertices = this.addVertices_(p0, p1, p2,
-      sign * WebGLLineStringReplay.Instruction_.BEVEL_FIRST * (lineJoin || 1), numVertices);
+      sign * Instruction.BEVEL_FIRST * (lineJoin || 1), numVertices);
 
     numVertices = this.addVertices_(p0, p1, p2,
-      sign * WebGLLineStringReplay.Instruction_.BEVEL_SECOND * (lineJoin || 1), numVertices);
+      sign * Instruction.BEVEL_SECOND * (lineJoin || 1), numVertices);
 
     numVertices = this.addVertices_(p0, p1, p2,
-      -sign * WebGLLineStringReplay.Instruction_.MITER_BOTTOM * (lineJoin || 1), numVertices);
+      -sign * Instruction.MITER_BOTTOM * (lineJoin || 1), numVertices);
 
     if (i > offset) {
       this.indices[numIndices++] = n;
@@ -22658,7 +22727,7 @@ WebGLLineStringReplay.prototype.drawCoordinates_ = function(flatCoordinates, off
     //Add miter
     if (lineJoin) {
       numVertices = this.addVertices_(p0, p1, p2,
-        sign * WebGLLineStringReplay.Instruction_.MITER_TOP * lineJoin, numVertices);
+        sign * Instruction.MITER_TOP * lineJoin, numVertices);
 
       this.indices[numIndices++] = n + 1;
       this.indices[numIndices++] = n + 3;
@@ -22668,14 +22737,14 @@ WebGLLineStringReplay.prototype.drawCoordinates_ = function(flatCoordinates, off
 
   if (closed) {
     n = n || numVertices / 7;
-    sign = __WEBPACK_IMPORTED_MODULE_4__geom_flat_orient_js__["a" /* default */].linearRingIsClockwise([p0[0], p0[1], p1[0], p1[1], p2[0], p2[1]], 0, 6, 2)
+    sign = Object(__WEBPACK_IMPORTED_MODULE_4__geom_flat_orient_js__["a" /* linearRingIsClockwise */])([p0[0], p0[1], p1[0], p1[1], p2[0], p2[1]], 0, 6, 2)
       ? 1 : -1;
 
     numVertices = this.addVertices_(p0, p1, p2,
-      sign * WebGLLineStringReplay.Instruction_.BEVEL_FIRST * (lineJoin || 1), numVertices);
+      sign * Instruction.BEVEL_FIRST * (lineJoin || 1), numVertices);
 
     numVertices = this.addVertices_(p0, p1, p2,
-      -sign * WebGLLineStringReplay.Instruction_.MITER_BOTTOM * (lineJoin || 1), numVertices);
+      -sign * Instruction.MITER_BOTTOM * (lineJoin || 1), numVertices);
 
     this.indices[numIndices++] = n;
     this.indices[numIndices++] = lastIndex - 1;
@@ -22738,7 +22807,7 @@ WebGLLineStringReplay.prototype.drawLineString = function(lineStringGeometry, fe
   let flatCoordinates = lineStringGeometry.getFlatCoordinates();
   const stride = lineStringGeometry.getStride();
   if (this.isValid_(flatCoordinates, 0, flatCoordinates.length, stride)) {
-    flatCoordinates = __WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["a" /* default */].translate(flatCoordinates, 0, flatCoordinates.length,
+    flatCoordinates = Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["d" /* translate */])(flatCoordinates, 0, flatCoordinates.length,
       stride, -this.origin[0], -this.origin[1]);
     if (this.state_.changed) {
       this.styleIndices_.push(this.indices.length);
@@ -22765,7 +22834,7 @@ WebGLLineStringReplay.prototype.drawMultiLineString = function(multiLineStringGe
   if (ends.length > 1) {
     for (i = 1, ii = ends.length; i < ii; ++i) {
       if (this.isValid_(flatCoordinates, ends[i - 1], ends[i], stride)) {
-        const lineString = __WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["a" /* default */].translate(flatCoordinates, ends[i - 1], ends[i],
+        const lineString = Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["d" /* translate */])(flatCoordinates, ends[i - 1], ends[i],
           stride, -this.origin[0], -this.origin[1]);
         this.drawCoordinates_(
           lineString, 0, lineString.length, stride);
@@ -23097,21 +23166,6 @@ WebGLLineStringReplay.prototype.setFillStrokeStyle = function(fillStyle, strokeS
   }
 };
 
-/**
- * @enum {number}
- * @private
- */
-WebGLLineStringReplay.Instruction_ = {
-  ROUND: 2,
-  BEGIN_LINE: 3,
-  END_LINE: 5,
-  BEGIN_LINE_CAP: 7,
-  END_LINE_CAP: 11,
-  BEVEL_FIRST: 13,
-  BEVEL_SECOND: 17,
-  MITER_BOTTOM: 19,
-  MITER_TOP: 23
-};
 /* harmony default export */ __webpack_exports__["a"] = (WebGLLineStringReplay);
 
 
@@ -23880,7 +23934,7 @@ const TileGrid = function(options) {
  * @private
  * @type {ol.TileCoord}
  */
-TileGrid.tmpTileCoord_ = [0, 0, 0];
+const tmpTileCoord = [0, 0, 0];
 
 
 /**
@@ -24050,7 +24104,7 @@ TileGrid.prototype.getTileRangeExtent = function(z, tileRange, opt_extent) {
  * @return {ol.TileRange} Tile range.
  */
 TileGrid.prototype.getTileRangeForExtentAndZ = function(extent, z, opt_tileRange) {
-  const tileCoord = TileGrid.tmpTileCoord_;
+  const tileCoord = tmpTileCoord;
   this.getTileCoordForXYAndZ_(extent[0], extent[1], z, false, tileCoord);
   const minX = tileCoord[1];
   const minY = tileCoord[2];
@@ -28354,11 +28408,11 @@ LinearRing.prototype.closestPointXY = function(x, y, closestPoint, minSquaredDis
     return minSquaredDistance;
   }
   if (this.maxDeltaRevision_ != this.getRevision()) {
-    this.maxDelta_ = Math.sqrt(__WEBPACK_IMPORTED_MODULE_6__geom_flat_closest_js__["a" /* default */].getMaxSquaredDelta(
+    this.maxDelta_ = Math.sqrt(Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_closest_js__["e" /* maxSquaredDelta */])(
       this.flatCoordinates, 0, this.flatCoordinates.length, this.stride, 0));
     this.maxDeltaRevision_ = this.getRevision();
   }
-  return __WEBPACK_IMPORTED_MODULE_6__geom_flat_closest_js__["a" /* default */].getClosestPoint(
+  return Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_closest_js__["d" /* assignClosestPoint */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride,
     this.maxDelta_, true, x, y, closestPoint, minSquaredDistance);
 };
@@ -28381,7 +28435,7 @@ LinearRing.prototype.getArea = function() {
  * @api
  */
 LinearRing.prototype.getCoordinates = function() {
-  return __WEBPACK_IMPORTED_MODULE_8__geom_flat_inflate_js__["a" /* default */].coordinates(
+  return Object(__WEBPACK_IMPORTED_MODULE_8__geom_flat_inflate_js__["a" /* inflateCoordinates */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride);
 };
 
@@ -28391,7 +28445,7 @@ LinearRing.prototype.getCoordinates = function() {
  */
 LinearRing.prototype.getSimplifiedGeometryInternal = function(squaredTolerance) {
   const simplifiedFlatCoordinates = [];
-  simplifiedFlatCoordinates.length = __WEBPACK_IMPORTED_MODULE_9__geom_flat_simplify_js__["a" /* default */].douglasPeucker(
+  simplifiedFlatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_9__geom_flat_simplify_js__["a" /* douglasPeucker */])(
     this.flatCoordinates, 0, this.flatCoordinates.length, this.stride,
     squaredTolerance, simplifiedFlatCoordinates, 0);
   const simplifiedLinearRing = new LinearRing(null);
@@ -28431,7 +28485,7 @@ LinearRing.prototype.setCoordinates = function(coordinates, opt_layout) {
     if (!this.flatCoordinates) {
       this.flatCoordinates = [];
     }
-    this.flatCoordinates.length = __WEBPACK_IMPORTED_MODULE_7__geom_flat_deflate_js__["a" /* default */].coordinates(
+    this.flatCoordinates.length = Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_deflate_js__["b" /* deflateCoordinates */])(
       this.flatCoordinates, 0, coordinates, this.stride);
     this.changed();
   }
@@ -29346,7 +29400,7 @@ Attribution.prototype.getSourceAttributions_ = function(frameState) {
   const resolution = frameState.viewState.resolution;
   for (let i = 0, ii = layerStatesArray.length; i < ii; ++i) {
     const layerState = layerStatesArray[i];
-    if (!__WEBPACK_IMPORTED_MODULE_7__layer_Layer_js__["a" /* default */].visibleAtResolution(layerState, resolution)) {
+    if (!Object(__WEBPACK_IMPORTED_MODULE_7__layer_Layer_js__["b" /* visibleAtResolution */])(layerState, resolution)) {
       continue;
     }
 
@@ -30083,9 +30137,9 @@ DoubleClickZoom.handleEvent = function(mapBrowserEvent) {
 const DragPan = function(opt_options) {
 
   __WEBPACK_IMPORTED_MODULE_6__interaction_Pointer_js__["a" /* default */].call(this, {
-    handleDownEvent: DragPan.handleDownEvent_,
-    handleDragEvent: DragPan.handleDragEvent_,
-    handleUpEvent: DragPan.handleUpEvent_
+    handleDownEvent: handleDownEvent,
+    handleDragEvent: handleDragEvent,
+    handleUpEvent: handleUpEvent
   });
 
   const options = opt_options ? opt_options : {};
@@ -30126,9 +30180,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["g" /* inherits */])(DragPan, __W
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @this {ol.interaction.DragPan}
- * @private
  */
-DragPan.handleDragEvent_ = function(mapBrowserEvent) {
+function handleDragEvent(mapBrowserEvent) {
   const targetPointers = this.targetPointers;
   const centroid =
       __WEBPACK_IMPORTED_MODULE_6__interaction_Pointer_js__["a" /* default */].centroid(targetPointers);
@@ -30156,16 +30209,15 @@ DragPan.handleDragEvent_ = function(mapBrowserEvent) {
   }
   this.lastCentroid = centroid;
   this.lastPointersCount_ = targetPointers.length;
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Stop drag sequence?
  * @this {ol.interaction.DragPan}
- * @private
  */
-DragPan.handleUpEvent_ = function(mapBrowserEvent) {
+function handleUpEvent(mapBrowserEvent) {
   const map = mapBrowserEvent.map;
   const view = map.getView();
   if (this.targetPointers.length === 0) {
@@ -30195,16 +30247,15 @@ DragPan.handleUpEvent_ = function(mapBrowserEvent) {
     this.lastCentroid = null;
     return true;
   }
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Start drag sequence?
  * @this {ol.interaction.DragPan}
- * @private
  */
-DragPan.handleDownEvent_ = function(mapBrowserEvent) {
+function handleDownEvent(mapBrowserEvent) {
   if (this.targetPointers.length > 0 && this.condition_(mapBrowserEvent)) {
     const map = mapBrowserEvent.map;
     const view = map.getView();
@@ -30226,7 +30277,7 @@ DragPan.handleDownEvent_ = function(mapBrowserEvent) {
   } else {
     return false;
   }
-};
+}
 
 
 /**
@@ -30277,9 +30328,9 @@ const DragRotate = function(opt_options) {
   const options = opt_options ? opt_options : {};
 
   __WEBPACK_IMPORTED_MODULE_6__interaction_Pointer_js__["a" /* default */].call(this, {
-    handleDownEvent: DragRotate.handleDownEvent_,
-    handleDragEvent: DragRotate.handleDragEvent_,
-    handleUpEvent: DragRotate.handleUpEvent_
+    handleDownEvent: handleDownEvent,
+    handleDragEvent: handleDragEvent,
+    handleUpEvent: handleUpEvent
   });
 
   /**
@@ -30307,9 +30358,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["g" /* inherits */])(DragRotate, 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @this {ol.interaction.DragRotate}
- * @private
  */
-DragRotate.handleDragEvent_ = function(mapBrowserEvent) {
+function handleDragEvent(mapBrowserEvent) {
   if (!Object(__WEBPACK_IMPORTED_MODULE_3__events_condition_js__["d" /* mouseOnly */])(mapBrowserEvent)) {
     return;
   }
@@ -30330,16 +30380,15 @@ DragRotate.handleDragEvent_ = function(mapBrowserEvent) {
       view, rotation - delta);
   }
   this.lastAngle_ = theta;
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Stop drag sequence?
  * @this {ol.interaction.DragRotate}
- * @private
  */
-DragRotate.handleUpEvent_ = function(mapBrowserEvent) {
+function handleUpEvent(mapBrowserEvent) {
   if (!Object(__WEBPACK_IMPORTED_MODULE_3__events_condition_js__["d" /* mouseOnly */])(mapBrowserEvent)) {
     return true;
   }
@@ -30351,16 +30400,15 @@ DragRotate.handleUpEvent_ = function(mapBrowserEvent) {
   __WEBPACK_IMPORTED_MODULE_5__interaction_Interaction_js__["a" /* default */].rotate(view, rotation,
     undefined, this.duration_);
   return false;
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Start drag sequence?
  * @this {ol.interaction.DragRotate}
- * @private
  */
-DragRotate.handleDownEvent_ = function(mapBrowserEvent) {
+function handleDownEvent(mapBrowserEvent) {
   if (!Object(__WEBPACK_IMPORTED_MODULE_3__events_condition_js__["d" /* mouseOnly */])(mapBrowserEvent)) {
     return false;
   }
@@ -30373,7 +30421,7 @@ DragRotate.handleDownEvent_ = function(mapBrowserEvent) {
   } else {
     return false;
   }
-};
+}
 
 
 /**
@@ -30503,6 +30551,34 @@ DragZoom.prototype.onBoxEnd = function() {
 
 
 
+
+/**
+ * @enum {string}
+ */
+const DragBoxEventType = {
+  /**
+   * Triggered upon drag box start.
+   * @event ol.interaction.DragBox.Event#boxstart
+   * @api
+   */
+  BOXSTART: 'boxstart',
+
+  /**
+   * Triggered on drag when box is active.
+   * @event ol.interaction.DragBox.Event#boxdrag
+   * @api
+   */
+  BOXDRAG: 'boxdrag',
+
+  /**
+   * Triggered upon drag box end.
+   * @event ol.interaction.DragBox.Event#boxend
+   * @api
+   */
+  BOXEND: 'boxend'
+};
+
+
 /**
  * @classdesc
  * Allows the user to draw a vector box by clicking and dragging on the map,
@@ -30523,9 +30599,9 @@ DragZoom.prototype.onBoxEnd = function() {
 const DragBox = function(opt_options) {
 
   __WEBPACK_IMPORTED_MODULE_3__interaction_Pointer_js__["a" /* default */].call(this, {
-    handleDownEvent: DragBox.handleDownEvent_,
-    handleDragEvent: DragBox.handleDragEvent_,
-    handleUpEvent: DragBox.handleUpEvent_
+    handleDownEvent: handleDownEvent,
+    handleDragEvent: handleDragEvent,
+    handleUpEvent: handleUpEvent
   });
 
   const options = opt_options ? opt_options : {};
@@ -30585,18 +30661,17 @@ DragBox.defaultBoxEndCondition = function(mapBrowserEvent, startPixel, endPixel)
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @this {ol.interaction.DragBox}
- * @private
  */
-DragBox.handleDragEvent_ = function(mapBrowserEvent) {
+function handleDragEvent(mapBrowserEvent) {
   if (!Object(__WEBPACK_IMPORTED_MODULE_2__events_condition_js__["d" /* mouseOnly */])(mapBrowserEvent)) {
     return;
   }
 
   this.box_.setPixels(this.startPixel_, mapBrowserEvent.pixel);
 
-  this.dispatchEvent(new DragBox.Event(DragBox.EventType_.BOXDRAG,
+  this.dispatchEvent(new DragBox.Event(DragBoxEventType.BOXDRAG,
     mapBrowserEvent.coordinate, mapBrowserEvent));
-};
+}
 
 
 /**
@@ -30622,9 +30697,8 @@ DragBox.prototype.onBoxEnd = __WEBPACK_IMPORTED_MODULE_1__index_js__["h" /* null
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Stop drag sequence?
  * @this {ol.interaction.DragBox}
- * @private
  */
-DragBox.handleUpEvent_ = function(mapBrowserEvent) {
+function handleUpEvent(mapBrowserEvent) {
   if (!Object(__WEBPACK_IMPORTED_MODULE_2__events_condition_js__["d" /* mouseOnly */])(mapBrowserEvent)) {
     return true;
   }
@@ -30634,20 +30708,19 @@ DragBox.handleUpEvent_ = function(mapBrowserEvent) {
   if (this.boxEndCondition_(mapBrowserEvent,
     this.startPixel_, mapBrowserEvent.pixel)) {
     this.onBoxEnd(mapBrowserEvent);
-    this.dispatchEvent(new DragBox.Event(DragBox.EventType_.BOXEND,
+    this.dispatchEvent(new DragBox.Event(DragBoxEventType.BOXEND,
       mapBrowserEvent.coordinate, mapBrowserEvent));
   }
   return false;
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Start drag sequence?
  * @this {ol.interaction.DragBox}
- * @private
  */
-DragBox.handleDownEvent_ = function(mapBrowserEvent) {
+function handleDownEvent(mapBrowserEvent) {
   if (!Object(__WEBPACK_IMPORTED_MODULE_2__events_condition_js__["d" /* mouseOnly */])(mapBrowserEvent)) {
     return false;
   }
@@ -30657,41 +30730,13 @@ DragBox.handleDownEvent_ = function(mapBrowserEvent) {
     this.startPixel_ = mapBrowserEvent.pixel;
     this.box_.setMap(mapBrowserEvent.map);
     this.box_.setPixels(this.startPixel_, this.startPixel_);
-    this.dispatchEvent(new DragBox.Event(DragBox.EventType_.BOXSTART,
+    this.dispatchEvent(new DragBox.Event(DragBoxEventType.BOXSTART,
       mapBrowserEvent.coordinate, mapBrowserEvent));
     return true;
   } else {
     return false;
   }
-};
-
-
-/**
- * @enum {string}
- * @private
- */
-DragBox.EventType_ = {
-  /**
-   * Triggered upon drag box start.
-   * @event ol.interaction.DragBox.Event#boxstart
-   * @api
-   */
-  BOXSTART: 'boxstart',
-
-  /**
-   * Triggered on drag when box is active.
-   * @event ol.interaction.DragBox.Event#boxdrag
-   * @api
-   */
-  BOXDRAG: 'boxdrag',
-
-  /**
-   * Triggered upon drag box end.
-   * @event ol.interaction.DragBox.Event#boxend
-   * @api
-   */
-  BOXEND: 'boxend'
-};
+}
 
 
 /**
@@ -31149,6 +31194,17 @@ const MAX_DELTA = 1;
 
 
 /**
+ * @enum {string}
+ */
+const Mode = {
+  TRACKPAD: 'trackpad',
+  WHEEL: 'wheel'
+};
+/* unused harmony export Mode */
+
+
+
+/**
  * @classdesc
  * Allows the user to zoom the map by scrolling the mouse wheel.
  *
@@ -31221,7 +31277,7 @@ const MouseWheelZoom = function(opt_options) {
 
   /**
    * @private
-   * @type {ol.interaction.MouseWheelZoom.Mode_|undefined}
+   * @type {ol.interaction.Mode|undefined}
    */
   this.mode_ = undefined;
 
@@ -31313,11 +31369,11 @@ MouseWheelZoom.handleEvent = function(mapBrowserEvent) {
 
   if (!this.mode_ || now - this.startTime_ > this.trackpadEventGap_) {
     this.mode_ = Math.abs(delta) < 4 ?
-      MouseWheelZoom.Mode_.TRACKPAD :
-      MouseWheelZoom.Mode_.WHEEL;
+      Mode.TRACKPAD :
+      Mode.WHEEL;
   }
 
-  if (this.mode_ === MouseWheelZoom.Mode_.TRACKPAD) {
+  if (this.mode_ === Mode.TRACKPAD) {
     const view = map.getView();
     if (this.trackpadTimeoutId_) {
       clearTimeout(this.trackpadTimeoutId_);
@@ -31426,14 +31482,6 @@ MouseWheelZoom.prototype.setMouseAnchor = function(useAnchor) {
 };
 
 
-/**
- * @enum {string}
- * @private
- */
-MouseWheelZoom.Mode_ = {
-  TRACKPAD: 'trackpad',
-  WHEEL: 'wheel'
-};
 /* harmony default export */ __webpack_exports__["a"] = (MouseWheelZoom);
 
 
@@ -31471,9 +31519,9 @@ MouseWheelZoom.Mode_ = {
 const PinchRotate = function(opt_options) {
 
   __WEBPACK_IMPORTED_MODULE_4__interaction_Pointer_js__["a" /* default */].call(this, {
-    handleDownEvent: PinchRotate.handleDownEvent_,
-    handleDragEvent: PinchRotate.handleDragEvent_,
-    handleUpEvent: PinchRotate.handleUpEvent_
+    handleDownEvent: handleDownEvent,
+    handleDragEvent: handleDragEvent,
+    handleUpEvent: handleUpEvent
   });
 
   const options = opt_options || {};
@@ -31522,9 +31570,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["g" /* inherits */])(PinchRotate,
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @this {ol.interaction.PinchRotate}
- * @private
  */
-PinchRotate.handleDragEvent_ = function(mapBrowserEvent) {
+function handleDragEvent(mapBrowserEvent) {
   let rotationDelta = 0.0;
 
   const touch0 = this.targetPointers[0];
@@ -31568,16 +31615,15 @@ PinchRotate.handleDragEvent_ = function(mapBrowserEvent) {
     __WEBPACK_IMPORTED_MODULE_3__interaction_Interaction_js__["a" /* default */].rotateWithoutConstraints(view,
       rotation + rotationDelta, this.anchor_);
   }
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Stop drag sequence?
  * @this {ol.interaction.PinchRotate}
- * @private
  */
-PinchRotate.handleUpEvent_ = function(mapBrowserEvent) {
+function handleUpEvent(mapBrowserEvent) {
   if (this.targetPointers.length < 2) {
     const map = mapBrowserEvent.map;
     const view = map.getView();
@@ -31591,16 +31637,15 @@ PinchRotate.handleUpEvent_ = function(mapBrowserEvent) {
   } else {
     return true;
   }
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Start drag sequence?
  * @this {ol.interaction.PinchRotate}
- * @private
  */
-PinchRotate.handleDownEvent_ = function(mapBrowserEvent) {
+function handleDownEvent(mapBrowserEvent) {
   if (this.targetPointers.length >= 2) {
     const map = mapBrowserEvent.map;
     this.anchor_ = null;
@@ -31614,13 +31659,14 @@ PinchRotate.handleDownEvent_ = function(mapBrowserEvent) {
   } else {
     return false;
   }
-};
+}
 
 
 /**
  * @inheritDoc
  */
 PinchRotate.prototype.shouldStopEvent = __WEBPACK_IMPORTED_MODULE_2__functions_js__["a" /* FALSE */];
+
 /* harmony default export */ __webpack_exports__["a"] = (PinchRotate);
 
 
@@ -31656,9 +31702,9 @@ PinchRotate.prototype.shouldStopEvent = __WEBPACK_IMPORTED_MODULE_2__functions_j
 const PinchZoom = function(opt_options) {
 
   __WEBPACK_IMPORTED_MODULE_4__interaction_Pointer_js__["a" /* default */].call(this, {
-    handleDownEvent: PinchZoom.handleDownEvent_,
-    handleDragEvent: PinchZoom.handleDragEvent_,
-    handleUpEvent: PinchZoom.handleUpEvent_
+    handleDownEvent: handleDownEvent,
+    handleDragEvent: handleDragEvent,
+    handleUpEvent: handleUpEvent
   });
 
   const options = opt_options ? opt_options : {};
@@ -31701,9 +31747,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__index_js__["g" /* inherits */])(PinchZoom, _
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @this {ol.interaction.PinchZoom}
- * @private
  */
-PinchZoom.handleDragEvent_ = function(mapBrowserEvent) {
+function handleDragEvent(mapBrowserEvent) {
   let scaleDelta = 1.0;
 
   const touch0 = this.targetPointers[0];
@@ -31748,16 +31793,15 @@ PinchZoom.handleDragEvent_ = function(mapBrowserEvent) {
   // scale, bypass the resolution constraint
   map.render();
   __WEBPACK_IMPORTED_MODULE_3__interaction_Interaction_js__["a" /* default */].zoomWithoutConstraints(view, newResolution, this.anchor_);
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Stop drag sequence?
  * @this {ol.interaction.PinchZoom}
- * @private
  */
-PinchZoom.handleUpEvent_ = function(mapBrowserEvent) {
+function handleUpEvent(mapBrowserEvent) {
   if (this.targetPointers.length < 2) {
     const map = mapBrowserEvent.map;
     const view = map.getView();
@@ -31777,16 +31821,15 @@ PinchZoom.handleUpEvent_ = function(mapBrowserEvent) {
   } else {
     return true;
   }
-};
+}
 
 
 /**
  * @param {ol.MapBrowserPointerEvent} mapBrowserEvent Event.
  * @return {boolean} Start drag sequence?
  * @this {ol.interaction.PinchZoom}
- * @private
  */
-PinchZoom.handleDownEvent_ = function(mapBrowserEvent) {
+function handleDownEvent(mapBrowserEvent) {
   if (this.targetPointers.length >= 2) {
     const map = mapBrowserEvent.map;
     this.anchor_ = null;
@@ -31799,7 +31842,7 @@ PinchZoom.handleDownEvent_ = function(mapBrowserEvent) {
   } else {
     return false;
   }
-};
+}
 
 
 /**
@@ -32444,7 +32487,7 @@ CanvasMapRenderer.prototype.renderFrame = function(frameState) {
   this.dispatchComposeEvent_(__WEBPACK_IMPORTED_MODULE_7__render_EventType_js__["a" /* default */].PRECOMPOSE, frameState);
 
   const layerStatesArray = frameState.layerStatesArray;
-  Object(__WEBPACK_IMPORTED_MODULE_2__array_js__["j" /* stableSort */])(layerStatesArray, __WEBPACK_IMPORTED_MODULE_10__Map_js__["a" /* default */].sortByZIndex);
+  Object(__WEBPACK_IMPORTED_MODULE_2__array_js__["j" /* stableSort */])(layerStatesArray, __WEBPACK_IMPORTED_MODULE_10__Map_js__["b" /* sortByZIndex */]);
 
   if (rotation) {
     context.save();
@@ -32457,7 +32500,7 @@ CanvasMapRenderer.prototype.renderFrame = function(frameState) {
     layerState = layerStatesArray[i];
     layer = layerState.layer;
     layerRenderer = /** @type {ol.renderer.canvas.Layer} */ (this.getLayerRenderer(layer));
-    if (!__WEBPACK_IMPORTED_MODULE_5__layer_Layer_js__["a" /* default */].visibleAtResolution(layerState, viewResolution) ||
+    if (!Object(__WEBPACK_IMPORTED_MODULE_5__layer_Layer_js__["b" /* visibleAtResolution */])(layerState, viewResolution) ||
         layerState.sourceState != __WEBPACK_IMPORTED_MODULE_12__source_State_js__["a" /* default */].READY) {
       continue;
     }
@@ -32501,8 +32544,7 @@ CanvasMapRenderer.prototype.forEachLayerAtPixel = function(pixel, frameState, ca
   for (i = numLayers - 1; i >= 0; --i) {
     const layerState = layerStates[i];
     const layer = layerState.layer;
-    if (__WEBPACK_IMPORTED_MODULE_5__layer_Layer_js__["a" /* default */].visibleAtResolution(layerState, viewResolution) &&
-        layerFilter.call(thisArg2, layer)) {
+    if (Object(__WEBPACK_IMPORTED_MODULE_5__layer_Layer_js__["b" /* visibleAtResolution */])(layerState, viewResolution) && layerFilter.call(thisArg2, layer)) {
       const layerRenderer = /** @type {ol.renderer.canvas.Layer} */ (this.getLayerRenderer(layer));
       result = layerRenderer.forEachLayerAtCoordinate(
         coordinate, frameState, callback, thisArg);
@@ -33036,14 +33078,9 @@ CanvasVectorLayerRenderer.prototype.prepareFrame = function(frameState, layerSta
    */
   const render = function(feature) {
     let styles;
-    let styleFunction = feature.getStyleFunction();
+    const styleFunction = feature.getStyleFunction() || vectorLayer.getStyleFunction();
     if (styleFunction) {
-      styles = styleFunction.call(feature, resolution);
-    } else {
-      styleFunction = vectorLayer.getStyleFunction();
-      if (styleFunction) {
-        styles = styleFunction(feature, resolution);
-      }
+      styles = styleFunction(feature, resolution);
     }
     if (styles) {
       const dirty = this.renderFeature(
@@ -33056,8 +33093,8 @@ CanvasVectorLayerRenderer.prototype.prepareFrame = function(frameState, layerSta
     const features = [];
     vectorSource.forEachFeatureInExtent(extent,
       /**
-         * @param {ol.Feature} feature Feature.
-         */
+       * @param {ol.Feature} feature Feature.
+       */
       function(feature) {
         features.push(feature);
       }, this);
@@ -33183,12 +33220,12 @@ function defaultCompare(a, b) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = drawTextOnPath;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__math_js__ = __webpack_require__(4);
 /**
  * @module ol/geom/flat/textpath
  */
 
-const _ol_geom_flat_textpath_ = {};
 
 
 /**
@@ -33204,7 +33241,7 @@ const _ol_geom_flat_textpath_ = {};
  * @return {Array.<Array.<*>>} The result array of null if `maxAngle` was
  * exceeded. Entries of the array are x, y, anchorX, angle, chunk.
  */
-_ol_geom_flat_textpath_.lineString = function(
+function drawTextOnPath(
   flatCoordinates, offset, end, stride, text, measure, startM, maxAngle) {
   const result = [];
 
@@ -33276,8 +33313,7 @@ _ol_geom_flat_textpath_.lineString = function(
     startM += charLength;
   }
   return result;
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_textpath_);
+}
 
 
 /***/ }),
@@ -33428,14 +33464,14 @@ CanvasImageReplay.prototype.drawPoint = function(pointGeometry, feature) {
   const myEnd = this.drawCoordinates_(
     flatCoordinates, 0, flatCoordinates.length, stride);
   this.instructions.push([
-    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].DRAW_IMAGE, myBegin, myEnd, this.image_,
+    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["c" /* default */].DRAW_IMAGE, myBegin, myEnd, this.image_,
     // Remaining arguments to DRAW_IMAGE are in alphabetical order
     this.anchorX_, this.anchorY_, this.declutterGroup_, this.height_, this.opacity_,
     this.originX_, this.originY_, this.rotateWithView_, this.rotation_,
     this.scale_ * this.pixelRatio, this.snapToPixel_, this.width_
   ]);
   this.hitDetectionInstructions.push([
-    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].DRAW_IMAGE, myBegin, myEnd,
+    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["c" /* default */].DRAW_IMAGE, myBegin, myEnd,
     this.hitDetectionImage_,
     // Remaining arguments to DRAW_IMAGE are in alphabetical order
     this.anchorX_, this.anchorY_, this.declutterGroup_, this.height_, this.opacity_,
@@ -33460,14 +33496,14 @@ CanvasImageReplay.prototype.drawMultiPoint = function(multiPointGeometry, featur
   const myEnd = this.drawCoordinates_(
     flatCoordinates, 0, flatCoordinates.length, stride);
   this.instructions.push([
-    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].DRAW_IMAGE, myBegin, myEnd, this.image_,
+    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["c" /* default */].DRAW_IMAGE, myBegin, myEnd, this.image_,
     // Remaining arguments to DRAW_IMAGE are in alphabetical order
     this.anchorX_, this.anchorY_, this.declutterGroup_, this.height_, this.opacity_,
     this.originX_, this.originY_, this.rotateWithView_, this.rotation_,
     this.scale_ * this.pixelRatio, this.snapToPixel_, this.width_
   ]);
   this.hitDetectionInstructions.push([
-    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].DRAW_IMAGE, myBegin, myEnd,
+    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["c" /* default */].DRAW_IMAGE, myBegin, myEnd,
     this.hitDetectionImage_,
     // Remaining arguments to DRAW_IMAGE are in alphabetical order
     this.anchorX_, this.anchorY_, this.declutterGroup_, this.height_, this.opacity_,
@@ -33574,7 +33610,7 @@ CanvasLineStringReplay.prototype.drawFlatCoordinates_ = function(flatCoordinates
   const myBegin = this.coordinates.length;
   const myEnd = this.appendFlatCoordinates(
     flatCoordinates, offset, end, stride, false, false);
-  const moveToLineToInstruction = [__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].MOVE_TO_LINE_TO, myBegin, myEnd];
+  const moveToLineToInstruction = [__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["c" /* default */].MOVE_TO_LINE_TO, myBegin, myEnd];
   this.instructions.push(moveToLineToInstruction);
   this.hitDetectionInstructions.push(moveToLineToInstruction);
   return end;
@@ -33594,16 +33630,14 @@ CanvasLineStringReplay.prototype.drawLineString = function(lineStringGeometry, f
   this.updateStrokeStyle(state, this.applyStroke);
   this.beginGeometry(lineStringGeometry, feature);
   this.hitDetectionInstructions.push([
-    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].SET_STROKE_STYLE,
+    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["c" /* default */].SET_STROKE_STYLE,
     state.strokeStyle, state.lineWidth, state.lineCap, state.lineJoin,
     state.miterLimit, state.lineDash, state.lineDashOffset
-  ], [
-    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].BEGIN_PATH
-  ]);
+  ], __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* beginPathInstruction */]);
   const flatCoordinates = lineStringGeometry.getFlatCoordinates();
   const stride = lineStringGeometry.getStride();
   this.drawFlatCoordinates_(flatCoordinates, 0, flatCoordinates.length, stride);
-  this.hitDetectionInstructions.push([__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].STROKE]);
+  this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["e" /* strokeInstruction */]);
   this.endGeometry(lineStringGeometry, feature);
 };
 
@@ -33621,12 +33655,10 @@ CanvasLineStringReplay.prototype.drawMultiLineString = function(multiLineStringG
   this.updateStrokeStyle(state, this.applyStroke);
   this.beginGeometry(multiLineStringGeometry, feature);
   this.hitDetectionInstructions.push([
-    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].SET_STROKE_STYLE,
+    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["c" /* default */].SET_STROKE_STYLE,
     state.strokeStyle, state.lineWidth, state.lineCap, state.lineJoin,
     state.miterLimit, state.lineDash, state.lineDashOffset
-  ], [
-    __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].BEGIN_PATH
-  ]);
+  ], __WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* beginPathInstruction */]);
   const ends = multiLineStringGeometry.getEnds();
   const flatCoordinates = multiLineStringGeometry.getFlatCoordinates();
   const stride = multiLineStringGeometry.getStride();
@@ -33635,7 +33667,7 @@ CanvasLineStringReplay.prototype.drawMultiLineString = function(multiLineStringG
     offset = this.drawFlatCoordinates_(
       flatCoordinates, offset, ends[i], stride);
   }
-  this.hitDetectionInstructions.push([__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].STROKE]);
+  this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["e" /* strokeInstruction */]);
   this.endGeometry(multiLineStringGeometry, feature);
 };
 
@@ -33646,7 +33678,7 @@ CanvasLineStringReplay.prototype.drawMultiLineString = function(multiLineStringG
 CanvasLineStringReplay.prototype.finish = function() {
   const state = this.state;
   if (state.lastStroke != undefined && state.lastStroke != this.coordinates.length) {
-    this.instructions.push([__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].STROKE]);
+    this.instructions.push(__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["e" /* strokeInstruction */]);
   }
   this.reverseHitDetectionInstructions();
   this.state = null;
@@ -33658,12 +33690,12 @@ CanvasLineStringReplay.prototype.finish = function() {
  */
 CanvasLineStringReplay.prototype.applyStroke = function(state) {
   if (state.lastStroke != undefined && state.lastStroke != this.coordinates.length) {
-    this.instructions.push([__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].STROKE]);
+    this.instructions.push(__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["e" /* strokeInstruction */]);
     state.lastStroke = this.coordinates.length;
   }
   state.lastStroke = 0;
   __WEBPACK_IMPORTED_MODULE_2__canvas_Replay_js__["a" /* default */].prototype.applyStroke.call(this, state);
-  this.instructions.push([__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* default */].BEGIN_PATH]);
+  this.instructions.push(__WEBPACK_IMPORTED_MODULE_1__canvas_Instruction_js__["a" /* beginPathInstruction */]);
 };
 /* harmony default export */ __webpack_exports__["a"] = (CanvasLineStringReplay);
 
@@ -33682,6 +33714,7 @@ CanvasLineStringReplay.prototype.applyStroke = function(state) {
 /**
  * @module ol/render/canvas/PolygonReplay
  */
+
 
 
 
@@ -33722,35 +33755,31 @@ CanvasPolygonReplay.prototype.drawFlatCoordinatess_ = function(flatCoordinates, 
   const fill = state.fillStyle !== undefined;
   const stroke = state.strokeStyle != undefined;
   const numEnds = ends.length;
-  const beginPathInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].BEGIN_PATH];
-  this.instructions.push(beginPathInstruction);
-  this.hitDetectionInstructions.push(beginPathInstruction);
+  this.instructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* beginPathInstruction */]);
+  this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* beginPathInstruction */]);
   for (let i = 0; i < numEnds; ++i) {
     const end = ends[i];
     const myBegin = this.coordinates.length;
     const myEnd = this.appendFlatCoordinates(
       flatCoordinates, offset, end, stride, true, !stroke);
-    const moveToLineToInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].MOVE_TO_LINE_TO, myBegin, myEnd];
+    const moveToLineToInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["c" /* default */].MOVE_TO_LINE_TO, myBegin, myEnd];
     this.instructions.push(moveToLineToInstruction);
     this.hitDetectionInstructions.push(moveToLineToInstruction);
     if (stroke) {
       // Performance optimization: only call closePath() when we have a stroke.
       // Otherwise the ring is closed already (see appendFlatCoordinates above).
-      const closePathInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].CLOSE_PATH];
-      this.instructions.push(closePathInstruction);
-      this.hitDetectionInstructions.push(closePathInstruction);
+      this.instructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["b" /* closePathInstruction */]);
+      this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["b" /* closePathInstruction */]);
     }
     offset = end;
   }
-  const fillInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].FILL];
-  this.hitDetectionInstructions.push(fillInstruction);
+  this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["d" /* fillInstruction */]);
   if (fill) {
-    this.instructions.push(fillInstruction);
+    this.instructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["d" /* fillInstruction */]);
   }
   if (stroke) {
-    const strokeInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].STROKE];
-    this.instructions.push(strokeInstruction);
-    this.hitDetectionInstructions.push(strokeInstruction);
+    this.instructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["e" /* strokeInstruction */]);
+    this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["e" /* strokeInstruction */]);
   }
   return offset;
 };
@@ -33770,12 +33799,12 @@ CanvasPolygonReplay.prototype.drawCircle = function(circleGeometry, feature) {
   this.beginGeometry(circleGeometry, feature);
   // always fill the circle for hit detection
   this.hitDetectionInstructions.push([
-    __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].SET_FILL_STYLE,
+    __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["c" /* default */].SET_FILL_STYLE,
     Object(__WEBPACK_IMPORTED_MODULE_1__color_js__["b" /* asString */])(__WEBPACK_IMPORTED_MODULE_3__canvas_js__["a" /* default */].defaultFillStyle)
   ]);
   if (state.strokeStyle !== undefined) {
     this.hitDetectionInstructions.push([
-      __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].SET_STROKE_STYLE,
+      __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["c" /* default */].SET_STROKE_STYLE,
       state.strokeStyle, state.lineWidth, state.lineCap, state.lineJoin,
       state.miterLimit, state.lineDash, state.lineDashOffset
     ]);
@@ -33785,19 +33814,16 @@ CanvasPolygonReplay.prototype.drawCircle = function(circleGeometry, feature) {
   const myBegin = this.coordinates.length;
   this.appendFlatCoordinates(
     flatCoordinates, 0, flatCoordinates.length, stride, false, false);
-  const beginPathInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].BEGIN_PATH];
-  const circleInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].CIRCLE, myBegin];
-  this.instructions.push(beginPathInstruction, circleInstruction);
-  this.hitDetectionInstructions.push(beginPathInstruction, circleInstruction);
-  const fillInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].FILL];
-  this.hitDetectionInstructions.push(fillInstruction);
+  const circleInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["c" /* default */].CIRCLE, myBegin];
+  this.instructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* beginPathInstruction */], circleInstruction);
+  this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* beginPathInstruction */], circleInstruction);
+  this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["d" /* fillInstruction */]);
   if (state.fillStyle !== undefined) {
-    this.instructions.push(fillInstruction);
+    this.instructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["d" /* fillInstruction */]);
   }
   if (state.strokeStyle !== undefined) {
-    const strokeInstruction = [__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].STROKE];
-    this.instructions.push(strokeInstruction);
-    this.hitDetectionInstructions.push(strokeInstruction);
+    this.instructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["e" /* strokeInstruction */]);
+    this.hitDetectionInstructions.push(__WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["e" /* strokeInstruction */]);
   }
   this.endGeometry(circleGeometry, feature);
 };
@@ -33812,12 +33838,12 @@ CanvasPolygonReplay.prototype.drawPolygon = function(polygonGeometry, feature) {
   this.beginGeometry(polygonGeometry, feature);
   // always fill the polygon for hit detection
   this.hitDetectionInstructions.push([
-    __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].SET_FILL_STYLE,
+    __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["c" /* default */].SET_FILL_STYLE,
     Object(__WEBPACK_IMPORTED_MODULE_1__color_js__["b" /* asString */])(__WEBPACK_IMPORTED_MODULE_3__canvas_js__["a" /* default */].defaultFillStyle)]
   );
   if (state.strokeStyle !== undefined) {
     this.hitDetectionInstructions.push([
-      __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].SET_STROKE_STYLE,
+      __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["c" /* default */].SET_STROKE_STYLE,
       state.strokeStyle, state.lineWidth, state.lineCap, state.lineJoin,
       state.miterLimit, state.lineDash, state.lineDashOffset
     ]);
@@ -33844,12 +33870,12 @@ CanvasPolygonReplay.prototype.drawMultiPolygon = function(multiPolygonGeometry, 
   this.beginGeometry(multiPolygonGeometry, feature);
   // always fill the multi-polygon for hit detection
   this.hitDetectionInstructions.push([
-    __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].SET_FILL_STYLE,
+    __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["c" /* default */].SET_FILL_STYLE,
     Object(__WEBPACK_IMPORTED_MODULE_1__color_js__["b" /* asString */])(__WEBPACK_IMPORTED_MODULE_3__canvas_js__["a" /* default */].defaultFillStyle)
   ]);
   if (state.strokeStyle !== undefined) {
     this.hitDetectionInstructions.push([
-      __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["a" /* default */].SET_STROKE_STYLE,
+      __WEBPACK_IMPORTED_MODULE_4__canvas_Instruction_js__["c" /* default */].SET_STROKE_STYLE,
       state.strokeStyle, state.lineWidth, state.lineCap, state.lineJoin,
       state.miterLimit, state.lineDash, state.lineDashOffset
     ]);
@@ -33880,7 +33906,7 @@ CanvasPolygonReplay.prototype.finish = function() {
   if (tolerance !== 0) {
     const coordinates = this.coordinates;
     for (let i = 0, ii = coordinates.length; i < ii; ++i) {
-      coordinates[i] = __WEBPACK_IMPORTED_MODULE_2__geom_flat_simplify_js__["a" /* default */].snap(coordinates[i], tolerance);
+      coordinates[i] = Object(__WEBPACK_IMPORTED_MODULE_2__geom_flat_simplify_js__["e" /* snap */])(coordinates[i], tolerance);
     }
   }
 };
@@ -34124,7 +34150,7 @@ CanvasTextReplay.prototype.drawText = function(geometry, feature) {
     let flatEnd;
     for (let o = 0, oo = ends.length; o < oo; ++o) {
       if (textAlign == undefined) {
-        const range = __WEBPACK_IMPORTED_MODULE_4__geom_flat_straightchunk_js__["a" /* default */].lineString(
+        const range = Object(__WEBPACK_IMPORTED_MODULE_4__geom_flat_straightchunk_js__["a" /* matchingChunk */])(
           textState.maxAngle, flatCoordinates, flatOffset, ends[o], stride);
         flatOffset = range[0];
         flatEnd = range[1];
@@ -34284,7 +34310,7 @@ CanvasTextReplay.prototype.drawTextImage_ = function(label, begin, end) {
 
   const anchorX = align * label.width / pixelRatio + 2 * (0.5 - align) * strokeWidth;
   const anchorY = baseline * label.height / pixelRatio + 2 * (0.5 - baseline) * strokeWidth;
-  this.instructions.push([__WEBPACK_IMPORTED_MODULE_8__canvas_Instruction_js__["a" /* default */].DRAW_IMAGE, begin, end,
+  this.instructions.push([__WEBPACK_IMPORTED_MODULE_8__canvas_Instruction_js__["c" /* default */].DRAW_IMAGE, begin, end,
     label, (anchorX - this.textOffsetX_) * pixelRatio, (anchorY - this.textOffsetY_) * pixelRatio,
     this.declutterGroup_, label.height, 1, 0, 0, this.textRotateWithView_, this.textRotation_,
     1, true, label.width,
@@ -34294,7 +34320,7 @@ CanvasTextReplay.prototype.drawTextImage_ = function(label, begin, end) {
       }),
     !!textState.backgroundFill, !!textState.backgroundStroke
   ]);
-  this.hitDetectionInstructions.push([__WEBPACK_IMPORTED_MODULE_8__canvas_Instruction_js__["a" /* default */].DRAW_IMAGE, begin, end,
+  this.hitDetectionInstructions.push([__WEBPACK_IMPORTED_MODULE_8__canvas_Instruction_js__["c" /* default */].DRAW_IMAGE, begin, end,
     label, (anchorX - this.textOffsetX_) * pixelRatio, (anchorY - this.textOffsetY_) * pixelRatio,
     this.declutterGroup_, label.height, 1, 0, 0, this.textRotateWithView_, this.textRotation_,
     1 / pixelRatio, true, label.width, textState.padding,
@@ -34357,7 +34383,7 @@ CanvasTextReplay.prototype.drawChars_ = function(begin, end, declutterGroup) {
   if (!widths) {
     this.widths_[font] = widths = {};
   }
-  this.instructions.push([__WEBPACK_IMPORTED_MODULE_8__canvas_Instruction_js__["a" /* default */].DRAW_CHARS,
+  this.instructions.push([__WEBPACK_IMPORTED_MODULE_8__canvas_Instruction_js__["c" /* default */].DRAW_CHARS,
     begin, end, baseline, declutterGroup,
     textState.overflow, fillKey, textState.maxAngle,
     function(text) {
@@ -34369,7 +34395,7 @@ CanvasTextReplay.prototype.drawChars_ = function(begin, end, declutterGroup) {
     },
     offsetY, strokeKey, strokeWidth * pixelRatio, text, textKey, 1
   ]);
-  this.hitDetectionInstructions.push([__WEBPACK_IMPORTED_MODULE_8__canvas_Instruction_js__["a" /* default */].DRAW_CHARS,
+  this.hitDetectionInstructions.push([__WEBPACK_IMPORTED_MODULE_8__canvas_Instruction_js__["c" /* default */].DRAW_CHARS,
     begin, end, baseline, declutterGroup,
     textState.overflow, fillKey, textState.maxAngle,
     function(text) {
@@ -34475,10 +34501,10 @@ CanvasTextReplay.prototype.setTextStyle = function(textStyle, declutterGroup) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = matchingChunk;
 /**
  * @module ol/geom/flat/straightchunk
  */
-const _ol_geom_flat_straightchunk_ = {};
 
 
 /**
@@ -34490,7 +34516,7 @@ const _ol_geom_flat_straightchunk_ = {};
  * @return {Array.<number>} Start and end of the first suitable chunk of the
  * given `flatCoordinates`.
  */
-_ol_geom_flat_straightchunk_.lineString = function(maxAngle, flatCoordinates, offset, end, stride) {
+function matchingChunk(maxAngle, flatCoordinates, offset, end, stride) {
   let chunkStart = offset;
   let chunkEnd = offset;
   let chunkM = 0;
@@ -34526,8 +34552,7 @@ _ol_geom_flat_straightchunk_.lineString = function(maxAngle, flatCoordinates, of
   }
   m += m23;
   return m > chunkM ? [start, i] : [chunkStart, chunkEnd];
-};
-/* harmony default export */ __webpack_exports__["a"] = (_ol_geom_flat_straightchunk_);
+}
 
 
 /***/ }),
@@ -34600,6 +34625,27 @@ _ol_geom_flat_straightchunk_.lineString = function(maxAngle, flatCoordinates, of
 
 
 
+
+/**
+ * @type {!Object.<string, Array.<ol.render.ReplayType>>}
+ */
+const IMAGE_REPLAYS = {
+  'image': [__WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].POLYGON, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].CIRCLE,
+    __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].LINE_STRING, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].IMAGE, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].TEXT],
+  'hybrid': [__WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].POLYGON, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].LINE_STRING]
+};
+
+
+/**
+ * @type {!Object.<string, Array.<ol.render.ReplayType>>}
+ */
+const VECTOR_REPLAYS = {
+  'image': [__WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].DEFAULT],
+  'hybrid': [__WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].IMAGE, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].TEXT, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].DEFAULT],
+  'vector': __WEBPACK_IMPORTED_MODULE_14__render_replay_js__["a" /* default */].ORDER
+};
+
+
 /**
  * @constructor
  * @extends {ol.renderer.canvas.TileLayer}
@@ -34669,28 +34715,6 @@ CanvasVectorTileLayerRenderer['handles'] = function(type, layer) {
  */
 CanvasVectorTileLayerRenderer['create'] = function(mapRenderer, layer) {
   return new CanvasVectorTileLayerRenderer(/** @type {ol.layer.VectorTile} */ (layer));
-};
-
-
-/**
- * @const
- * @type {!Object.<string, Array.<ol.render.ReplayType>>}
- */
-CanvasVectorTileLayerRenderer.IMAGE_REPLAYS = {
-  'image': [__WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].POLYGON, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].CIRCLE,
-    __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].LINE_STRING, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].IMAGE, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].TEXT],
-  'hybrid': [__WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].POLYGON, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].LINE_STRING]
-};
-
-
-/**
- * @const
- * @type {!Object.<string, Array.<ol.render.ReplayType>>}
- */
-CanvasVectorTileLayerRenderer.VECTOR_REPLAYS = {
-  'image': [__WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].DEFAULT],
-  'hybrid': [__WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].IMAGE, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].TEXT, __WEBPACK_IMPORTED_MODULE_11__render_ReplayType_js__["a" /* default */].DEFAULT],
-  'vector': __WEBPACK_IMPORTED_MODULE_14__render_replay_js__["a" /* default */].ORDER
 };
 
 
@@ -34780,18 +34804,12 @@ CanvasVectorTileLayerRenderer.prototype.createReplayGroup_ = function(
      */
     const render = function(feature) {
       let styles;
-      let styleFunction = feature.getStyleFunction();
+      const styleFunction = feature.getStyleFunction() || layer.getStyleFunction();
       if (styleFunction) {
-        styles = styleFunction.call(/** @type {ol.Feature} */ (feature), resolution);
-      } else {
-        styleFunction = layer.getStyleFunction();
-        if (styleFunction) {
-          styles = styleFunction(feature, resolution);
-        }
+        styles = styleFunction(feature, resolution);
       }
       if (styles) {
-        const dirty = this.renderFeature(feature, squaredTolerance, styles,
-          replayGroup);
+        const dirty = this.renderFeature(feature, squaredTolerance, styles, replayGroup);
         this.dirty_ = this.dirty_ || dirty;
         replayState.dirty = replayState.dirty || dirty;
       }
@@ -34952,7 +34970,7 @@ CanvasVectorTileLayerRenderer.prototype.postCompose = function(context, frameSta
   const declutterReplays = layer.getDeclutter() ? {} : null;
   const source = /** @type {ol.source.VectorTile} */ (layer.getSource());
   const renderMode = layer.getRenderMode();
-  const replayTypes = CanvasVectorTileLayerRenderer.VECTOR_REPLAYS[renderMode];
+  const replayTypes = VECTOR_REPLAYS[renderMode];
   const pixelRatio = frameState.pixelRatio;
   const rotation = frameState.viewState.rotation;
   const size = frameState.size;
@@ -35069,7 +35087,7 @@ CanvasVectorTileLayerRenderer.prototype.renderTileImage_ = function(
   const layer = this.getLayer();
   const replayState = tile.getReplayState(layer);
   const revision = layer.getRevision();
-  const replays = CanvasVectorTileLayerRenderer.IMAGE_REPLAYS[layer.getRenderMode()];
+  const replays = IMAGE_REPLAYS[layer.getRenderMode()];
   if (replays && replayState.renderedTileRevision !== revision) {
     replayState.renderedTileRevision = revision;
     const tileCoord = tile.wrappedTileCoord;
@@ -35207,7 +35225,7 @@ WebGLImageLayerRenderer.prototype.createTexture_ = function(image) {
   const imageElement = image.getImage();
   const gl = this.mapRenderer.getGL();
 
-  return __WEBPACK_IMPORTED_MODULE_11__webgl_Context_js__["a" /* default */].createTexture(
+  return Object(__WEBPACK_IMPORTED_MODULE_11__webgl_Context_js__["a" /* createTexture */])(
     gl, imageElement, __WEBPACK_IMPORTED_MODULE_10__webgl_js__["a" /* default */].CLAMP_TO_EDGE, __WEBPACK_IMPORTED_MODULE_10__webgl_js__["a" /* default */].CLAMP_TO_EDGE);
 };
 
@@ -35601,7 +35619,7 @@ WebGLCircleReplay.prototype.drawCircle = function(circleGeometry, feature) {
 
     this.radius_ = radius;
     let flatCoordinates = circleGeometry.getFlatCoordinates();
-    flatCoordinates = __WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["a" /* default */].translate(flatCoordinates, 0, 2,
+    flatCoordinates = Object(__WEBPACK_IMPORTED_MODULE_5__geom_flat_transform_js__["d" /* translate */])(flatCoordinates, 0, 2,
       stride, -this.origin[0], -this.origin[1]);
     this.drawCoordinates_(flatCoordinates, 0, 2, stride);
   } else {
@@ -36643,7 +36661,7 @@ WebGLPolygonReplay.prototype.drawCoordinates_ = function(
  */
 WebGLPolygonReplay.prototype.processFlatCoordinates_ = function(
   flatCoordinates, stride, list, rtree, clockwise) {
-  const isClockwise = __WEBPACK_IMPORTED_MODULE_6__geom_flat_orient_js__["a" /* default */].linearRingIsClockwise(flatCoordinates,
+  const isClockwise = Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_orient_js__["a" /* linearRingIsClockwise */])(flatCoordinates,
     0, flatCoordinates.length, stride);
   let i, ii;
   let n = this.vertices.length / 2;
@@ -36907,7 +36925,7 @@ WebGLPolygonReplay.prototype.clipEars_ = function(list, rtree, simple, ccw) {
           variableCriterion) {
         //The diagonal is completely inside the polygon
         if (simple || p0.reflex === false || p2.reflex === false ||
-            __WEBPACK_IMPORTED_MODULE_6__geom_flat_orient_js__["a" /* default */].linearRingIsClockwise([s0.p0.x, s0.p0.y, p0.x,
+            Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_orient_js__["a" /* linearRingIsClockwise */])([s0.p0.x, s0.p0.y, p0.x,
               p0.y, p1.x, p1.y, p2.x, p2.y, s3.p1.x, s3.p1.y], 0, 10, 2) === !ccw) {
           //The diagonal is persumably valid, we have an ear
           this.indices[numIndices++] = p0.i;
@@ -37036,7 +37054,7 @@ WebGLPolygonReplay.prototype.isClockwise_ = function(list) {
     flatCoordinates[i++] = seg.p0.y;
     seg = list.nextItem();
   } while (seg !== start);
-  return __WEBPACK_IMPORTED_MODULE_6__geom_flat_orient_js__["a" /* default */].linearRingIsClockwise(flatCoordinates, 0, length, 2);
+  return Object(__WEBPACK_IMPORTED_MODULE_6__geom_flat_orient_js__["a" /* linearRingIsClockwise */])(flatCoordinates, 0, length, 2);
 };
 
 
@@ -37264,14 +37282,14 @@ WebGLPolygonReplay.prototype.drawMultiPolygon = function(multiPolygonGeometry, f
   for (i = 0, ii = endss.length; i < ii; ++i) {
     const ends = endss[i];
     if (ends.length > 0) {
-      const outerRing = __WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["a" /* default */].translate(flatCoordinates, start, ends[0],
+      const outerRing = Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["d" /* translate */])(flatCoordinates, start, ends[0],
         stride, -this.origin[0], -this.origin[1]);
       if (outerRing.length) {
         const holes = [];
         let holeFlatCoords;
         for (j = 1, jj = ends.length; j < jj; ++j) {
           if (ends[j] !== ends[j - 1]) {
-            holeFlatCoords = __WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["a" /* default */].translate(flatCoordinates, ends[j - 1],
+            holeFlatCoords = Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["d" /* translate */])(flatCoordinates, ends[j - 1],
               ends[j], stride, -this.origin[0], -this.origin[1]);
             holes.push(holeFlatCoords);
           }
@@ -37304,14 +37322,14 @@ WebGLPolygonReplay.prototype.drawPolygon = function(polygonGeometry, feature) {
   const stride = polygonGeometry.getStride();
   if (ends.length > 0) {
     const flatCoordinates = polygonGeometry.getFlatCoordinates().map(Number);
-    const outerRing = __WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["a" /* default */].translate(flatCoordinates, 0, ends[0],
+    const outerRing = Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["d" /* translate */])(flatCoordinates, 0, ends[0],
       stride, -this.origin[0], -this.origin[1]);
     if (outerRing.length) {
       const holes = [];
       let i, ii, holeFlatCoords;
       for (i = 1, ii = ends.length; i < ii; ++i) {
         if (ends[i] !== ends[i - 1]) {
-          holeFlatCoords = __WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["a" /* default */].translate(flatCoordinates, ends[i - 1],
+          holeFlatCoords = Object(__WEBPACK_IMPORTED_MODULE_7__geom_flat_transform_js__["d" /* translate */])(flatCoordinates, ends[i - 1],
             ends[i], stride, -this.origin[0], -this.origin[1]);
           holes.push(holeFlatCoords);
         }
@@ -39275,7 +39293,7 @@ const WebGLMapRenderer = function(container, map) {
    * @private
    * @type {ol.webgl.Context}
    */
-  this.context_ = new __WEBPACK_IMPORTED_MODULE_16__webgl_Context_js__["a" /* default */](this.canvas_, this.gl_);
+  this.context_ = new __WEBPACK_IMPORTED_MODULE_16__webgl_Context_js__["b" /* default */](this.canvas_, this.gl_);
 
   Object(__WEBPACK_IMPORTED_MODULE_4__events_js__["a" /* listen */])(this.canvas_, __WEBPACK_IMPORTED_MODULE_17__webgl_ContextEventType_js__["a" /* default */].LOST,
     this.handleWebGLContextLost, this);
@@ -39628,7 +39646,7 @@ WebGLMapRenderer.prototype.renderFrame = function(frameState) {
   /** @type {Array.<ol.LayerState>} */
   const layerStatesToDraw = [];
   const layerStatesArray = frameState.layerStatesArray;
-  Object(__WEBPACK_IMPORTED_MODULE_1__array_js__["j" /* stableSort */])(layerStatesArray, __WEBPACK_IMPORTED_MODULE_10__Map_js__["a" /* default */].sortByZIndex);
+  Object(__WEBPACK_IMPORTED_MODULE_1__array_js__["j" /* stableSort */])(layerStatesArray, __WEBPACK_IMPORTED_MODULE_10__Map_js__["b" /* sortByZIndex */]);
 
   const viewResolution = frameState.viewState.resolution;
   let i, ii, layerRenderer, layerState;
@@ -40581,14 +40599,9 @@ WebGLVectorLayerRenderer.prototype.prepareFrame = function(frameState, layerStat
    */
   const render = function(feature) {
     let styles;
-    let styleFunction = feature.getStyleFunction();
+    const styleFunction = feature.getStyleFunction() || vectorLayer.getStyleFunction();
     if (styleFunction) {
-      styles = styleFunction.call(feature, resolution);
-    } else {
-      styleFunction = vectorLayer.getStyleFunction();
-      if (styleFunction) {
-        styles = styleFunction(feature, resolution);
-      }
+      styles = styleFunction(feature, resolution);
     }
     if (styles) {
       const dirty = this.renderFeature(
@@ -40601,8 +40614,8 @@ WebGLVectorLayerRenderer.prototype.prepareFrame = function(frameState, layerStat
     const features = [];
     vectorSource.forEachFeatureInExtent(extent,
       /**
-         * @param {ol.Feature} feature Feature.
-         */
+       * @param {ol.Feature} feature Feature.
+       */
       function(feature) {
         features.push(feature);
       }, this);

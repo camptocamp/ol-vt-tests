@@ -63,7 +63,8 @@ const map = new Map({
   }),
   controls: [
     new Zoom({delta: 0.55})
-  ]
+  ],
+  renderer: 'webgl'
 });
 
 const mbTilesLayer = new VectorTileLayer({

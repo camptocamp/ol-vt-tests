@@ -30,12 +30,6 @@ plugins.push(new webpack.optimize.CommonsChunkPlugin({
 }));
 
 module.exports = {
-  resolve: {
-    alias: {
-      ol: 'mapbox-to-ol-style/node_modules/ol/',
-      openlayers: 'openlayers/src/ol'
-    }
-  },
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].js',

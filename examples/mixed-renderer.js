@@ -8,7 +8,6 @@ import TileWMS from 'openlayers/source/TileWMS.js';
 const layers = [
   new TileLayer({
     extent: [-13884991, 2870341, -7455066, 6338219],
-    renderer: 'canvas',
     source: new TileWMS({
       url: 'https://ahocevar.com/geoserver/wms',
       params: {'LAYERS': 'topp:states', 'TILED': true},
@@ -18,14 +17,13 @@ const layers = [
     })
   }),
   new TileLayer({
-    renderer: 'webgl',
     source: new OSM()
   })
 ];
 const map = new Map({
   layers: layers,
   target: 'map',
-  renderer: 'webgl',
+  renderer: 'mixed',
   view: new View({
     center: [-10997148, 4569099],
     zoom: 4

@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "mapbox-to-ol-style": "^3.4.0",
-    "openlayers": "https://api.github.com/repos/jahow/openlayers/tarball/poc-webgl-vectortiles",
+    "openlayers": "https://api.github.com/repos/jahow/openlayers/tarball/poc-webgl-vectortiles-2",
     "ol-mapbox-style": "^2.10.1"
   },
   "devDependencies": {

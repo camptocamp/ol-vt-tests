@@ -16,7 +16,7 @@ webpackJsonp([1],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__source_TileImage_js__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__source_WMSServerType_js__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__tilecoord_js__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__string_js__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__string_js__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__uri_js__ = __webpack_require__(105);
 /**
  * @module ol/source/TileWMS
@@ -443,22 +443,22 @@ function appendParams(uri, params) {
 
 /***/ }),
 
-/***/ 323:
+/***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(324);
+module.exports = __webpack_require__(321);
 
 
 /***/ }),
 
-/***/ 324:
+/***/ 321:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_openlayers_Map_js__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers_View_js__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers_layer_Tile_js__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers_layer_Tile_js__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_openlayers_source_OSM_js__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_openlayers_source_TileWMS_js__ = __webpack_require__(102);
 
@@ -503,7 +503,7 @@ const map = new __WEBPACK_IMPORTED_MODULE_0_openlayers_Map_js__["a" /* default *
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__index_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__source_XYZ_js__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__source_XYZ_js__ = __webpack_require__(80);
 /**
  * @module ol/source/OSM
  */
@@ -568,4 +568,4 @@ OSM.ATTRIBUTION = '&copy; ' +
 
 /***/ })
 
-},[323]);
+},[320]);

@@ -47330,6 +47330,7 @@ const map = new __WEBPACK_IMPORTED_MODULE_0_openlayers_Map__["a" /* default */](
       })
     })
   ],
+  loadTilesWhileInteracting: true,
   target: 'map',
   view: new  __WEBPACK_IMPORTED_MODULE_1_openlayers_View__["a" /* default */]({
     center: Object(__WEBPACK_IMPORTED_MODULE_8_openlayers_proj__["d" /* fromLonLat */])([7.75, 46.7]),

@@ -108,7 +108,7 @@
         "park"
       ],
       "layout": {
-        "visibility": "none"
+        "visibility": "visible"
       },
       "paint": {
         "fill-color": "hsl(100, 50%, 86%)",

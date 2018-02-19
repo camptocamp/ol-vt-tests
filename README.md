@@ -3,6 +3,7 @@ Provide different examples to compare vector tiles rendering performance.
 ## Install
 ```
 npm install
+cd node_modules/mapbox-to-ol-style/ && npm install
 ```
 ## Run
 ```

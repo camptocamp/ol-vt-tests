@@ -56,6 +56,7 @@ const map = new Map({
       })
     })
   ],
+  loadTilesWhileInteracting: true,
   target: 'map',
   view: new  View({
     center: fromLonLat([7.75, 46.7]),

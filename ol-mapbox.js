@@ -43558,11 +43558,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__WEBPACK_IMPORTED_MODULE_0_mapbox_gl___default.a.accessToken = "pk.eyJ1Ijoicm9tYW56b2xsZXIiLCJhIjoiY2pkand5dzJkMG1jdTMzbzJqMmZ5cDUycSJ9.djXLa0ZfFbls1yUu35I80Q";
-
 var map = new __WEBPACK_IMPORTED_MODULE_0_mapbox_gl___default.a.Map({
     container: "map", // container id
-    style: "mapbox://styles/mapbox/streets-v9", // stylesheet location
+    style: "data/swissbasemap-osm-integrated.json", // stylesheet location
     center: [6.5124174, 46.5284586], // starting position
     maxZoom: 17,
     zoom: 10 // starting zoom

@@ -6463,7 +6463,7 @@
         ]
       ],
       "layout": {
-        "visibility": "hidden"
+        "visibility": "none"
       },
       "paint": {
         "fill-color": "rgba(255, 255, 255, 1)",

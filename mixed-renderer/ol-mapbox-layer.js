@@ -1,4 +1,4 @@
-webpackJsonp([4],[
+webpackJsonp([3],[
 /* 0 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -44236,27 +44236,23 @@ function jsonp(url, callback, opt_errback, opt_callbackParam) {
 /* 261 */,
 /* 262 */,
 /* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(268);
+module.exports = __webpack_require__(265);
 
 
 /***/ }),
-/* 268 */
+/* 265 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mapbox_gl__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_mapbox_gl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_mapbox_gl__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers_layer_Tile_js__ = __webpack_require__(133);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers_Map_js__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_openlayers_source_TileJSON_js__ = __webpack_require__(224);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_openlayers_View_js__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_openlayers_Map_js__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_openlayers_View_js__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_openlayers_layer_Tile_js__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_openlayers_layer_MapBox__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_openlayers_source_TileJSON_js__ = __webpack_require__(224);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_openlayers_proj_transforms_js__ = __webpack_require__(115);
 
 
@@ -44265,63 +44261,248 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+const layers = [];
 
-var map = new __WEBPACK_IMPORTED_MODULE_0_mapbox_gl___default.a.Map({
-    container: "map", // container id
-    style: "data/swissbasemap-osm-integrated.json", // stylesheet location
-    center: [6.5124174, 46.5284586], // starting position
-    maxZoom: 17,
-    zoom: 10 // starting zoom
+const transformFromLatLng = Object(__WEBPACK_IMPORTED_MODULE_5_openlayers_proj_transforms_js__["c" /* get */])("EPSG:4326", "EPSG:3857");
+
+const map = new __WEBPACK_IMPORTED_MODULE_0_openlayers_Map_js__["a" /* default */]({
+  layers: layers,
+  target: 'map',
+  renderer: 'mixed',
+  view: new __WEBPACK_IMPORTED_MODULE_1_openlayers_View_js__["a" /* default */]({
+    center: transformFromLatLng([6.5124174, 46.5284586]),
+    maxZoom: 18,
+    zoom: 11
+  })
 });
 
-var swisstopoBauzonenSource = new __WEBPACK_IMPORTED_MODULE_3_openlayers_source_TileJSON_js__["a" /* default */]({
+const mbLayer = new __WEBPACK_IMPORTED_MODULE_3_openlayers_layer_MapBox__["a" /* default */]({
+  map: map,
+  container: map.getTarget(),
+  style: 'data/swissbasemap-osm-integrated.json'
+});
+
+const  swisstopoBauzonenSource = new __WEBPACK_IMPORTED_MODULE_4_openlayers_source_TileJSON_js__["a" /* default */]({
   tileJSON: {
-      "attribution": "&copy; swisstopo",
-      "bounds": [
-          5.140242,
-          45.398181,
-          11.47757,
-          48.230651
-      ],
-      "id": "bauzonen",
-      "maxzoom": 18,
-      "minzoom": 0,
-      "type": "raster",
-      "tileSize": 256,
-      "tiles": [
-          "https://wmts.geo.admin.ch/1.0.0/ch.are.bauzonen/default/current/3857/{z}/{x}/{y}.png"
-      ],
+    "attribution": "&copy; swisstopo",
+    "bounds": [
+      5.140242,
+      45.398181,
+      11.47757,
+      48.230651
+    ],
+    "id": "bauzonen",
+    "maxzoom": 18,
+    "minzoom": 0,
+    "type": "raster",
+    "tileSize": 256,
+    "tiles": [
+      "https://wmts.geo.admin.ch/1.0.0/ch.are.bauzonen/default/current/3857/{z}/{x}/{y}.png"
+    ],
   }
 });
 
-const transformFromLatLng = Object(__WEBPACK_IMPORTED_MODULE_5_openlayers_proj_transforms_js__["c" /* get */])("EPSG:4326", "EPSG:3857");
-const transformToLatLng = Object(__WEBPACK_IMPORTED_MODULE_5_openlayers_proj_transforms_js__["c" /* get */])("EPSG:3857", "EPSG:4326");
-
-var olMap = new __WEBPACK_IMPORTED_MODULE_2_openlayers_Map_js__["a" /* default */]({
-    layers: [
-        new __WEBPACK_IMPORTED_MODULE_1_openlayers_layer_Tile_js__["a" /* default */]({
-            opacity: 0.3,
-            source: swisstopoBauzonenSource
-        })
+const  trailSource = new __WEBPACK_IMPORTED_MODULE_4_openlayers_source_TileJSON_js__["a" /* default */]({
+  tileJSON: {
+    "attribution": "&copy; swisstopo",
+    "bounds": [
+      5.140242,
+      45.398181,
+      11.47757,
+      48.230651
     ],
-    target: "olmap",
-    view: new __WEBPACK_IMPORTED_MODULE_4_openlayers_View_js__["a" /* default */]({
-        center: transformFromLatLng([6.5124174, 46.5284586]),
-        maxZoom: 18,
-        zoom: 11
-    })
+    "id": "bauzonen",
+    "maxzoom": 18,
+    "minzoom": 0,
+    "type": "raster",
+    "tileSize": 256,
+    "tiles": [
+      "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swisstlm3d-wanderwege/default/current/3857/{z}/{x}/{y}.png"
+    ],
+  }
 });
 
-var olMapView = olMap.getView();
-olMap.on('precompose', () => {
-    var center = transformToLatLng(olMapView.getCenter());
-    var zoom = olMapView.getZoom() - 1;
-    map.jumpTo({
-        center: center,
-        zoom: zoom
-    });
+map.addLayer(new __WEBPACK_IMPORTED_MODULE_2_openlayers_layer_Tile_js__["a" /* default */]({
+  opacity: 1,
+  source: swisstopoBauzonenSource
+}));
+
+const trailLayer = new __WEBPACK_IMPORTED_MODULE_2_openlayers_layer_Tile_js__["a" /* default */]({
+  opacity: 1,
+  source: trailSource
 });
+
+map.addLayer(trailLayer);
+
+
+const mbToggleButton = document.getElementById('mbToggle');
+const mbOpacityInput = document.getElementById('mbOpacity');
+
+mbToggleButton.addEventListener('click', function() {
+  mbLayer.setVisible(!mbLayer.getVisible());
+}, false);
+
+mbOpacityInput.addEventListener('change', function(e) {
+  mbLayer.setOpacity(parseFloat(this.value));
+}, false);
+
+const mbZIndexInput = document.getElementById('mbZIndex');
+mbZIndexInput.onchange = function() {
+  trailLayer.get('canvas').style.zIndex = 1;
+  mbLayer.setZIndex(parseInt(this.value, 10) || 0);
+};
+mbZIndexInput.value = String(mbLayer.getZIndex());
+mbOpacityInput.value = mbLayer.getOpacity();
+
+/***/ }),
+/* 266 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export visibleAtResolution */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__events_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__events_EventType_js__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Object_js__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__layer_Base_js__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__layer_Property_js__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__obj_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__render_EventType_js__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__source_State_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_mapbox_gl__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_mapbox_gl___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_mapbox_gl__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__proj__ = __webpack_require__(18);
+/**
+ * @module ol/layer/Layer
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+const MapBox = function(options) {
+
+  this.map_;
+  this.baseOptions = Object(__WEBPACK_IMPORTED_MODULE_6__obj_js__["a" /* assign */])({}, options);
+
+  __WEBPACK_IMPORTED_MODULE_4__layer_Base_js__["a" /* default */].call(this, /** @type {olx.layer.BaseOptions} */ (this.baseOptions));
+
+  if (options.map) {
+    this.setMap(options.map);
+  }
+};
+
+Object(__WEBPACK_IMPORTED_MODULE_2__index_js__["g" /* inherits */])(MapBox, __WEBPACK_IMPORTED_MODULE_4__layer_Base_js__["a" /* default */]);
+
+
+/**
+ * Return `true` if the layer is visible, and if the passed resolution is
+ * between the layer's minResolution and maxResolution. The comparison is
+ * inclusive for `minResolution` and exclusive for `maxResolution`.
+ * @param {ol.LayerState} layerState Layer state.
+ * @param {number} resolution Resolution.
+ * @return {boolean} The layer is visible at the given resolution.
+ */
+function visibleAtResolution(layerState, resolution) {
+  return layerState.visible && resolution >= layerState.minResolution &&
+    resolution < layerState.maxResolution;
+}
+
+
+MapBox.prototype.initMap = function() {
+  const transformToLatLng = Object(__WEBPACK_IMPORTED_MODULE_10__proj__["g" /* getTransform */])("EPSG:3857", "EPSG:4326");
+  const map = this.map_;
+  const view = map.getView();
+  const center = transformToLatLng(view.getCenter());
+
+  const options = Object(__WEBPACK_IMPORTED_MODULE_6__obj_js__["a" /* assign */])(this.baseOptions, {
+    center,
+    container: map.getTargetElement(),
+    zoom: view.getZoom() - 1
+  });
+
+  this.mbmap = new __WEBPACK_IMPORTED_MODULE_9_mapbox_gl___default.a.Map(options);
+  this.mbmap.on("load", () => {
+    const viewport = document.getElementsByClassName('ol-viewport')[0];
+    const mbcanvas = document.getElementsByClassName('mapboxgl-canvas')[0];
+    viewport.insertBefore(mbcanvas, viewport.firstChild);
+    [ 'mapboxgl-missing-css',
+      'mapboxgl-control-container',
+      'mapboxgl-canvas-container',
+    ].forEach( className => document.getElementsByClassName(className)[0].remove());
+  });
+
+  map.on('precompose', () => {
+    const center = transformToLatLng(view.getCenter());
+    const zoom = view.getZoom() - 1;
+    this.mbmap.jumpTo({
+      center: center,
+      zoom: zoom
+    });
+    console.log('move mapbox');
+  });
+  window.mbmap = this.mbmap;
+};
+
+MapBox.prototype.setVisible = function(visible) {
+  __WEBPACK_IMPORTED_MODULE_4__layer_Base_js__["a" /* default */].prototype.setVisible.call(this, visible);
+
+  const canvas = this.mbmap.getCanvas();
+  canvas.style.display = visible ? 'block' : 'none';
+};
+
+MapBox.prototype.setOpacity = function(opacity) {
+  __WEBPACK_IMPORTED_MODULE_4__layer_Base_js__["a" /* default */].prototype.setOpacity.call(this, opacity);
+  const canvas = this.mbmap.getCanvas();
+  canvas.style.opacity = opacity;
+};
+
+MapBox.prototype.setZIndex = function(zindex) {
+  __WEBPACK_IMPORTED_MODULE_4__layer_Base_js__["a" /* default */].prototype.setZIndex.call(this, zindex);
+  const canvas = this.mbmap.getCanvas();
+  canvas.style.zIndex = zindex;
+};
+
+/**
+ * @inheritDoc
+ */
+MapBox.prototype.getLayersArray = function(opt_array) {
+  const array = opt_array ? opt_array : [];
+  array.push(this);
+  return array;
+};
+
+
+/**
+ * @inheritDoc
+ */
+MapBox.prototype.getLayerStatesArray = function(opt_states) {
+  const states = opt_states ? opt_states : [];
+  states.push(this.getLayerState());
+  return states;
+};
+
+/**
+ * @private
+ */
+MapBox.prototype.handleSourcePropertyChange_ = function() {
+  this.changed();
+};
+
+MapBox.prototype.setMap = function(map) {
+  this.map_ = map;
+  this.initMap();
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (MapBox);
 
 
 /***/ })
-],[267]);
+],[264]);

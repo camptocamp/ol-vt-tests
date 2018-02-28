@@ -4,6 +4,7 @@
   "description": "Tests & metrics on vector tiles support in openlayers",
   "scripts": {
     "start": "webpack-dashboard -- webpack-dev-server",
+    "dev": "NODE_ENV=dev webpack-dev-server --hot --inline --host 0.0.0.0 --port 3000 -d",
     "build": "webpack --config webpack.config.js && cp -r data/ dist",
     "deploy": "npm run build && gh-pages --dist dist --add"
   },

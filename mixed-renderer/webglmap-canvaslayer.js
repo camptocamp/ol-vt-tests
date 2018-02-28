@@ -40413,14 +40413,15 @@ WebGLMapRenderer.prototype.renderFrame = function(frameState) {
   Object(__WEBPACK_IMPORTED_MODULE_1__array_js__["j" /* stableSort */])(layerStatesArray, __WEBPACK_IMPORTED_MODULE_10__Map_js__["b" /* sortByZIndex */]);
 
   const viewResolution = frameState.viewState.resolution;
-  let i, ii, layerRenderer, layerState;
+  let i, ii, layer, layerRenderer, layerState;
   for (i = 0, ii = layerStatesArray.length; i < ii; ++i) {
     layerState = layerStatesArray[i];
+    layer = layerState.layer;
     if (Object(__WEBPACK_IMPORTED_MODULE_6__layer_Layer_js__["b" /* visibleAtResolution */])(layerState, viewResolution) &&
         layerState.sourceState == __WEBPACK_IMPORTED_MODULE_12__source_State_js__["a" /* default */].READY) {
       layerRenderer = /** @type {ol.renderer.webgl.Layer} */ (this.getLayerRenderer(layerState.layer));
 
-      const renderCtxt = this.contextManager_.getContext(layerRenderer);
+      const renderCtxt = this.contextManager_.getContext(layerRenderer, layer);
 
       if (layerRenderer.prepareFrame(frameState, layerState, context)) {
         layerStatesToDraw.push(layerState);
@@ -40445,8 +40446,9 @@ WebGLMapRenderer.prototype.renderFrame = function(frameState) {
 
   for (i = 0, ii = layerStatesToDraw.length; i < ii; ++i) {
     layerState = layerStatesToDraw[i];
+    layer = layerState.layer;
     layerRenderer = /** @type {ol.renderer.webgl.Layer} */ (this.getLayerRenderer(layerState.layer));
-    const renderCtxt = this.contextManager_.getContext(layerRenderer);
+    const renderCtxt = this.contextManager_.getContext(layerRenderer, layer);
     layerRenderer.composeFrame(frameState, layerState, renderCtxt ? renderCtxt.context : context);
   }
 
@@ -44130,7 +44132,6 @@ const layers = [
     })
   }),
   new __WEBPACK_IMPORTED_MODULE_2_openlayers_layer_Tile_js__["a" /* default */]({
-    renderer: 'webgl',
     source: new __WEBPACK_IMPORTED_MODULE_3_openlayers_source_OSM_js__["a" /* default */]()
   })
 ];

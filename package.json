@@ -11,8 +11,9 @@
   "dependencies": {
     "mapbox-gl": "^0.44.1",
     "mapbox-to-ol-style": "^3.4.0",
+    "ol-mapbox-style": "^2.10.1",
     "openlayers": "https://api.github.com/repos/openlayers/openlayers/tarball/18fa8dd",
-    "ol-mapbox-style": "^2.10.1"
+    "worker-loader": "^1.1.1"
   },
   "devDependencies": {
     "css-loader": "^0.28.9",

@@ -53,3 +53,12 @@ WebGL map renderer with OSM layer rendered in it + canvas layer in its own canva
 
 ##### [Mixed map + canvas layers](https://camptocamp.github.io/ol-vt-tests/mixed-renderer/mixed-renderer.html)
 Mixed map renderer that declare no canvas + 2 canvas layers with their own canvas.
+
+#### WebGL experimental Vector Tiles renderer
+The following examples use an experimental Vector Tiles WebGL renderer. The tile loading logic is very basic, hence why the map is blank sometimes.
+
+#### [Basic example with swiss base map](https://camptocamp.github.io/ol-vt-tests/webgl-poc/ol-sbm-osm.html)
+Swisstopo example map given to an experimental WebGL Vector Tiles renderer. Note: triangulation is done using [earcut](https://github.com/mapbox/earcut) instead of the custom-made algorithm of OpenLayers.
+
+#### [MapBox font rendering demo](https://camptocamp.github.io/ol-vt-tests/fonts-webgl-poc/mapbox-vector-tiles.html)
+This example uses a basic MapBox style spec and implements text rendering using SDF glyph atlas with [tiny-sdf](https://github.com/mapbox/tiny-sdf)

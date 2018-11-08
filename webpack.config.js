@@ -35,6 +35,7 @@ module.exports = {
       openlayers: 'openlayers/src/ol'
     }
   },
+  devtool: 'cheap-module-source-map',
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].js',

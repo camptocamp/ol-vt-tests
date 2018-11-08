@@ -3,12 +3,12 @@ import View from 'openlayers/View';
 import MVT from 'openlayers/format/MVT';
 import VectorTileLayer from 'openlayers/layer/VectorTile';
 import VectorTileSource from 'openlayers/source/VectorTile';
-import TileLayer from 'openlayers/layer/Tile';
-import XYZSource from 'openlayers/source/XYZ';
 import TileGrid from 'openlayers/tilegrid/TileGrid';
 import {fromLonLat, get as getProjection} from 'openlayers/proj';
 import Zoom from 'openlayers/control/Zoom';
 import mb2olstyle from 'mapbox-to-ol-style';
+
+import {workerfeatureloader} from './workerfeatureloader.js';
 
 const resolutionsView = [];
 for (let i = 0; i <= 20; ++i) {
@@ -33,29 +33,7 @@ const tileGridMvt = new TileGrid({
 });
 
 const map = new Map({
-  layers: [
-    new TileLayer({
-      opacity: 0.3,
-      source: new XYZSource({
-        url: 'https://tileserver.dev.bgdi.ch/data/hillshade-europe-cut-mbtiles/{z}/{x}/{y}.png',
-        transition: 0,
-        tileGrid: tileGridMvt,
-        maxZoom: 14
-      })
-    }),
-    new TileLayer({
-      opacity: 0,
-      source: new XYZSource({
-        url: 'https://wmts{10-14}.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png',
-        transition: 0,
-        tileGrid: new TileGrid({
-          extent: getProjection('EPSG:3857').getExtent(),
-          resolutions: resolutionsWmts,
-          tileSize: 256
-        })
-      })
-    })
-  ],
+  layers: [],
   loadTilesWhileInteracting: true,
   target: 'map',
   view: new  View({
@@ -73,6 +51,7 @@ const mbTilesLayer = new VectorTileLayer({
   source: new VectorTileSource({
     format: new MVT(),
     url: 'https://tileserver.dev.bgdi.ch/data/swissbasemap-mbtiles/{z}/{x}/{y}.pbf',
+    tileLoadFunction: workerfeatureloader,
     maxZoom: 15
   })
 });
@@ -88,4 +67,3 @@ fetch('data/swissbasemap-osm-integrated.json').then(function(style) {
     });
   });
 });
-
